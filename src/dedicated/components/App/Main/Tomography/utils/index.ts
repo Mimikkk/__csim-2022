@@ -1,1 +1,3 @@
-export { bresenham as drawline } from "./bresenham";
+export * from "./bresenham";
+export * from "./iradon";
+export * from "./radon";
