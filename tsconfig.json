@@ -1,7 +1,8 @@
 {
   "include": [
     "src",
-    "index.html"
+    "index.html",
+    "node_modules/@types/jest/index.d.ts"
   ],
   "compilerOptions": {
     "paths": {
