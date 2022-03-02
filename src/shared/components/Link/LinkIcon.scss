@@ -1,4 +1,4 @@
 .link-icon {
-  @apply w-7 h-7 fill-white opacity-60;
-  @apply transition transition-all duration-300 hover:opacity-100 hover:w-8 hover:h-8;
+  @apply w-7 h-7 hover:w-8 hover:h-8 fill-white opacity-60;
+  @apply transition transition-all duration-300 hover:opacity-100;
 }

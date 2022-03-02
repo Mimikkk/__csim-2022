@@ -1,5 +1,4 @@
 import "./Header.scss";
-import { Icon, LinkIcon } from "@/shared/components";
 
 export const Header = () => {
   return (

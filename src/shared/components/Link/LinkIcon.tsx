@@ -3,11 +3,10 @@ import { path, pipe } from "rambda";
 import SVGInject from "@iconfu/svg-inject";
 import cx from "classnames";
 import "./LinkIcon.scss";
-import { AvailableIcon } from "@/shared/components/Icon/available-icons";
 
 interface Props {
   link: string;
-  icon: "github" | "discord" | AvailableIcon;
+  icon: "github" | "discord";
   class?: string;
 }
 
@@ -15,7 +14,7 @@ export const LinkIcon: Component<Props> = ({ link, icon, ...props }) => (
   <div class={props.class}>
     <a href={link}>
       <img
-        {...(props as any)}
+        {...props}
         class={cx(props.class, "link-icon")}
         src={`/icons/links/${icon}.svg`}
         alt={`${link} logo link`}
