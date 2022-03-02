@@ -1,0 +1,7 @@
+{
+  "bracketSameLine": true,
+  "endOfLine": "crlf",
+  "semi": true,
+  "printWidth": 80,
+  "tabWidth": 2
+}
