@@ -8,7 +8,7 @@ export const Footer = () => (
       <LinkIcon link="https://discord.gg/GSE43yH63T" icon="discord" />
     </div>
     <div>
-      <Icon icon="abstract-003" class="w-7 h-7 fill-amber-300 opacity-80" />
+      <Icon icon="abstract-003" class="link fill-amber-300" />
       <p class="opacity-50">IwM - Daniel Zdancewicz 2022</p>
     </div>
   </footer>
