@@ -1,5 +1,6 @@
 import { path, pipe } from "rambda";
 import { For } from "solid-js";
+import "./Select.scss";
 
 export interface Option<T = string> {
   label: string;
@@ -19,14 +20,12 @@ export const Select = <T,>({
   onChange,
   default: defaultOption,
 }: Props<T>) => (
-  <label>
-    {label && <span class="pr-2">{label}</span>}
-    <select
-      class="w-40 h-8 font-extrabold rounded-md text-opacity-80 bg-blue-300 text-black"
-      onChange={pipe(path("currentTarget.value"), onChange)}>
+  <fieldset class="select-fieldset">
+    <legend>{label}</legend>
+    <select onChange={pipe(path("currentTarget.value"), onChange)}>
       <For each={[defaultOption, ...options]}>
         {({ label, value }) => <option value={value as any}>{label}</option>}
       </For>
     </select>
-  </label>
+  </fieldset>
 );

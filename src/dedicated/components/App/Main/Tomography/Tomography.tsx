@@ -1,5 +1,5 @@
 import { values } from "rambda";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal } from "solid-js";
 import { Option, Select } from "@/shared/components";
 
 const tomographyDefaultOption: Option = {
@@ -21,14 +21,11 @@ const tomographyImages: Record<string, Option> = {
 export const Tomography = () => {
   const [image, setImage] = createSignal("");
 
-  createEffect(() => {
-    console.log({ i: image() });
-  });
   return (
     <div class="flex gap-x-2">
       <div class="flex flex-col gap-y-2">
         <Select
-          label="Tomograf:"
+          label="Tomograf"
           default={tomographyDefaultOption}
           options={values(tomographyImages)}
           onChange={setImage}
@@ -43,6 +40,17 @@ export const Tomography = () => {
           <p>Liczba skanów:</p>
           <p>Rozpiętość:</p>
           <p>Filtrowanie:</p>
+        </div>
+      </div>
+      <div class="w-[300px] h-[300px] flex justify-center bg-gray-800 opacity-80 rounded-md">
+        <div class="flex justify-center items-center">
+          {image() && (
+            <img
+              class="rounded-md"
+              src={`/tomograph/photos/${image()}`}
+              alt="Tomography image"
+            />
+          )}
         </div>
       </div>
       <div class="w-[800px] h-[800px] flex justify-center bg-gray-800 opacity-80 rounded-md">
