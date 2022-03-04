@@ -7,9 +7,7 @@ import "./App.scss";
 export const App: Component = () => (
   <article>
     <Header />
-    <nav />
     <Main />
-    <aside />
     <Footer />
   </article>
 );
