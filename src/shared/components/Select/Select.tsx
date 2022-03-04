@@ -11,7 +11,7 @@ export interface Props<T> {
   label?: string;
   default?: Option<T>;
   options: Option<T>[];
-  onChange: (value: T) => void;
+  onChange?: (value: T) => void;
 }
 
 export const Select = <T,>({

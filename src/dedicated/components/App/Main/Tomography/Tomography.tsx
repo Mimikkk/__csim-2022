@@ -1,6 +1,14 @@
 import { values } from "rambda";
-import { createSignal } from "solid-js";
+import {
+  createContext as createSolidContext,
+  createEffect,
+  createSignal,
+  onCleanup,
+  onMount,
+  useContext,
+} from "solid-js";
 import { Option, Select } from "@/shared/components";
+import { TomographyProvider, useTomography } from "./context";
 
 const tomographyDefaultOption: Option = {
   label: "Wybierz zdjęcie...",
@@ -19,51 +27,49 @@ const tomographyImages: Record<string, Option> = {
 };
 
 export const Tomography = () => {
-  const [image, setImage] = createSignal("");
-
   return (
-    <div class="flex gap-x-2">
-      <div class="flex flex-col gap-y-2">
-        <Select
-          label="Tomograf"
-          default={tomographyDefaultOption}
-          options={values(tomographyImages)}
-          onChange={setImage}
-        />
-        <div>
-          <p>Informacje o pliku</p>
-          <p>Szerokość:</p>
-          <p>Wysokość:</p>
-          <p>RSME:</p>
+    <TomographyProvider>
+      {() => {
+        const { image, setImage } = useTomography();
 
-          <p>Liczba detektorów:</p>
-          <p>Liczba skanów:</p>
-          <p>Rozpiętość:</p>
-          <p>Filtrowanie:</p>
-        </div>
-      </div>
-      <div class="w-[300px] h-[300px] flex justify-center bg-gray-800 opacity-80 rounded-md">
-        <div class="flex justify-center items-center">
-          {image() && (
-            <img
-              class="rounded-md"
-              src={`/tomograph/photos/${image()}`}
-              alt="Tomography image"
-            />
-          )}
-        </div>
-      </div>
-      <div class="w-[800px] h-[800px] flex justify-center bg-gray-800 opacity-80 rounded-md">
-        <div class="flex justify-center items-center">
-          {image() && (
-            <img
-              class="rounded-md"
-              src={`/tomograph/photos/${image()}`}
-              alt="Tomography image"
-            />
-          )}
-        </div>
-      </div>
-    </div>
+        return (
+          <div class="flex gap-x-2">
+            <div class="flex flex-col gap-y-2">
+              <Select
+                label="Tomograf"
+                default={tomographyDefaultOption}
+                options={values(tomographyImages)}
+                onChange={setImage}
+              />
+              <div>
+                <p>Informacje o pliku</p>
+                <p>Szerokość:</p>
+                <p>Wysokość:</p>
+                <p>RSME:</p>
+
+                <p>Liczba detektorów:</p>
+                <p>Liczba skanów:</p>
+                <p>Rozpiętość:</p>
+                <p>Filtrowanie:</p>
+              </div>
+            </div>
+            <div class="w-[300px] h-[300px] p-2 flex justify-center bg-gray-800 opacity-80 rounded-md">
+              {image() && (
+                <img
+                  class="rounded-md"
+                  src={`/tomograph/photos/${image()}`}
+                  alt="Tomography image"
+                />
+              )}
+            </div>
+            <div class="w-[800px] h-[800px] flex justify-center bg-gray-800 opacity-80 rounded-md">
+              <div class="w-[800px] p-2 flex justify-center items-center">
+                <canvas width={256} height={256} />
+              </div>
+            </div>
+          </div>
+        );
+      }}
+    </TomographyProvider>
   );
 };
