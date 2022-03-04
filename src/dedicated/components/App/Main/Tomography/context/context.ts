@@ -6,9 +6,6 @@ export const [useTomography, TomographyProvider] = createContext(
   () => {
     const [image, setImage] = createSignal("scout.jpg");
 
-    return {
-      image,
-      setImage,
-    } as const;
+    return { image, setImage } as const;
   }
 );
