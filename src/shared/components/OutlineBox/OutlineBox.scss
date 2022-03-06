@@ -1,0 +1,5 @@
+.outline-box {
+  @apply flex justify-center items-center;
+  @apply p-2 border-2 rounded-md;
+  @apply bg-gray-800  hover:border-amber-400 transition-all;
+}
