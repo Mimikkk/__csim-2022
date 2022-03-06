@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 body {
+  @apply bg-gray-700;
+
   font-family: 'Verdana', sans-serif;
   font-size: 16px;
   color: aliceblue;
