@@ -1,13 +1,17 @@
 import { TomographyProvider } from "./context";
-import { TomographyCanvas, TomographyControls } from "./components";
-import "./Tomography.scss";
+import {
+  TomographyCanvas,
+  TomographyControls,
+  TomographyImage,
+} from "./components";
 import { OutlineBox } from "@/shared/components";
+import "./Tomography.scss";
 
 const TomographyContent = () => (
   <div class="tomography">
     <TomographyControls />
     <OutlineBox>
-      <TomographyCanvas />
+      <TomographyImage />
     </OutlineBox>
     <OutlineBox>
       <TomographyCanvas />
