@@ -5,24 +5,24 @@ import {
 } from "solid-js";
 export * from "./createContext";
 
-export const createContext = <Props extends object, State extends object>(
+export const createContext = <Args extends object, State extends object>(
   name: string,
-  provider: ((props: Props) => State) | (() => State)
-): readonly [() => State, Component<Props>] => {
+  provider: () => State
+): readonly [() => State, Component] => {
   const Context = createSolidContext<State>();
 
   const hook = () => {
     const context = useContext(Context);
-    if (context === undefined) {
-      throw new Error(`Context must be used within ${name} Provider`);
+    switch (context) {
+      case undefined:
+        throw Error(`Context must be used within ${name} Provider`);
+      default:
+        return context;
     }
-    return context;
   };
 
-  const Provider: Component<Props> = ({ children, ...props }) => (
-    <Context.Provider value={provider(props as any)}>
-      {children}
-    </Context.Provider>
+  const Provider = (props) => (
+    <Context.Provider value={provider()}>{props.children}</Context.Provider>
   );
 
   return [hook, Provider] as const;

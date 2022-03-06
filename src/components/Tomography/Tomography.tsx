@@ -2,7 +2,8 @@ import { TomographyProvider, useTomography } from "./context";
 import { TomographSelect } from "./components";
 import "./Tomography.scss";
 import { Component } from "solid-js";
-export const TomographInfo = () => {
+import { OutlineBox } from "@/shared/components";
+export const TomographyInfo = () => {
   return (
     <>
       <p>Szerokość:</p>
@@ -23,26 +24,15 @@ export const TomographyParameters = () => {
   );
 };
 
-const TomographyContent = () => {
-  const { image } = useTomography();
-  return (
-    <div class="tomography">
-      <div>
-        <TomographSelect />
-        <TomographInfo />
-        <TomographyParameters />
-      </div>
-      <OutlineBox>
-        <Image />
-      </OutlineBox>
-      <OutlineBox>
-        <Image />
-      </OutlineBox>
-    </div>
-  );
-};
+export const TomographyControls = () => (
+  <div>
+    <TomographSelect />
+    <TomographyInfo />
+    <TomographyParameters />
+  </div>
+);
 
-const Image: Component = () => {
+const TomographyImage: Component = () => {
   const { image } = useTomography();
 
   return (
@@ -59,12 +49,20 @@ const Image: Component = () => {
   );
 };
 
-const OutlineBox: Component = ({ children }) => (
-  <div class="bg-gray-800 p-2 rounded-md flex justify-center items-center">
-    <Image />
+const TomographyContent = () => (
+  <div class="tomography">
+    <TomographyControls />
+    <OutlineBox>
+      <TomographyImage />
+    </OutlineBox>
+    <OutlineBox>
+      <TomographyImage />
+    </OutlineBox>
   </div>
 );
 
 export const Tomography = () => (
-  <TomographyProvider>{() => <TomographyContent />}</TomographyProvider>
+  <TomographyProvider>
+    <TomographyContent />
+  </TomographyProvider>
 );
