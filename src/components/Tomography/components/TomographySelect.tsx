@@ -1,6 +1,6 @@
 import { Option, Select } from "@/shared/components";
-import { useTomography } from "@/dedicated/components/App/Main/Tomography/context";
 import { values } from "rambda";
+import { useTomography } from "@/components/Tomography/context";
 
 const tomographyDefaultOption: Option = {
   label: "Wybierz zdjęcie...",

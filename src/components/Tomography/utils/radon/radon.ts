@@ -1,5 +1,5 @@
 import { range } from "rambda";
-import { bresenham } from "@/dedicated/components/App/Main/Tomography/utils/bresenham/bresenham";
+import { bresenham } from "@/components/Tomography/utils/bresenham/bresenham";
 
 const { ceil, floor, sqrt, PI, round } = Math;
 export const radon = (

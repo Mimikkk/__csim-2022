@@ -1,0 +1,7 @@
+footer {
+  @apply flex justify-between bg-gray-900 px-2;
+
+  div {
+    @apply flex items-center gap-2;
+  }
+}

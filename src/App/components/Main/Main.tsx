@@ -1,7 +1,5 @@
 import { Route, Routes } from "solid-app-router";
-import { Tomography } from "./Tomography";
-import { Eyes } from "./Eyes";
-import { Fihr } from "./Fihr";
+import { Eyes, Fihr, Tomography } from "@/components";
 
 export const Main = () => (
   <main>

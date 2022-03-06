@@ -1,17 +1,13 @@
 header {
-  @apply col-span-3;
   @apply bg-gray-900;
+  @apply px-2;
 
   @apply flex justify-end;
   div {
-    @apply flex gap-x-4 items-center;
+    @apply flex gap-x-2 items-center;
 
     a {
       @apply hover:text-amber-300 transition-all duration-300;
-    }
-
-    &:last-child {
-      @apply pr-2;
     }
   }
 }
