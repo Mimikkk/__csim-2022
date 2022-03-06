@@ -1,1 +1,3 @@
-export * from "./TomographySelect";
+export * from "./Controls";
+export * from "./Canvas";
+export * from "./Image";
