@@ -46,19 +46,21 @@ const Image: Component = () => {
   const { image } = useTomography();
 
   return (
-    <img
-      class="image"
-      src={`/tomograph/photos/${image()}`}
-      alt="Tomography image"
-      onload={(xd) => {
-        console.log("load", xd);
-      }}
-    />
+    image() && (
+      <img
+        class="max-h-[800px]"
+        src={`/tomograph/photos/${image()}`}
+        alt="Tomography image"
+        onload={(xd) => {
+          console.log("load", xd);
+        }}
+      />
+    )
   );
 };
 
 const OutlineBox: Component = ({ children }) => (
-  <div class="bg-gray-800 p-2 rounded-md">
+  <div class="bg-gray-800 p-2 rounded-md flex justify-center items-center">
     <Image />
   </div>
 );
