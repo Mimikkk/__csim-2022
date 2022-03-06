@@ -1,6 +1,5 @@
 article {
-  @apply w-screen h-screen grid;
-  @apply grid-rows-[1fr_22fr_1fr];
-  @apply grid-cols-1;
+  @apply w-screen h-screen;
+  @apply grid grid-rows-[1fr_22fr_1fr] grid-cols-1;
   @apply bg-gray-700;
 }

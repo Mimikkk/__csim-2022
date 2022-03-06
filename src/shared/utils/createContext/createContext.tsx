@@ -21,7 +21,7 @@ export const createContext = <Props extends object, State extends object>(
 
   const Provider: Component<Props> = ({ children, ...props }) => (
     <Context.Provider value={provider(props as any)}>
-      <span>{children}</span>
+      {children}
     </Context.Provider>
   );
 

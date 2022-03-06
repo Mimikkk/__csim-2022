@@ -4,11 +4,11 @@ import { Eyes } from "./Eyes";
 import { Fihr } from "./Fihr";
 
 export const Main = () => (
-  <main class="flex justify-center items-center">
+  <main>
     <Routes>
-      <Route path="/tomography" element={<Tomography />} />
-      <Route path="/eyes" element={<Eyes />} />
-      <Route path="/fihr" element={<Fihr />} />
+      <Route path="/tomography" element={Tomography} />
+      <Route path="/eyes" element={Eyes} />
+      <Route path="/fihr" element={Fihr} />
     </Routes>
   </main>
 );

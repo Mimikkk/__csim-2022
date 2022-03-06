@@ -1,13 +1,15 @@
-import type { Component } from "solid-js";
+import { Router } from "solid-app-router";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Main } from "./Main";
 import "./App.scss";
 
-export const App: Component = () => (
+export const App = () => (
   <article>
-    <Header />
-    <Main />
-    <Footer />
+    <Router>
+      <Header />
+      <Main />
+      <Footer />
+    </Router>
   </article>
 );
