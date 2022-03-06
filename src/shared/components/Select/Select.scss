@@ -6,7 +6,7 @@
   @apply transition-all duration-300;
 
   select {
-    @apply w-48 h-8;
+    @apply w-full;
     @apply bg-transparent;
     option {
       @apply text-gray-700;

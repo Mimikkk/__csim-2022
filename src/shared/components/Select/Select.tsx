@@ -20,12 +20,14 @@ export const Select = <T,>({
   onChange,
   default: defaultOption,
 }: Props<T>) => (
-  <fieldset class="select-fieldset">
-    <legend>{label}</legend>
-    <select onChange={pipe(path("currentTarget.value"), onChange)}>
-      <For each={[defaultOption, ...options]}>
-        {({ label, value }) => <option value={value as any}>{label}</option>}
-      </For>
-    </select>
-  </fieldset>
+  <label>
+    <fieldset class="select-fieldset">
+      <legend>{label}</legend>
+      <select onChange={pipe(path("currentTarget.value"), onChange)}>
+        <For each={[defaultOption, ...options]}>
+          {({ label, value }) => <option value={value as any}>{label}</option>}
+        </For>
+      </select>
+    </fieldset>
+  </label>
 );
