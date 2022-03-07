@@ -1,3 +1,4 @@
+import { ControlsProvider } from "./components/Controls/context";
 import { TomographyProvider } from "./context";
 import {
   TomographyCanvas,
@@ -21,6 +22,8 @@ const TomographyContent = () => (
 
 export const Tomography = () => (
   <TomographyProvider>
-    <TomographyContent />
+    <ControlsProvider>
+      <TomographyContent />
+    </ControlsProvider>
   </TomographyProvider>
 );
