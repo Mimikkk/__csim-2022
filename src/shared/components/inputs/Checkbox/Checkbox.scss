@@ -1,0 +1,37 @@
+.checkbox-input {
+  @apply flex gap-x-2;
+
+  label {
+    @apply transition-all duration-300;
+    @apply hover:text-amber-400 hover:cursor-pointer;
+  }
+
+
+  input {
+    @apply transition-all duration-300;
+    @apply hover:cursor-pointer;
+
+    @apply appearance-none;
+    @apply bg-blue-600 hover:bg-blue-800;
+    @apply w-6 h-6 rounded-md;
+    @apply border-2 hover:border-amber-400;
+
+    @apply grid place-content-center;
+
+    &::before {
+      content: "";
+      @apply w-3 h-3 bg-white;
+      @apply transition-all scale-0 origin-center;
+
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+
+    &:hover::before {
+      @apply bg-amber-400;
+    }
+
+    &:checked::before {
+      @apply scale-100;
+    }
+  }
+}
