@@ -1,0 +1,28 @@
+.range-fieldset {
+  @apply border-2 rounded-md;
+  @apply px-1 pb-2 opacity-80;
+  @apply bg-gray-800 hover:bg-blue-800 hover:border-amber-400;
+  @apply text-opacity-100 font-extrabold;
+  @apply transition-all duration-300;
+
+  @apply flex items-center justify-center gap-x-1;
+
+
+  input {
+    appearance: none;
+    overflow: hidden;
+
+    @apply bg-white;
+    @apply cursor-pointer;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      cursor: ew-resize;
+      width: 10px;
+      height: 10px;
+
+      @apply bg-gray-800;
+      box-shadow: -80px 0 0 80px hsl(0, 82%, 42%);
+    }
+  }
+}
