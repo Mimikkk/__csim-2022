@@ -7,7 +7,7 @@ export interface Option<T = string> {
   value: T;
 }
 
-export interface Props<T> {
+interface Props<T> {
   label?: string;
   default?: Option<T>;
   options: Option<T>[];
