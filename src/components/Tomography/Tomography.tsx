@@ -13,15 +13,15 @@ export const Tomography = () => (
   <TomographyProvider>
     <ControlsProvider>
       <CanvasProvider>
-        <div class="tomography">
+        <fieldset class="tomography">
           <TomographyControls />
-          <OutlineBox>
+          <OutlineBox centered>
             <TomographyImage />
           </OutlineBox>
-          <OutlineBox>
+          <OutlineBox centered>
             <TomographyCanvas />
           </OutlineBox>
-        </div>
+        </fieldset>
       </CanvasProvider>
     </ControlsProvider>
   </TomographyProvider>

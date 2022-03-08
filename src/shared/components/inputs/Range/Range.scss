@@ -1,12 +1,11 @@
 .range-fieldset {
+  @apply flex items-center justify-center gap-x-1;
+  @apply -mt-2.5;
   @apply border-2 rounded-md;
   @apply px-1 pb-2 opacity-80;
   @apply bg-gray-800 hover:bg-blue-800 hover:border-amber-400;
   @apply text-opacity-100 font-extrabold;
   @apply transition-all duration-300;
-
-  @apply flex items-center justify-center gap-x-1;
-
 
   input {
     appearance: none;

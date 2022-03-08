@@ -1,5 +1,6 @@
 .select-fieldset {
   @apply border-2 rounded-md;
+  @apply -mt-2.5;
   @apply px-1 pb-2 opacity-80;
   @apply bg-gray-800 hover:bg-blue-800 hover:border-amber-400;
   @apply text-opacity-100 font-extrabold;

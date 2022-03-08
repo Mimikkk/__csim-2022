@@ -1,25 +1,23 @@
 import { TomographSelect } from "./Select";
-import { Range, Checkbox } from "@/shared/components";
+import { Range, Checkbox, OutlineBox } from "@/shared/components";
 import { useTomography } from "@/components/Tomography/context";
 import { useControls } from "./context";
 
-export const TomographyInfo = () => {
-  return (
-    <>
-      <p>Szerokość:</p>
-      <p>Wysokość:</p>
-      <p>RSME:</p>
-    </>
-  );
-};
+export const TomographyInfo = () => (
+  <OutlineBox class="flex-col">
+    <p>Wysokość:</p>
+    <p>Szerokość:</p>
+    <p>RSME:</p>
+  </OutlineBox>
+);
 
 export const TomographyParameters = () => {
   const { setAngle, setDetectors, setScans, setShouldFilter } = useControls();
   const { image } = useTomography();
 
   return (
-    <fieldset disabled={!image()} class="flex flex-col gap-y-2">
-      <div>
+    <OutlineBox>
+      <fieldset disabled={!image()} class="flex flex-col gap-y-2">
         <Range
           default={90}
           min={90}
@@ -44,13 +42,13 @@ export const TomographyParameters = () => {
           label="Rozpiętość"
           onChange={setAngle}
         />
-      </div>
-      <Checkbox
-        default={false}
-        label="Filtrowanie"
-        onChange={setShouldFilter}
-      />
-    </fieldset>
+        <Checkbox
+          default={false}
+          label="Filtrowanie"
+          onChange={setShouldFilter}
+        />
+      </fieldset>
+    </OutlineBox>
   );
 };
 
