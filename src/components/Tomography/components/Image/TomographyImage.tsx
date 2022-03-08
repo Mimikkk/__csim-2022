@@ -1,11 +1,11 @@
-import { Component, onCleanup } from "solid-js";
+import { Component, Show } from "solid-js";
 import { useTomography } from "@/components/Tomography/context";
 
 export const TomographyImage: Component = () => {
   const { image } = useTomography();
 
   return (
-    image() && (
+    <Show when={image()} fallback="Wybierz zdjęcie...">
       <img
         class="max-h-[800px]"
         src={`/tomograph/photos/${image()}`}
@@ -19,6 +19,6 @@ export const TomographyImage: Component = () => {
           console.log({ event, c: event.currentTarget });
         }}
       />
-    )
+    </Show>
   );
 };
