@@ -10,14 +10,6 @@ export const TomographyImage: Component = () => {
         class="max-h-[800px]"
         src={`/tomograph/photos/${image()}`}
         alt="Tomography image"
-        onload={(event) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            console.log({ x: reader.result });
-          };
-
-          console.log({ event, c: event.currentTarget });
-        }}
       />
     </Show>
   );

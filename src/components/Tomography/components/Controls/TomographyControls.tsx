@@ -3,13 +3,17 @@ import { Range, Checkbox, OutlineBox } from "@/shared/components";
 import { useTomography } from "@/components/Tomography/context";
 import { useControls } from "./context";
 
-export const TomographyInfo = () => (
-  <OutlineBox class="flex-col">
-    <p>Wysokość:</p>
-    <p>Szerokość:</p>
-    <p>RSME:</p>
-  </OutlineBox>
-);
+export const TomographyInfo = () => {
+  const { width, height } = useTomography();
+
+  return (
+    <OutlineBox class="flex-col">
+      <p>Wysokość: {height}</p>
+      <p>Szerokość: {width}</p>
+      <p>RSME:</p>
+    </OutlineBox>
+  );
+};
 
 export const TomographyParameters = () => {
   const { setAngle, setDetectors, setScans, setShouldFilter } = useControls();
