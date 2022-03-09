@@ -4,7 +4,7 @@ import "./Footer.scss";
 export const Footer = () => (
   <footer>
     <div>
-      <LinkIcon link="https://github.com/Mimikkk/solid-ts" icon="github" />
+      <LinkIcon link="https://github.com/Mimikkk" icon="github" />
       <LinkIcon link="https://discord.gg/GSE43yH63T" icon="discord" />
     </div>
     <div>
