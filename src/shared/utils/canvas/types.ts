@@ -8,6 +8,7 @@ export interface HTMLCanvasCallback {
 export interface CanvasPixelHandlerCallback {
   (
     canvas: HTMLCanvasElement,
+    deltatime: DOMHighResTimeStamp,
     timestamp: DOMHighResTimeStamp
   ): HTMLCanvasCallback;
 }
@@ -19,4 +20,3 @@ export interface CanvasRefCallback {
 export interface CanvasLoopCallback {
   (loop: CanvasPixelHandlerCallback): CanvasRefCallback;
 }
-

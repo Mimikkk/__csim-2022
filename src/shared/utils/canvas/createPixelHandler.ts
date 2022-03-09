@@ -4,9 +4,14 @@ import { CanvasLoopCallback } from "./types";
 
 export const createPixelHandler: CanvasLoopCallback =
   (createPixelHandler) => (canvas) => {
+    let start = performance.now();
+
     const loop = (timestamp) => {
       frame = requestAnimationFrame(loop);
-      eachpixel(canvas, createPixelHandler(canvas, timestamp));
+      const delta = timestamp - start;
+      start = timestamp;
+
+      eachpixel(canvas, createPixelHandler(canvas, delta, timestamp));
     };
 
     let frame = requestAnimationFrame(loop);
