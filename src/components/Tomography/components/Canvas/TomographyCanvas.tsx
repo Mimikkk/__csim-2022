@@ -1,6 +1,7 @@
 import { useTomography } from "@/components/Tomography/context";
-import { Component, createEffect, createResource, on, Show } from "solid-js";
-import { fetchImageDataFromSource } from "@/shared/utils/canvas";
+import { Component, Show } from "solid-js";
+import { fetchImageDataFromSource } from "@/shared/utils";
+import { useCanvas } from "./context";
 import "./TomographyCanvas.scss";
 
 export const fetchTomographyData = (imagepath: string) =>
@@ -8,21 +9,14 @@ export const fetchTomographyData = (imagepath: string) =>
 
 export const TomographyCanvas: Component = () => {
   const { image } = useTomography();
-  const [imagedata] = createResource(image, fetchTomographyData);
-  let canvas: HTMLCanvasElement = null;
-
-  createEffect(() => {
-    if (imagedata()) {
-      canvas.getContext("2d").putImageData(imagedata(), 0, 0);
-    }
-  });
+  const { setCanvas, imagedata } = useCanvas();
 
   return (
     <Show when={image()} fallback="Wybierz zdjęcie...">
       <Show when={imagedata()} fallback="Ładowanie zdjęcia...">
         <canvas
           class="tomography-canvas"
-          ref={canvas}
+          ref={setCanvas}
           width={imagedata().width}
           height={imagedata().height}
         />
