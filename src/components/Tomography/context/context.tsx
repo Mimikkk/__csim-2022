@@ -1,5 +1,6 @@
 import { createEffect, createSignal } from "solid-js";
 import { createContext } from "@/shared/utils";
+import * as numjs from "numjs";
 
 export const [useTomography, TomographyProvider] = createContext(
   "Tomography",

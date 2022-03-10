@@ -1,4 +1,4 @@
-import { eachpixel } from "@/shared/utils";
+import { handleEachPixel } from "@/shared/utils";
 import { onCleanup } from "solid-js";
 import { CanvasLoopCallback } from "./types";
 
@@ -11,7 +11,7 @@ export const createPixelHandler: CanvasLoopCallback =
       const delta = timestamp - start;
       start = timestamp;
 
-      eachpixel(canvas, createPixelHandler(canvas, delta, timestamp));
+      handleEachPixel(canvas, createPixelHandler(canvas, delta, timestamp));
     };
 
     let frame = requestAnimationFrame(loop);

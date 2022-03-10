@@ -1,3 +1,3 @@
 export * from "./fetchImageDataFromSource";
 export * from "./createPixelHandler";
-export * from "./eachpixel";
+export * from "./handleEachPixel";
