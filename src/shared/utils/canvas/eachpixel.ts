@@ -1,4 +1,4 @@
-import { HTMLCanvasCallback } from "./types";
+import { HTMLCanvasCallback, Rgba } from "./types";
 
 export const eachpixel = (
   canvas: HTMLCanvasElement,
@@ -16,3 +16,6 @@ export const eachpixel = (
   }
   context.putImageData(image, 0, 0);
 };
+export function* aeachpixel({ data }: ImageData): Generator<Rgba> {
+  for (let p = 0; p < data.length; p += 4) yield data.slice(p, p + 4) as any;
+}
