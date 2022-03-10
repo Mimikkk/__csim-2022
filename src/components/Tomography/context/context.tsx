@@ -1,11 +1,10 @@
 import { createEffect, createSignal } from "solid-js";
 import { createContext } from "@/shared/utils";
-import * as numjs from "numjs";
 
 export const [useTomography, TomographyProvider] = createContext(
   "Tomography",
   () => {
-    const [image, setImage] = createSignal("CT_ScoutView.jpg");
+    const [image, setImage] = createSignal("");
     const [width, setWidth] = createSignal(0);
     const [height, setHeight] = createSignal(0);
 

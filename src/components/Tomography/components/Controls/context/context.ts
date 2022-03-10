@@ -5,16 +5,16 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [angle, setAngle] = createSignal(0);
   const [detectors, setDetectors] = createSignal(0);
   const [scans, setScans] = createSignal(0);
-  const [shouldFilter, setShouldFilter] = createSignal(false);
+  const [useFilter, setUseFilter] = createSignal(false);
 
   return {
     angle,
     detectors,
     scans,
-    shouldFilter,
+    useFilter,
     setAngle,
     setDetectors,
     setScans,
-    setShouldFilter,
+    setUseFilter,
   } as const;
 });
