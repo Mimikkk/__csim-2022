@@ -1,1 +1,1 @@
-from .rmse import rmse_post
+from .process import process_command
