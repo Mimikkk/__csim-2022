@@ -1,20 +1,32 @@
 import { useTomography } from "@/components/Tomography/context";
-import { createPixelHandler } from "@/shared/utils";
-import { Component } from "solid-js";
+import { Component, createEffect, createResource, on, Show } from "solid-js";
+import { fetchImageDataFromSource } from "@/shared/utils/canvas";
+import "./TomographyCanvas.scss";
+
+export const fetchTomographyData = (imagepath: string) =>
+  fetchImageDataFromSource(`tomograph/photos/${imagepath}`);
 
 export const TomographyCanvas: Component = () => {
   const { image } = useTomography();
+  const [imagedata] = createResource(image, fetchTomographyData);
+  let canvas: HTMLCanvasElement = null;
+
+  createEffect(() => {
+    if (imagedata()) {
+      canvas.getContext("2d").putImageData(imagedata(), 0, 0);
+    }
+  });
 
   return (
-    <canvas
-      ref={createPixelHandler((canvas, dt, timestamp) => ([x, y]) => {
-        const r = (256 * x) / canvas.width + 64 * Math.sin(timestamp / 1000);
-        const g = (256 * y) / canvas.height + 64 * Math.cos(timestamp / 1000);
-        const b = (256 * y) / canvas.height + 64 * Math.tanh(timestamp / 1000);
-        return [r, g, b, 255];
-      })}
-      width={256}
-      height={256}
-    />
+    <Show when={image()} fallback="Wybierz zdjęcie...">
+      <Show when={imagedata()} fallback="Ładowanie zdjęcia...">
+        <canvas
+          class="tomography-canvas"
+          ref={canvas}
+          width={imagedata().width}
+          height={imagedata().height}
+        />
+      </Show>
+    </Show>
   );
 };

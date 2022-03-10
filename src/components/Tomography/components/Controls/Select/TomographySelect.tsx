@@ -2,12 +2,12 @@ import { Option, Select } from "@/shared/components";
 import { values } from "rambda";
 import { useTomography } from "@/components/Tomography/context";
 
-const tomographyDefaultOption: Option = {
+const $default: Option = {
   label: "Wybierz zdjęcie...",
   value: "",
 };
 
-export const tomographyImages: Record<string, Option> = {
+const images: Record<string, Option> = {
   largeScout: { label: "Duży Scout", value: "CT_ScoutView-large.jpg" },
   scout: { label: "Scout", value: "CT_ScoutView.jpg" },
   circle: { label: "Koło", value: "Kolo.jpg" },
@@ -20,14 +20,15 @@ export const tomographyImages: Record<string, Option> = {
 };
 
 export const TomographSelect = () => {
-  const { setImage } = useTomography();
+  const { image, setImage } = useTomography();
 
   return (
     <Select
       label="Tomograf"
-      default={tomographyDefaultOption}
-      options={values(tomographyImages)}
+      default={$default}
+      options={values(images)}
       onChange={setImage}
+      value={image()}
     />
   );
 };
