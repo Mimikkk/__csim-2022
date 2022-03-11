@@ -10,9 +10,13 @@ class TomographyRequest(object):
   use_filter: bool
 
   @property
-  def image(self): return base64_to_img(self.encoded_image)
+  def encoded_format(self): return self.encoded_image.split(',')[0]
+
+  @property
+  def image(self): return base64_to_img(self.encoded_image.split(',')[1])
 
 @dataclass
 class TomographyResponse(object):
-  encoded_image: str
+  encoded_reconstruction: str
+  encoded_sinogram: str
   rsme: float
