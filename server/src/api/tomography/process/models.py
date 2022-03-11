@@ -1,11 +1,8 @@
-from base64 import b64decode
 from dataclasses import dataclass
-from io import BytesIO
-
-from PIL import Image
+from src.utils import base64_to_img
 
 @dataclass
-class TomographyRequest:
+class TomographyRequest(object):
   encoded_image: str
   detectors: int
   scans: int
@@ -13,10 +10,9 @@ class TomographyRequest:
   use_filter: bool
 
   @property
-  def image(self):
-    return Image.open(BytesIO(b64decode(self.encoded_image)))
+  def image(self): return base64_to_img(self.encoded_image)
 
 @dataclass
-class TomographyResponse:
+class TomographyResponse(object):
   encoded_image: str
   rsme: float
