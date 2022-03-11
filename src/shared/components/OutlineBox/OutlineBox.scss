@@ -5,4 +5,8 @@
   &.centered {
     @apply flex justify-center items-center;
   }
+
+  &.label {
+    @apply -mt-2.5;
+  }
 }
