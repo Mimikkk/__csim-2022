@@ -12,21 +12,25 @@ export interface TomographyRequest {
 }
 
 export interface TomographyResponse {
-  encoded_image: string;
+  encoded_reconstruction: string;
+  encoded_sinogram: string;
   rmse: number;
 }
 
 export interface TomographyParsedResponse {
   rmse: number;
-  imagedata: ImageData;
+  sinogram: ImageData;
+  reconstruction: ImageData;
 }
 
 export const parseResponse = async ({
-  encoded_image,
+  encoded_reconstruction,
+  encoded_sinogram,
   rmse,
 }: TomographyResponse): Promise<TomographyParsedResponse> => ({
   rmse,
-  imagedata: await fetchImageDataFromSource(encoded_image),
+  sinogram: await fetchImageDataFromSource(encoded_sinogram),
+  reconstruction: await fetchImageDataFromSource(encoded_reconstruction),
 });
 
 export const tomographyService = {
