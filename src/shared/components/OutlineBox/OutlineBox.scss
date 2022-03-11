@@ -9,4 +9,8 @@
   &.label {
     @apply -mt-2.5;
   }
+
+  legend {
+    @apply font-extrabold;
+  }
 }
