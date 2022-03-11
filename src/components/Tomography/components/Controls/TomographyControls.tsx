@@ -10,6 +10,7 @@ export const TomographyInfo = () => {
 
   return (
     <OutlineBox class="flex-col">
+      <TomographSelect />
       <p>Wysokość: {height}</p>
       <p>Szerokość: {width}</p>
       <p>RMSE: {rmse}</p>
@@ -56,7 +57,6 @@ export const TomographyParameters = () => {
 
 export const TomographyControls = () => (
   <div>
-    <TomographSelect />
     <TomographyInfo />
     <TomographyParameters />
   </div>

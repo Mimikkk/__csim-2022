@@ -2,8 +2,8 @@ import { createContext } from "@/shared/utils";
 import { createEffect, createResource, createSignal } from "solid-js";
 import { fetchTomographyData } from "@/components/Tomography/components";
 import { useTomography } from "@/components/Tomography/context";
-import axios from "axios";
 import { useControls } from "@/components/Tomography/components/Controls/context";
+import { tomographyService } from "@/components/Tomography/service";
 
 export const [useCanvas, CanvasProvider] = createContext("Canvas", () => {
   const { image } = useTomography();
@@ -14,33 +14,20 @@ export const [useCanvas, CanvasProvider] = createContext("Canvas", () => {
 
   createEffect(async () => {
     if (!canvas() || !imagedata()) return;
+    const context = canvas().getContext("2d");
 
-    canvas().getContext("2d").putImageData(imagedata(), 0, 0);
-    canvas().toDataURL();
+    context.putImageData(imagedata(), 0, 0);
 
-    const image = new Image();
-
-    const {
-      data: { rawImage, rsme },
-    } = await axios.post("http://localhost:3001/api/tomography/process", {
-      raw_image: canvas().toDataURL(),
-      useFilter,
-      detectors,
-      angle,
-      scans,
+    const { imagedata: img, rmse } = await tomographyService.process({
+      angle: angle(),
+      useFilter: useFilter(),
+      scans: scans(),
+      detectors: detectors(),
+      encodedImage: canvas().toDataURL(),
     });
 
-    setRmse(rsme);
-    image.src = rawImage;
-    await image.decode();
-
-    canvas().getContext("2d").drawImage(image, 0, 0);
-  });
-
-  createEffect(() => {
-    if (!canvas() || !imagedata()) return;
-    const context = canvas().getContext("2d");
-    context.putImageData(imagedata(), 0, 0);
+    setRmse(rmse);
+    context.putImageData(img, 0, 0);
   });
 
   return { rmse, canvas, setCanvas, imagedata } as const;
