@@ -7,28 +7,29 @@ const $default: Option = {
   value: "",
 };
 
+const path = (name: string) => `tomograph/photos/${name}`;
 const images: Record<string, Option> = {
-  largeScout: { label: "Duży Scout", value: "CT_ScoutView-large.jpg" },
-  scout: { label: "Scout", value: "CT_ScoutView.jpg" },
-  circle: { label: "Koło", value: "Kolo.jpg" },
-  dot: { label: "Kropka", value: "Kropka.jpg" },
-  squares: { label: "Dwa kwadraty", value: "Kwadraty2.jpg" },
-  stripes: { label: "Dwa paski", value: "Paski2.jpg" },
-  saddle: { label: "Saddle", value: "SADDLE_PE.JPG" },
-  largeSaddle: { label: "Duży Saddle", value: "SADDLE_PE-large.JPG" },
-  sheppLogan: { label: "Shepp Logan", value: "Shepp_Logan.jpg" },
+  largeScout: { label: "Duży Scout", value: path("CT_ScoutView-large.jpg") },
+  scout: { label: "Scout", value: path("CT_ScoutView.jpg") },
+  circle: { label: "Koło", value: path("Kolo.jpg") },
+  dot: { label: "Kropka", value: path("Kropka.jpg") },
+  squares: { label: "Dwa kwadraty", value: path("Kwadraty2.jpg") },
+  stripes: { label: "Dwa paski", value: path("Paski2.jpg") },
+  saddle: { label: "Saddle", value: path("SADDLE_PE.JPG") },
+  largeSaddle: { label: "Duży Saddle", value: path("SADDLE_PE-large.JPG") },
+  sheppLogan: { label: "Shepp Logan", value: path("Shepp_Logan.jpg") },
 };
 
 export const TomographSelect = () => {
-  const { image, setImage } = useTomography();
+  const { imagepath, setImagepath } = useTomography();
 
   return (
     <Select
       label="Tomograf"
       default={$default}
       options={values(images)}
-      onChange={setImage}
-      value={image()}
+      onChange={setImagepath}
+      value={imagepath()}
     />
   );
 };

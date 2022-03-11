@@ -1,32 +1,23 @@
 import { createEffect, createSignal } from "solid-js";
 import { createContext } from "@/shared/utils";
 
+const emptyImage = new ImageData(1, 1);
+
 export const [useTomography, TomographyProvider] = createContext(
   "Tomography",
   () => {
-    const [image, setImage] = createSignal("");
-    const [width, setWidth] = createSignal(0);
-    const [height, setHeight] = createSignal(0);
-
-    createEffect(async () => {
-      const img = new Image();
-      img.src = `/tomograph/photos/${image()}`;
-      try {
-        await img.decode();
-
-        setWidth(img.naturalWidth);
-        setHeight(img.naturalHeight);
-      } catch {
-        setWidth(0);
-        setHeight(0);
-      }
-    });
+    const [imagepath, setImagepath] = createSignal("");
+    const [reconstruction, setReconstruction] = createSignal(emptyImage);
+    const [tomography, setTomography] = createSignal(emptyImage);
+    const [sinogram, setSinogram] = createSignal(emptyImage);
+    const [rmse, setRmse] = createSignal(0);
 
     return {
-      image,
-      setImage,
-      width,
-      height,
+      reconstruction,
+      sinogram,
+      rmse,
+      imagepath,
+      setImagepath,
     } as const;
   }
 );

@@ -1,28 +1,31 @@
 import { OutlineBox } from "@/shared/components";
 import { ControlsProvider } from "./components/Controls/context";
-import { CanvasProvider } from "./components/Canvas/context";
 import { TomographyProvider } from "./context";
 import {
-  TomographyCanvas,
   TomographyControls,
   TomographyImage,
+  TomographyReconstruction,
+  TomographySinogram,
 } from "./components";
 import "./Tomography.scss";
 
 export const Tomography = () => (
   <TomographyProvider>
     <ControlsProvider>
-      <CanvasProvider>
-        <fieldset class="tomography">
-          <TomographyControls />
-          <OutlineBox centered>
+      <fieldset class="tomography">
+        <TomographyControls />
+        <OutlineBox class="grid grid-rows-2 gap-2">
+          <OutlineBox label="Tomograf" centered>
             <TomographyImage />
           </OutlineBox>
-          <OutlineBox centered>
-            <TomographyCanvas />
+          <OutlineBox label="Sinogram" centered>
+            <TomographySinogram />
           </OutlineBox>
-        </fieldset>
-      </CanvasProvider>
+        </OutlineBox>
+        <OutlineBox label="Rekonstrukcja" centered>
+          <TomographyReconstruction />
+        </OutlineBox>
+      </fieldset>
     </ControlsProvider>
   </TomographyProvider>
 );

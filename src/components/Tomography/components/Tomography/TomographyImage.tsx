@@ -2,13 +2,13 @@ import { Component, Show } from "solid-js";
 import { useTomography } from "@/components/Tomography/context";
 
 export const TomographyImage: Component = () => {
-  const { image } = useTomography();
+  const { imagepath } = useTomography();
 
   return (
-    <Show when={image()} fallback="Wybierz zdjęcie...">
+    <Show when={imagepath()} fallback="Wybierz zdjęcie...">
       <img
-        class="max-h-[800px]"
-        src={`/tomograph/photos/${image()}`}
+        class="max-h-[350px] rounded-md"
+        src={imagepath()}
         alt="Tomography image"
       />
     </Show>

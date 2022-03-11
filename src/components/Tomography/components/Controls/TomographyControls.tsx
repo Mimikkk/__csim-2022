@@ -2,17 +2,15 @@ import { TomographSelect } from "./Select";
 import { Range, Checkbox, OutlineBox } from "@/shared/components";
 import { useTomography } from "@/components/Tomography/context";
 import { useControls } from "./context";
-import { useCanvas } from "@/components/Tomography/components/Canvas/context";
 
 export const TomographyInfo = () => {
-  const { width, height } = useTomography();
-  const { rmse } = useCanvas();
+  const { rmse } = useTomography();
 
   return (
     <OutlineBox class="flex-col">
       <TomographSelect />
-      <p>Wysokość: {height}</p>
-      <p>Szerokość: {width}</p>
+      <p>Wysokość: {"placeholder"}</p>
+      <p>Szerokość: {"placeholder"}</p>
       <p>RMSE: {rmse}</p>
     </OutlineBox>
   );
@@ -20,11 +18,11 @@ export const TomographyInfo = () => {
 
 export const TomographyParameters = () => {
   const { setAngle, setDetectors, setScans, setUseFilter } = useControls();
-  const { image } = useTomography();
+  const { imagepath } = useTomography();
 
   return (
     <OutlineBox>
-      <fieldset disabled={!image()} class="flex flex-col gap-y-2">
+      <fieldset disabled={!imagepath()} class="flex flex-col gap-y-2">
         <Range
           default={90}
           min={90}
