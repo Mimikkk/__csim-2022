@@ -1,5 +1,9 @@
 import { createEffect, createResource, createSignal } from "solid-js";
-import { createContext, fetchImageBase64FromSource } from "@/shared/utils";
+import {
+  createContext,
+  fetchImageBase64FromSource,
+  fetchImageDataFromSource,
+} from "@/shared/utils";
 import { tomographyService } from "@/components/Tomography/service";
 import { useControls } from "@/components/Tomography/components/Controls/context";
 
@@ -24,6 +28,8 @@ export const [useTomography, TomographyProvider] = createContext(
     const [imagepath, setImagepath] = createSignal(
       "tomograph/photos/CT_ScoutView.jpg"
     );
+    const [original] = createResource(imagepath, fetchImageDataFromSource);
+
     const [sinogram, setSinogram] = createSignal<HTMLCanvasElement>(null);
     const [reconstruction, setReconstruction] =
       createSignal<HTMLCanvasElement>(null);
@@ -50,6 +56,7 @@ export const [useTomography, TomographyProvider] = createContext(
     });
 
     return {
+      original,
       processed,
       imagepath,
       setImagepath,

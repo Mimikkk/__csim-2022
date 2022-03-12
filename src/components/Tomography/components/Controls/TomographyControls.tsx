@@ -2,16 +2,32 @@ import { TomographSelect } from "./Select";
 import { Range, Checkbox, OutlineBox } from "@/shared/components";
 import { useTomography } from "@/components/Tomography/context";
 import { useControls } from "./context";
+import { Show } from "solid-js";
 
 export const TomographyInfo = () => {
-  const { rmse } = useTomography();
+  const { original, processed } = useTomography();
 
   return (
     <OutlineBox class="flex-col">
       <TomographSelect />
-      <p>Wysokość: {"placeholder"}</p>
-      <p>Szerokość: {"placeholder"}</p>
-      <p>RMSE: {rmse}</p>
+      <p>
+        <strong>Szerokość: </strong>
+        <Show when={!original.loading} fallback="Ładowanie...">
+          {original().width}px
+        </Show>
+      </p>
+      <p>
+        <strong>Wysokość: </strong>
+        <Show when={!original.loading} fallback="Ładowanie...">
+          {original().height}px
+        </Show>
+      </p>
+      <p>
+        <strong>RMSE: </strong>
+        <Show when={!processed.loading} fallback="Ładowanie...">
+          {processed().rmse}
+        </Show>
+      </p>
     </OutlineBox>
   );
 };
