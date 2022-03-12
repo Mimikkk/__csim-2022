@@ -10,10 +10,13 @@ class TomographyRequest(object):
   use_filter: bool
 
   @property
-  def encoded_format(self): return self.encoded_image.split(',')[0]
+  def encoded_format(self): return self.encoded_image and self.encoded_image.split(',')[0] or ""
 
   @property
-  def image(self): return base64_to_img(self.encoded_image.split(',')[1])
+  def encoded_string(self): return self.encoded_image and self.encoded_image.split(',')[1] or ""
+
+  @property
+  def image(self): return base64_to_img(self.encoded_string)
 
 @dataclass
 class TomographyResponse(object):

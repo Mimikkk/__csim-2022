@@ -9,4 +9,4 @@ from .models import TomographyResponse, TomographyRequest
 def process_command(item: TomographyRequest):
   image = item.image
 
-  return TomographyResponse(img_to_base64(item.image), rmse(array(item.image), array(image)))
+  return TomographyResponse(img_to_base64(image), img_to_base64(image), rmse(array(item.image), array(image)))
