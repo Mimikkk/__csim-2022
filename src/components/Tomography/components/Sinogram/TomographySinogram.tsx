@@ -2,12 +2,12 @@ import { useTomography } from "@/components/Tomography/context";
 import { Component, Show } from "solid-js";
 
 export const TomographySinogram: Component = () => {
-  const { imagepath } = useTomography();
+  const { imagepath, processed, setSinogram } = useTomography();
 
   return (
     <Show when={imagepath()} fallback="Wybierz zdjęcie...">
-      <Show when={false} fallback="Ładowanie zdjęcia...">
-        <canvas class="max-h-[350px] rounded-md" />
+      <Show when={!processed.loading} fallback="Ładowanie...">
+        <canvas class="max-h-[350px] rounded-md" ref={setSinogram} />
       </Show>
     </Show>
   );

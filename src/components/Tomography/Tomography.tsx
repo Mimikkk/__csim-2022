@@ -10,8 +10,8 @@ import {
 import "./Tomography.scss";
 
 export const Tomography = () => (
-  <TomographyProvider>
-    <ControlsProvider>
+  <ControlsProvider>
+    <TomographyProvider>
       <fieldset class="tomography">
         <TomographyControls />
         <OutlineBox class="grid grid-rows-2 gap-2">
@@ -26,6 +26,6 @@ export const Tomography = () => (
           <TomographyReconstruction />
         </OutlineBox>
       </fieldset>
-    </ControlsProvider>
-  </TomographyProvider>
+    </TomographyProvider>
+  </ControlsProvider>
 );
