@@ -7,7 +7,7 @@ from .models import TomographyResponse, TomographyRequest
 def process_command(item: TomographyRequest):
   original = item.image
   sinogram = create_sinogram(original, item.detectors, item.scans, item.angle, item.use_filter)
-  inverse = inverse_sinogram(sinogram)
+  inverse = inverse_sinogram(sinogram, item.detectors, item.scans, item.angle, item.use_filter)
 
   return TomographyResponse(
     img_to_base64(inverse),
