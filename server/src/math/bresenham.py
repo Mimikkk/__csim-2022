@@ -1,28 +1,24 @@
-def bresenham(x0: int, y0: int, x1: int, y1: int) -> list[tuple[int, int]]:
-  dx = abs(x1 - x0)
-  dy = abs(y1 - y0)
+from numpy import array
+from numpy.typing import NDArray
 
-  sx = -1 if x0 > x1 else 1
-  sy = -1 if y0 > y1 else 1
+def bresenham(start: NDArray, target: NDArray) -> NDArray:
+  (x0, y0) = map(round, start)
+  (x1, y1) = map(round, target)
+  (dx, sx) = (abs(x1 - x0), 1 if x0 < x1 else -1)
+  (dy, sy) = (-abs(y1 - y0), 1 if y0 < y1 else -1)
+  err = dx + dy
 
   points = []
-  if dx > dy:
-    error = dx / 2.0
-    while x0 != x1:
-      points.append((x0, y0))
-      error -= dy
-      if error < 0:
-        y0 += sy
-        error += dx
+  while True:
+    points.append([x0, y0])
+    if x0 == x1 and y0 == y1: break
+    doubled_err = err << 1
+    if doubled_err >= dy:
+      if x0 == x1: break
+      err += dy
       x0 += sx
-  else:
-    error = dy / 2.0
-    while y0 != y1:
-      points.append((x0, y0))
-      error -= dx
-      if error < 0:
-        x0 += sx
-        error += dy
+    if doubled_err <= dx:
+      if y0 == y1: break
+      err += dx
       y0 += sy
-  points.append((x0, y0))
-  return points
+  return array(points)
