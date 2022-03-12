@@ -8,4 +8,7 @@ def img_to_base64(image: Image) -> str:
   return str(b64encode(buffered.getvalue()))
 
 def base64_to_img(base64: str) -> Image:
-  return orr(lambda: open(BytesIO(b64decode(base64))), new("RGB", (1, 1)))
+  try:
+    return open(BytesIO(b64decode(base64)))
+  except:
+    return new("RGB", (1, 1))
