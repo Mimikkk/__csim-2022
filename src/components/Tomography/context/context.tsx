@@ -21,7 +21,9 @@ const putImageOnContext = (canvas: HTMLCanvasElement, image: ImageData) => {
 export const [useTomography, TomographyProvider] = createContext(
   "Tomography",
   () => {
-    const [imagepath, setImagepath] = createSignal("");
+    const [imagepath, setImagepath] = createSignal(
+      "tomograph/photos/CT_ScoutView.jpg"
+    );
     const [sinogram, setSinogram] = createSignal<HTMLCanvasElement>(null);
     const [reconstruction, setReconstruction] =
       createSignal<HTMLCanvasElement>(null);
