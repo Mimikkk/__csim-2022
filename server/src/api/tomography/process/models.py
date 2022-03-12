@@ -22,4 +22,4 @@ class TomographyRequest(object):
 class TomographyResponse(object):
   encoded_reconstruction: str
   encoded_sinogram: str
-  rsme: float
+  rmse: float
