@@ -34,14 +34,14 @@ export const [useTomography, TomographyProvider] = createContext(
     const [reconstruction, setReconstruction] =
       createSignal<HTMLCanvasElement>(null);
 
-    const { detectors, angle, scans, useFilter } = useControls();
+    const { detectors, spread, scans, useFilter } = useControls();
     const [processed] = createResource(
       imagepath,
       async () =>
         await tomographyService.process({
           encodedImage: await fetchImageBase64FromSource(imagepath()),
           detectors: detectors(),
-          angle: angle(),
+          spread: spread(),
           scans: scans(),
           useFilter: useFilter(),
         }),

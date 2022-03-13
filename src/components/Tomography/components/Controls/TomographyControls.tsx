@@ -33,7 +33,7 @@ export const TomographyInfo = () => {
 };
 
 export const TomographyParameters = () => {
-  const { setAngle, setDetectors, setScans, setUseFilter } = useControls();
+  const { setSpread, setDetectors, setScans, setUseFilter } = useControls();
   const { imagepath } = useTomography();
 
   return (
@@ -61,7 +61,7 @@ export const TomographyParameters = () => {
           max={270}
           step={45}
           label="Rozpiętość"
-          onChange={setAngle}
+          onChange={setSpread}
         />
         <Checkbox default={false} label="Filtrowanie" onChange={setUseFilter} />
       </fieldset>

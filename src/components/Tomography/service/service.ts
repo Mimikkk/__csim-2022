@@ -7,7 +7,7 @@ export interface TomographyRequest {
   encodedImage: string;
   detectors: number;
   scans: number;
-  angle: number;
+  spread: number;
   useFilter: boolean;
 }
 

@@ -6,7 +6,7 @@ class TomographyRequest(object):
   encoded_image: str
   detectors: int
   scans: int
-  angle: int
+  spread: int
   use_filter: bool
 
   @property

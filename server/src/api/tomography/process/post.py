@@ -6,8 +6,8 @@ from .models import TomographyResponse, TomographyRequest
 @app.post("/api/tomography/process", response_model=TomographyResponse)
 def process_command(item: TomographyRequest):
   original = item.image
-  (sinogram, radius) = create_sinogram(original, item.detectors, item.scans, item.angle, item.use_filter)
-  inverse = inverse_sinogram(sinogram, radius, item.detectors, item.scans, item.angle)
+  (sinogram, radius) = create_sinogram(original, item.scans, item.detectors, item.spread, item.use_filter)
+  inverse = inverse_sinogram(sinogram, radius, item.scans, item.detectors, item.spread)
 
   return TomographyResponse(
     img_to_base64(inverse),
