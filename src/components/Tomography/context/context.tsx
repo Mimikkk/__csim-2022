@@ -26,7 +26,7 @@ export const [useTomography, TomographyProvider] = createContext(
   "Tomography",
   () => {
     const [imagepath, setImagepath] = createSignal(
-      "tomograph/photos/CT_ScoutView.jpg"
+      "tomograph/photos/Kwadraty2.jpg"
     );
     const [original] = createResource(imagepath, fetchImageDataFromSource);
 
