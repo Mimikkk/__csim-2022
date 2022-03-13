@@ -1,5 +1,5 @@
 import { TomographSelect } from "./Select";
-import { Range, Checkbox, OutlineBox } from "@/shared/components";
+import { Range, Checkbox, OutlineBox, Button } from "@/shared/components";
 import { useTomography } from "@/components/Tomography/context";
 import { useControls } from "./context";
 import { Show } from "solid-js";
@@ -34,7 +34,7 @@ export const TomographyInfo = () => {
 
 export const TomographyParameters = () => {
   const { setSpread, setDetectors, setScans, setUseFilter } = useControls();
-  const { imagepath } = useTomography();
+  const { imagepath, refetch } = useTomography();
 
   return (
     <OutlineBox>
@@ -64,6 +64,7 @@ export const TomographyParameters = () => {
           onChange={setSpread}
         />
         <Checkbox default={false} label="Filtrowanie" onChange={setUseFilter} />
+        <Button onClick={refetch}>Wykonaj sinogram i rekonstrukcje</Button>
       </fieldset>
     </OutlineBox>
   );

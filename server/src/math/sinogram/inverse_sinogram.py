@@ -1,4 +1,4 @@
-from numpy import linspace, zeros
+from numpy import linspace, zeros, deg2rad, clip
 
 from PIL.Image import Image, fromarray
 from PIL.ImageOps import grayscale as to_grayscale
@@ -19,26 +19,17 @@ def inverse_sinogram(sinogram: Image, radius: int, scans: int, detectors: int, s
   reconstruction = zeros((diameter, diameter), dtype=np.int8)
   offset = array(reconstruction.shape) // 2
 
-  print(sinogram.shape)
-
-  # plt.imshow(reconstruction, cmap='gray')
-  plt.imshow(reconstruction, cmap='gray')
+  spread = deg2rad(spread)
   for (line, rotation) in zip(sinogram, linspace(0, tau, scans)):
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
     detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
-    print(detections.shape)
 
-    plt.plot(*emiter, 'ro', ms=3)
-    plt.plot(*detections, 'bo', ms=2)
-    plt.plot(*bresenham(emiter, detections.T[0]).T, 'go', ms=1)
-    plt.plot(*bresenham(emiter, detections.T[-1]).T, 'go', ms=1)
-    # for (detection, value) in zip(detections.T, line):
-    #   for point in bresenham(emiter, detection):
-    #     reconstruction[tuple(point)] += value
-    #
-    # plt.plot()
-    # break
+    for (detection, value) in zip(detections.T, line):
+      for point in bresenham(emiter, detection):
+        reconstruction[tuple(point)] += clip(value, 0, 255)
     break
+
+  plt.imshow(reconstruction, cmap='gray')
   plt.show()
 
   # plt.imshow(original, cmap='gray')

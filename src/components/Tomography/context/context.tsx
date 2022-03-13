@@ -35,7 +35,7 @@ export const [useTomography, TomographyProvider] = createContext(
       createSignal<HTMLCanvasElement>(null);
 
     const { detectors, spread, scans, useFilter } = useControls();
-    const [processed] = createResource(
+    const [processed, { refetch }] = createResource(
       imagepath,
       async () =>
         await tomographyService.process({
@@ -59,6 +59,7 @@ export const [useTomography, TomographyProvider] = createContext(
       original,
       processed,
       imagepath,
+      refetch,
       setImagepath,
       setSinogram,
       setReconstruction,
