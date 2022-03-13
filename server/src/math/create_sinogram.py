@@ -19,7 +19,9 @@ def create_filter_kernel() -> NDArray:
 
 # TODO - filtering
 def filter_sinogram(sinogram: NDArray, kernel: NDArray) -> NDArray:
-  return array([convolve(line, kernel, mode='same') for line in sinogram])
+  for i in range(sinogram.shape[0]):
+    sinogram[i, :] = convolve(sinogram[i, :], kernel, mode='same')
+  return sinogram
 
 def create_offset(array: NDArray, offset: NDArray) -> NDArray:
   return (array.T + offset).T
@@ -46,11 +48,11 @@ def create_sinogram(image: Image, scans: int, detectors: int, spread: float, use
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
     targets = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
     sinogram.append([calculate_sinogram_point(emiter, target, original) for target in targets.T])
+  sinogram = array(sinogram, dtype=np.int8)
 
   # TODO - filtering
   if (use_filter):
     kernel = create_filter_kernel()
-    sinogram = filter_sinogram(array(sinogram), kernel)
+    sinogram = filter_sinogram(sinogram, kernel)
 
-
-  return fromarray(array(sinogram), 'L').convert("RGBA")
+  return fromarray(sinogram, 'L').convert("RGBA")
