@@ -1,7 +1,8 @@
 from numpy import array
+from typing import Any
 from numpy.typing import NDArray
 
-def bresenham(start: NDArray, target: NDArray) -> NDArray:
+def bresenham(start: NDArray[(1, 2), int], target: NDArray[(1, 2), int]) -> NDArray[('N', 2), int]:
   (x0, y0) = map(round, start)
   (x1, y1) = map(round, target)
   (dx, sx) = (abs(x1 - x0), 1 if x0 < x1 else -1)
