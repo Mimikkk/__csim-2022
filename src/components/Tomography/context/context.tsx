@@ -26,31 +26,29 @@ export const [useTomography, TomographyProvider] = createContext(
   "Tomography",
   () => {
     const [imagepath, setImagepath] = createSignal(
-      "tomograph/photos/Kwadraty2.jpg"
+      "tomograph/photos/Kropka.jpg"
     );
     const [original] = createResource(imagepath, fetchImageDataFromSource);
-
     const [sinogram, setSinogram] = createSignal<HTMLCanvasElement>(null);
     const [reconstruction, setReconstruction] =
       createSignal<HTMLCanvasElement>(null);
+    const [canRun, setCanRun] = createSignal(false);
 
     const { detectors, spread, scans, useFilter } = useControls();
-    const [processed, { refetch }] = createResource(
-      imagepath,
-      async () =>
-        await tomographyService.process({
-          encodedImage: await fetchImageBase64FromSource(imagepath()),
-          detectors: detectors(),
-          spread: spread(),
-          scans: scans(),
-          useFilter: useFilter(),
-        }),
-      options
-    );
+    const [processed, { refetch }] = createResource(async () => {
+      if (!canRun()) return options.initialValue;
+
+      return await tomographyService.process({
+        encodedImage: await fetchImageBase64FromSource(imagepath()),
+        detectors: detectors(),
+        spread: spread(),
+        scans: scans(),
+        useFilter: useFilter(),
+      });
+    }, options);
 
     createEffect(() => {
       if (processed.loading) return;
-      console.log({ processed: processed() });
       putImageOnContext(sinogram(), processed().sinogram);
       putImageOnContext(reconstruction(), processed().reconstruction);
     });
@@ -59,7 +57,10 @@ export const [useTomography, TomographyProvider] = createContext(
       original,
       processed,
       imagepath,
-      refetch,
+      refetch: () => {
+        setCanRun(true);
+        refetch();
+      },
       setImagepath,
       setSinogram,
       setReconstruction,
