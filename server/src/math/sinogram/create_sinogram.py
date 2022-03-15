@@ -1,55 +1,34 @@
-from PIL.Image import Image, fromarray
-from PIL.ImageOps import grayscale as to_grayscale
-from matplotlib import pyplot as plt
 import numpy as np
 from numpy.typing import NDArray
+from sklearn.preprocessing import normalize
 
 from src.math.consts import tau
 from src.math.bresenham import bresenham
 from src.math.sinogram.utils import create_offset, calculate_detection_positions, calculate_emiter_position
-from src.utils import img_to_array, square_image
-from numpy import square, mod, pi, array, convolve, deg2rad, linspace
+from numpy import array, deg2rad, linspace
 
-def create_filter_kernel() -> NDArray:
-  h0 = 1
-  h = [-4 / square(pi * k) if mod(k, 2) else 0 for k in range(20)]
-  return array([*h[::-1], h0, *h])
-
-def filter_sinogram(sinogram: NDArray, kernel: NDArray) -> NDArray:
-  for i in range(sinogram.shape[0]):
-    sinogram[i, :] = convolve(sinogram[i, :], kernel, mode='same')
-  return sinogram
-
-def calculate_sinogram_point(emiter: NDArray, detection: NDArray, original: NDArray) -> float:
+def calculate_point(emiter: NDArray, detection: NDArray, original: NDArray) -> float:
   return round(original[tuple(bresenham(emiter, detection).T)].mean())
 
-def create_sinogram(image: Image, scans: int, detectors: int, spread: float, use_filter: bool) -> (Image, int):
-  print(f"Parameters {scans=} {detectors=} {spread=} {use_filter=}")
-  original = img_to_array(square_image(to_grayscale(image)))
-  radius = max(original.shape) // 2
+def create_sinogram(image: np.ndarray[(int,int)], radius: int, scans: int, detectors: int, spread: int) -> NDArray:
   spread = deg2rad(spread)
-
-  offset = array(original.shape) // 2
+  image
   sinogram = []
+  offset = array((radius, radius))
   for rotation in linspace(0, tau, scans):
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
     detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
-    sinogram.append([calculate_sinogram_point(emiter, detection, original) for detection in detections.T])
-  sinogram = array(sinogram, dtype=np.int8)
+    sinogram.append([calculate_point(emiter, detection, image) for detection in detections.T])
 
-  # plt.imshow(original, cmap='gray')
-  # for rotation in linspace(0, tau, scans):
-  #   emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
-  #   detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
-  #   plt.plot(*emiter, 'ro', ms=3)
-  #   plt.plot(*detections, 'bo', ms=2)
-  #   for detection in detections.T:
-  #     plt.plot(*bresenham(emiter, detection).T, 'go', ms=1)
-  #   break
-  # plt.show()
+  return normalize(array(sinogram))
 
-  if (use_filter):
-    kernel = create_filter_kernel()
-    sinogram = filter_sinogram(sinogram, kernel)
-
-  return (fromarray(sinogram, 'L').convert("RGBA"), radius)
+# plt.imshow(original, cmap='gray')
+# for rotation in linspace(0, tau, scans):
+#   emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
+#   detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
+#   plt.plot(*emiter, 'ro', ms=3)
+#   plt.plot(*detections, 'bo', ms=2)
+#   for detection in detections.T:
+#     plt.plot(*bresenham(emiter, detection).T, 'go', ms=1)
+#   break
+# plt.show()
