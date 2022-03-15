@@ -1,5 +1,4 @@
-from numpy import zeros
-from numpy.typing import NDArray
+from numpy import zeros, number, ndarray
 from sklearn.preprocessing import normalize
 
 from src.math.bresenham import bresenham
@@ -7,7 +6,8 @@ from src.math.sinogram.utils import create_offset, calculate_emiter_position, ca
 from src.math.consts import tau
 from numpy import array, deg2rad, linspace
 
-def inverse_sinogram(sinogram: NDArray, radius: int, scans: int, detectors: int, spread: float) -> NDArray:
+def inverse_sinogram(sinogram: ndarray[(int, int), number], radius: int, scans: int, detectors: int, spread: float) -> \
+    ndarray[(int, int), number]:
   diameter = 2 * radius
 
   reconstruction = zeros((diameter, diameter))

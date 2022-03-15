@@ -1,5 +1,7 @@
-from numpy import sqrt, mean, square
-from numpy.typing import NDArray
+from typing import TypeVar
 
-def rmse(first: NDArray, second: NDArray) -> float:
+from numpy import sqrt, mean, square, number, ndarray
+
+Shape = TypeVar('Shape')
+def rmse(first: ndarray[Shape, number], second: ndarray[Shape, number]) -> number:
   return sqrt(mean(square(first - second)))

@@ -1,10 +1,11 @@
 from base64 import b64encode, b64decode
+from typing import Any
 
 from PIL.Image import Image, open, new
 from PIL import UnidentifiedImageError
 from io import BytesIO
-from numpy.typing import NDArray
-from numpy import array, subtract
+
+from numpy import array, subtract, ndarray, number
 
 def img_to_base64(image: Image) -> str:
   image.save(buffered := BytesIO(), format="PNG")
@@ -14,9 +15,9 @@ def base64_to_img(base64: str) -> Image:
   try:
     return open(BytesIO(b64decode(base64)))
   except UnidentifiedImageError:
-    return new("RGB", (1, 1))
+    return new("RGBA", (1, 1))
 
-def img_to_array(image: Image) -> NDArray:
+def img_to_array(image: Image) -> ndarray[((Any, Any), Any), number]:
   # noinspection PyTypeChecker
   return array(image)
 

@@ -14,7 +14,6 @@ def process_command(item: TomographyRequest):
   print(f"Parameters : {item.scans=} {item.detectors} {item.spread=} {item.use_filter=}")
   original = item.image
 
-
   grayscale = img_to_array(square_image(to_grayscale(original)))
   print(f"Image Size : {grayscale.shape}")
 
