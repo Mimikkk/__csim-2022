@@ -1,7 +1,3 @@
-import numpy as np
-from numpy.typing import NDArray
-from sklearn.preprocessing import normalize
-
 from src.math.consts import tau
 from src.math.bresenham import bresenham
 from src.math.sinogram.utils import create_offset, calculate_detection_positions, calculate_emiter_position
@@ -21,16 +17,4 @@ def create_sinogram(original: ndarray[(int, int), number], radius: int, scans: i
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
     detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
     sinogram.append([calculate_point(emiter, detection, original) for detection in detections.T])
-
-  return normalize(array(sinogram))
-
-# plt.imshow(original, cmap='gray')
-# for rotation in linspace(0, tau, scans):
-#   emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
-#   detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
-#   plt.plot(*emiter, 'ro', ms=3)
-#   plt.plot(*detections, 'bo', ms=2)
-#   for detection in detections.T:
-#     plt.plot(*bresenham(emiter, detection).T, 'go', ms=1)
-#   break
-# plt.show()
+  return array(sinogram)
