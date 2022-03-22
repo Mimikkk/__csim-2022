@@ -8,15 +8,17 @@ export const TomographyReconstruction: Component = () => {
   return (
     <Show when={imagepath()} fallback="Wybierz zdjęcie...">
       <Show when={!processed.loading} fallback="Ładowanie...">
-        <OutlineBox label="Wynik">
-          <canvas class="max-h-[800px]" ref={setReconstruction} />
-        </OutlineBox>
-        <OutlineBox label="Proces">
-          <img
-            src={processed().reconstruction_animation}
-            alt="animacja rekonstrukcji sinogramu"
-          />
-        </OutlineBox>
+        <Show when={processed().isOk} fallback="Wykonaj sinogram">
+          <OutlineBox label="Wynik">
+            <canvas class="max-h-[800px]" ref={setReconstruction} />
+          </OutlineBox>
+          <OutlineBox label="Proces">
+            <img
+              src={processed().reconstructionAnimation}
+              alt="animacja rekonstrukcji sinogramu"
+            />
+          </OutlineBox>
+        </Show>
       </Show>
     </Show>
   );

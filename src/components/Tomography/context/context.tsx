@@ -4,10 +4,7 @@ import {
   fetchImageBase64FromSource,
   fetchImageDataFromSource,
 } from "@/shared/utils";
-import {
-  TomographyParsedResponse,
-  tomographyService,
-} from "@/components/Tomography/service";
+import { tomographyService } from "@/components/Tomography/service";
 import { useControls } from "@/components/Tomography/components/Controls/context";
 
 const options = {
@@ -16,9 +13,10 @@ const options = {
     sinogram: new ImageData(1, 1),
     rmse: 0,
     rmses: [0],
-    reconstruction_animation: "",
-    sinogram_animation: "",
-  } as TomographyParsedResponse,
+    reconstructionAnimation: "",
+    sinogramAnimation: "",
+    isOk: false,
+  },
 };
 
 const putImageOnContext = (canvas: HTMLCanvasElement, image: ImageData) => {

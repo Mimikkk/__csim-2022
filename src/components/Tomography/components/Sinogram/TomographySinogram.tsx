@@ -8,15 +8,17 @@ export const TomographySinogram: Component = () => {
   return (
     <Show when={imagepath()} fallback="Wybierz zdjęcie...">
       <Show when={!processed.loading} fallback="Ładowanie...">
-        <OutlineBox label="Wynik">
-          <canvas class="max-h-[350px] rounded-md" ref={setSinogram} />
-        </OutlineBox>
-        <OutlineBox label="Proces">
-          <img
-            src={processed().sinogram_animation}
-            alt="animacja konstrukcji sinogramu"
-          />
-        </OutlineBox>
+        <Show when={processed().isOk} fallback="Wykonaj sinogram">
+          <OutlineBox label="Wynik">
+            <canvas class="max-h-[350px] rounded-md" ref={setSinogram} />
+          </OutlineBox>
+          <OutlineBox label="Proces">
+            <img
+              src={processed().sinogramAnimation}
+              alt="animacja konstrukcji sinogramu"
+            />
+          </OutlineBox>
+        </Show>
       </Show>
     </Show>
   );

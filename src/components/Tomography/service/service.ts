@@ -27,8 +27,9 @@ export interface TomographyParsedResponse {
   rmses: number[];
   sinogram: ImageData;
   reconstruction: ImageData;
-  sinogram_animation: string;
-  reconstruction_animation: string;
+  sinogramAnimation: string;
+  reconstructionAnimation: string;
+  isOk: boolean;
 }
 
 export const parseResponse = async ({
@@ -46,8 +47,9 @@ export const parseResponse = async ({
     rmses,
     sinogram: await fetchImageDataFromSource(encoded_sinogram_png),
     reconstruction: await fetchImageDataFromSource(encoded_reconstruction_png),
-    sinogram_animation: encoded_sinogram_gif,
-    reconstruction_animation: encoded_reconstruction_gif,
+    sinogramAnimation: encoded_sinogram_gif,
+    reconstructionAnimation: encoded_reconstruction_gif,
+    isOk: true,
   };
 };
 
