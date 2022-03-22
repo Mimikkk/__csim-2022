@@ -7,19 +7,25 @@ from io import BytesIO
 
 from imageio import imwrite
 from numpy import array, subtract, ndarray, number, interp, uint8
+from imageio import mimsave
+from skimage import img_as_ubyte
 
-def bytes_to_base64(bytes: bytes) -> str:
-  return f"data:image/png;base64,{str(b64encode(bytes), 'utf-8')}"
+def bytesio_to_base64(bytes: BytesIO, format: str) -> str:
+  return f"data:image/{format};base64,{b64encode(bytes.getvalue()).decode('utf-8')}"
 
 def img_to_base64(image: Image) -> str:
-  image.save(buffered := BytesIO(), format="PNG")
-  return bytes_to_base64(buffered.getvalue())
+  image.save(buffered := BytesIO(), format="png")
+  return bytesio_to_base64(buffered, "png")
 
 def array_to_base64(arr: ndarray[(Any, Any, Any), int]) -> str:
   arr = arr / arr.max(initial=None)
   ranges = (arr.min(initial=None), arr.max(initial=None))
   imwrite(buffered := BytesIO(), interp(arr, ranges, (0, 255)).astype(uint8), format='png')
-  return bytes_to_base64(buffered.getvalue())
+  return bytesio_to_base64(buffered, format="png")
+
+def arrays_to_base64(arrays: ndarray[(Any, Any, Any, Any), int]) -> str:
+  mimsave(buffered := BytesIO(), [img_as_ubyte(frame) for frame in arrays], 'gif', fps=24)
+  return bytesio_to_base64(buffered, format="gif")
 
 def base64_to_img(base64: str) -> Image:
   try:
