@@ -23,6 +23,5 @@ class TomographyResponse(object):
   encoded_reconstruction_png: str
   encoded_reconstruction_gif: str
   encoded_sinogram_png: str
-  encoded_sinogram_gif: str
   rmses: list[float]
   rmse: float
