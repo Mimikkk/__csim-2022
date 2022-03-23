@@ -1,11 +1,19 @@
 from numpy import zeros, number, ndarray
+
+from src.math.rmse import rmse
 from src.math.bresenham import bresenham
 from src.math.sinogram.utils import create_offset, calculate_emiter_position, calculate_detection_positions
 from src.math.consts import tau
 from numpy import array, deg2rad, linspace
 
-def inverse_sinogram(sinogram: ndarray[(int, int), number], radius: int, scans: int, detectors: int, spread: float) -> \
-    (ndarray[(int, int), number], ndarray[(int, int, int), number]):
+from src.utils.image_conversion import clip_array, img_to_array
+
+from PIL import Image
+from PIL import ImageDraw
+
+def inverse_sinogram(sinogram: ndarray[(int, int), number], grayscale: ndarray[(int, int), number],
+                     radius: int, scans: int, detectors: int, spread: float) -> \
+    (ndarray[(int, int), number], ndarray[(int, int, int), number], float):
   diameter = 2 * radius
 
   reconstruction = zeros((diameter, diameter))
@@ -21,5 +29,10 @@ def inverse_sinogram(sinogram: ndarray[(int, int), number], radius: int, scans: 
     for (detection, value) in zip(detections.T, line):
       for point in bresenham(emiter, detection):
         reconstruction[tuple(point)] += value
-    animation[i, :, :] = reconstruction
-  return (reconstruction, animation)
+
+    image = Image.fromarray(clip_array(reconstruction, (0, 255)))
+    context = ImageDraw.Draw(image)
+    context.text((6, 6), f"RMSE: {rmse(grayscale, reconstruction):.2f}", fill=200)
+    animation[i, :, :] = img_to_array(image)
+
+  return (clip_array(reconstruction, (0, 255)), animation, rmse(grayscale, reconstruction))

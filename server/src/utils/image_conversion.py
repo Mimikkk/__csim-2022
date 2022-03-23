@@ -7,7 +7,7 @@ from io import BytesIO
 
 from imageio import imwrite
 from matplotlib import pyplot as plt
-from numpy import array, subtract, ndarray, number, interp, uint8
+from numpy import array, subtract, ndarray, number, interp, uint8, clip, around
 from imageio import mimsave
 from skimage import img_as_ubyte
 
@@ -51,3 +51,6 @@ def square_image(image: Image) -> Image:
   augmented = new(image.mode, (size, size), (0,))
   augmented.paste(image, offset)
   return augmented
+
+def clip_array(arr: ndarray[(Any, Any), int], feature_range: (float, float)) -> ndarray[(Any, Any), int]:
+  return clip(around(arr / arr.max(initial=None) * 255), *feature_range)

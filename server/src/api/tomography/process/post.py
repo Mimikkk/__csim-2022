@@ -24,12 +24,11 @@ def process_command(item: TomographyRequest):
   if (item.use_filter):
     kernel = create_sinogram_filter_kernel(item.detectors)
     sinogram = create_sinogram_filter(sinogram, kernel)
-  (reconstruction, frames) = inverse_sinogram(sinogram, radius, item.scans, item.detectors, item.spread)
+  (reconstruction, frames, rmse) = inverse_sinogram(sinogram, grayscale, radius, item.scans, item.detectors, item.spread)
 
   return TomographyResponse(
     encoded_reconstruction_png=array_to_base64(reconstruction),
     encoded_reconstruction_gif=arrays_to_base64(frames),
     encoded_sinogram_png=array_to_base64(sinogram),
-    rmses=[rmse(grayscale, reconstruction)],
-    rmse=rmse(grayscale, reconstruction),
+    rmse=rmse,
   )
