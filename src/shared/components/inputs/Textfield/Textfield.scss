@@ -1,0 +1,13 @@
+.select-fieldset {
+  @apply border-2 rounded-md;
+  @apply -mt-2.5;
+  @apply px-1 pb-2;
+  @apply bg-gray-800 hover:bg-blue-800 hover:border-amber-400;
+  @apply font-extrabold;
+  @apply transition-all duration-300;
+
+  input {
+    @apply w-full;
+    @apply bg-transparent;
+  }
+}
