@@ -12,7 +12,6 @@ const options = {
     reconstruction: new ImageData(1, 1),
     sinogram: new ImageData(1, 1),
     rmse: 0,
-    rmses: [0],
     reconstructionAnimation: "",
     sinogramAnimation: "",
     isOk: false,

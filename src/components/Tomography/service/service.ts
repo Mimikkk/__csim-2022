@@ -17,17 +17,14 @@ export interface TomographyResponse {
     encoded_sinogram_png: string;
     encoded_reconstruction_gif: string;
     encoded_sinogram_gif: string;
-    rmses: number[];
     rmse: number;
   };
 }
 
 export interface TomographyParsedResponse {
   rmse: number;
-  rmses: number[];
   sinogram: ImageData;
   reconstruction: ImageData;
-  sinogramAnimation: string;
   reconstructionAnimation: string;
   isOk: boolean;
 }
@@ -37,17 +34,13 @@ export const parseResponse = async ({
     encoded_reconstruction_png,
     encoded_sinogram_png,
     encoded_reconstruction_gif,
-    encoded_sinogram_gif,
-    rmses,
     rmse,
   },
 }: TomographyResponse): Promise<TomographyParsedResponse> => {
   return {
     rmse,
-    rmses,
     sinogram: await fetchImageDataFromSource(encoded_sinogram_png),
     reconstruction: await fetchImageDataFromSource(encoded_reconstruction_png),
-    sinogramAnimation: encoded_sinogram_gif,
     reconstructionAnimation: encoded_reconstruction_gif,
     isOk: true,
   };
