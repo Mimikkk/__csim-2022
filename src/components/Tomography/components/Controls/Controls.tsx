@@ -1,11 +1,17 @@
 import { TomographSelect } from "./Select";
-import { Range, Checkbox, OutlineBox, Button } from "@/shared/components";
+import {
+  Range,
+  Checkbox,
+  OutlineBox,
+  Button,
+  Textfield,
+} from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
 
 const Info = () => {
   const { original, width, height } = useControls();
-  console.log({ original });
+
   return (
     <OutlineBox class="flex-col">
       <TomographSelect />
@@ -80,7 +86,30 @@ const Parameters = () => {
 };
 
 const Patient = () => {
-  return <OutlineBox label="TODO - Pacjent" />;
+  const { setComments, setName, setId, id, name, comments } = useControls();
+
+  return (
+    <OutlineBox label="Pacjent" class="flex flex-col gap-2">
+      <Textfield
+        label="Imię i nazwisko"
+        onChange={setName}
+        value={name()}
+        placeholder="Wprowadź..."
+      />
+      <Textfield
+        label="Identyfikator"
+        onChange={setId}
+        value={id()}
+        placeholder="Wprowadź..."
+      />
+      <Textfield
+        label="Komentarz"
+        onChange={setComments}
+        value={comments()}
+        placeholder="Wprowadź..."
+      />
+    </OutlineBox>
+  );
 };
 
 export const Controls = () => (

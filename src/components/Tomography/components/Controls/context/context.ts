@@ -12,6 +12,10 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [width, setWidth] = createSignal<Nullable<number>>(null);
   const [height, setHeight] = createSignal<Nullable<number>>(null);
 
+  const [name, setName] = createSignal<Nullable<string>>(null);
+  const [id, setId] = createSignal<Nullable<string>>(null);
+  const [comments, setComments] = createSignal<Nullable<string>>(null);
+
   return {
     spread,
     detectors,
@@ -20,6 +24,9 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     original,
     width,
     height,
+    name,
+    id,
+    comments,
     setSpread,
     setDetectors,
     setScans,
@@ -27,5 +34,8 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     setOriginal,
     setWidth,
     setHeight,
+    setName,
+    setId,
+    setComments,
   } as const;
 });

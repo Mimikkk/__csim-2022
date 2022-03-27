@@ -27,7 +27,7 @@ const readfile = (file: File | Blob): Promise<string> =>
   });
 
 export const TomographSelect = () => {
-  const { setOriginal } = useControls();
+  const { setOriginal, setName, setId, setComments } = useControls();
 
   return (
     <div class="flex w-full gap-2">
@@ -46,9 +46,12 @@ export const TomographSelect = () => {
         class="flex-shrink"
         onDrop={async (file) => {
           if (file.name.endsWith(".dcm")) {
-            const { image } = await dicomService.read(file);
+            const { image, patient } = await dicomService.read(file);
 
-            return setOriginal(image);
+            setOriginal(image);
+            setName(patient.name);
+            setId(patient.id);
+            return setComments(patient.comments);
           }
 
           if (file.type.startsWith("image")) {
