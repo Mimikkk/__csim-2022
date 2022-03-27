@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from src.utils import base64_to_img
+from src.utils import base64_to_image
 
 @dataclass
 class TomographyRequest(object):
@@ -16,7 +16,7 @@ class TomographyRequest(object):
   def encoded_string(self): return self.encoded_image and self.encoded_image.split(',')[1] or ""
 
   @property
-  def image(self): return base64_to_img(self.encoded_string)
+  def image(self): return base64_to_image(self.encoded_string)
 
 @dataclass
 class TomographyResponse(object):

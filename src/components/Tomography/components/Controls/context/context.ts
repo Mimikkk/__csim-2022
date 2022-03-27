@@ -3,9 +3,9 @@ import { createSignal } from "solid-js";
 import { Nullable } from "@/shared/types";
 
 export const [useControls, ControlsProvider] = createContext("Controls", () => {
-  const [detectors, setDetectors] = createSignal(90);
-  const [scans, setScans] = createSignal(90);
-  const [spread, setSpread] = createSignal(45);
+  const [detectors, setDetectors] = createSignal(30);
+  const [scans, setScans] = createSignal(30);
+  const [spread, setSpread] = createSignal(15);
   const [useFilter, setUseFilter] = createSignal(false);
 
   const [original, setOriginal] = createSignal<Nullable<string>>(null);
@@ -15,6 +15,8 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [name, setName] = createSignal<Nullable<string>>(null);
   const [id, setId] = createSignal<Nullable<string>>(null);
   const [comments, setComments] = createSignal<Nullable<string>>(null);
+
+  const [sinogram, setSinogram] = createSignal<Nullable<string>>(null);
 
   return {
     spread,
@@ -27,6 +29,7 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     name,
     id,
     comments,
+    sinogram,
     setSpread,
     setDetectors,
     setScans,
@@ -37,5 +40,6 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     setName,
     setId,
     setComments,
+    setSinogram,
   } as const;
 });

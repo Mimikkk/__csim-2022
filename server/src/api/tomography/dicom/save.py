@@ -1,13 +1,7 @@
 from dataclasses import dataclass
-from io import BytesIO
-
-from fastapi import UploadFile, Response
-from matplotlib import pyplot as plt
-import pydicom
-
+from fastapi import Response
 from src import app
-from src.utils import base64_to_img
-from src.utils.image_conversion import base64_to_array
+from src.utils.image_conversion import base64_to_array, dicom_to_bytes
 from .models import Patient
 from .utils import array_to_dicom
 
@@ -23,5 +17,5 @@ async def dicom_read_post(request: DicomLoadRequest):
 
   image = base64_to_array(base64)
   dicom = array_to_dicom(image, patient)
-  pydicom.dcmwrite(buffered := BytesIO(), dicom)
-  return Response(buffered.getvalue(), media_type="application/dicom")
+
+  return Response(dicom_to_bytes(dicom), media_type="application/dicom")

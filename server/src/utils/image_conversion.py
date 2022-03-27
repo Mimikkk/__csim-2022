@@ -6,7 +6,6 @@ from PIL import UnidentifiedImageError
 from io import BytesIO
 
 from imageio import imwrite
-from matplotlib import pyplot as plt
 from numpy import array, subtract, ndarray, number, interp, uint8, clip, around
 from imageio import mimsave
 from pydicom import FileDataset, dcmwrite
@@ -20,9 +19,13 @@ def rescaled(arr: ndarray[Any, number]) -> ndarray[Any, uint8]:
 def bytesio_to_base64(bytes: BytesIO, format: str) -> str:
   return f"data:image/{format};base64,{b64encode(bytes.getvalue()).decode('utf-8')}"
 
-def img_to_base64(image: Image) -> str:
+def image_to_base64(image: Image) -> str:
   image.save(buffered := BytesIO(), format="png")
   return bytesio_to_base64(buffered, "png")
+
+def array_to_bytes(arr: ndarray[(Any, Any), int]) -> bytes:
+  imwrite(buffered := BytesIO(), rescaled(arr), format='png')
+  return buffered.getvalue()
 
 def array_to_base64(arr: ndarray[(Any, Any, Any), number]) -> str:
   imwrite(buffered := BytesIO(), rescaled(arr), format='png')
@@ -32,16 +35,16 @@ def arrays_to_base64(arrays: ndarray[(Any, Any, Any, Any), number]) -> str:
   mimsave(buffered := BytesIO(), [img_as_ubyte(rescaled(frame)) for frame in arrays], 'gif', fps=24)
   return bytesio_to_base64(buffered, format="gif")
 
-def base64_to_img(base64: str) -> Image:
+def base64_to_image(base64: str) -> Image:
   try:
     return open(BytesIO(b64decode(base64)))
   except UnidentifiedImageError:
     return new("RGBA", (1, 1))
 
 def base64_to_array(base64: str) -> ndarray[(Any, Any), int]:
-  return img_to_array(base64_to_img(base64))
+  return image_to_array(base64_to_image(base64))
 
-def img_to_array(image: Image) -> ndarray[((Any, Any), Any), number]:
+def image_to_array(image: Image) -> ndarray[((Any, Any), Any), number]:
   # noinspection PyTypeChecker
   return array(image)
 

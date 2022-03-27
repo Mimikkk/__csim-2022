@@ -8,7 +8,10 @@ import {
 } from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
-import { dicomService } from "@/components/Tomography/services/dicom";
+import {
+  dicomService,
+  sinogramService,
+} from "@/components/Tomography/services";
 
 const Info = () => {
   const { original, width, height } = useControls();
@@ -45,8 +48,17 @@ const Info = () => {
 };
 
 const Parameters = () => {
-  const { original, setSpread, setDetectors, setScans, setUseFilter } =
-    useControls();
+  const {
+    original,
+    setSinogram,
+    setSpread,
+    setDetectors,
+    setScans,
+    setUseFilter,
+    spread,
+    scans,
+    detectors,
+  } = useControls();
 
   return (
     <OutlineBox>
@@ -78,8 +90,15 @@ const Parameters = () => {
         <Checkbox default={false} label="Filtrowanie" onChange={setUseFilter} />
         <Button
           disabled={!original()}
-          onClick={() => {
-            console.log("Todo: Save parameters");
+          onClick={async () => {
+            const sinogram = await sinogramService.create({
+              original: original(),
+              scans: scans(),
+              spread: spread(),
+              detectors: detectors(),
+            });
+
+            setSinogram(sinogram);
           }}>
           Wykonaj sinogram
         </Button>
