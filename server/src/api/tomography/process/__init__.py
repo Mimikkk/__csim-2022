@@ -1,1 +1,1 @@
-from .process import process_command
+from .process import process_post

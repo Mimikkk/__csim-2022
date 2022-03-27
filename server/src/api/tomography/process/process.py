@@ -8,7 +8,7 @@ from .models import TomographyResponse, TomographyRequest
 from PIL.ImageOps import grayscale as to_grayscale
 
 @app.post("/api/tomography/process", response_model=TomographyResponse)
-def process_command(item: TomographyRequest):
+def process_post(item: TomographyRequest):
   print(f"Parameters : {item.scans=} {item.detectors=} {item.spread=} {item.use_filter=}")
   grayscale = img_to_array(square_image(to_grayscale(item.image)))
 
