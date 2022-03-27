@@ -9,7 +9,7 @@ from imageio import imwrite
 from matplotlib import pyplot as plt
 from numpy import array, subtract, ndarray, number, interp, uint8, clip, around
 from imageio import mimsave
-from pydicom import FileDataset
+from pydicom import FileDataset, dcmwrite
 from skimage import img_as_ubyte
 
 def rescaled(arr: ndarray[Any, number]) -> ndarray[Any, uint8]:
@@ -38,6 +38,9 @@ def base64_to_img(base64: str) -> Image:
   except UnidentifiedImageError:
     return new("RGBA", (1, 1))
 
+def base64_to_array(base64: str) -> ndarray[(Any, Any), int]:
+  return img_to_array(base64_to_img(base64))
+
 def img_to_array(image: Image) -> ndarray[((Any, Any), Any), number]:
   # noinspection PyTypeChecker
   return array(image)
@@ -59,3 +62,7 @@ def clip_array(arr: ndarray[(Any, Any), int], feature_range: (float, float)) -> 
 def dicom_to_base64(dicom: FileDataset) -> str:
   imwrite(buffered := BytesIO(), dicom.pixel_array, format='png')
   return bytesio_to_base64(buffered, format="png")
+
+def dicom_to_bytes(dicom: FileDataset) -> bytes:
+  dcmwrite(buffered := BytesIO(), dicom)
+  return buffered.getvalue()
