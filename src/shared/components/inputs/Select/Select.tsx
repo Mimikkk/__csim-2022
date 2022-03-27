@@ -1,6 +1,7 @@
-import { path, pipe } from "rambda";
-import { For } from "solid-js";
+import { createEffect, createSignal, For } from "solid-js";
 import "./Select.scss";
+import { Nullable } from "@/shared/types";
+import { Show } from "solid-js";
 
 export interface Option<T = string> {
   label: string;
@@ -9,31 +10,58 @@ export interface Option<T = string> {
 
 interface Props<T> {
   label?: string;
-  default?: Option<T>;
+  placeholder?: string;
+  nooptions?: string;
   options: Option<T>[];
-  value?: T;
-  onChange?: (value: T) => void;
+  value?: Nullable<T>;
+  defaultValue?: Nullable<T>;
+  onChange?: (value: Nullable<T>) => void;
 }
 
 export const Select = <T,>({
+  value,
   label,
   options,
   onChange,
-  value: defaultValue,
-  default: defaultOption,
-}: Props<T>) => (
-  <label>
-    <fieldset class="select-fieldset">
-      <legend>{label}</legend>
-      <select onChange={pipe(path("currentTarget.value"), onChange)}>
-        <For each={[defaultOption, ...options]}>
-          {({ label, value }) => (
-            <option value={value as any} selected={value === defaultValue}>
-              {label}
+  nooptions = "Brak opcji",
+  placeholder,
+  defaultValue,
+}: Props<T>) => {
+  const [current, setCurrent] = createSignal<Nullable<T>>(defaultValue || null);
+
+  createEffect(() => {
+    if (value) setCurrent(() => value);
+  });
+
+  return (
+    <label>
+      <fieldset class="select-fieldset">
+        <legend>{label}</legend>
+        <select
+          onChange={({ currentTarget: { value } }) => {
+            setCurrent(value as any);
+            onChange?.(value as any);
+          }}>
+          <Show when={placeholder && options.length > 0}>
+            <option value={null} disabled selected={current() === null}>
+              {placeholder}
             </option>
-          )}
-        </For>
-      </select>
-    </fieldset>
-  </label>
-);
+          </Show>
+          <For
+            each={options}
+            fallback={
+              <option disabled selected>
+                {nooptions}
+              </option>
+            }>
+            {({ label, value }) => (
+              <option value={value as any} selected={value === current()}>
+                {label}
+              </option>
+            )}
+          </For>
+        </select>
+      </fieldset>
+    </label>
+  );
+};
