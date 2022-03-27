@@ -60,7 +60,7 @@ export const TomographSelect = () => {
 
           return alert(`Nieprawidłowy format pliku '${file.type}'`);
         }}>
-        Upuść plik Dicom lub Obraz
+        Upuść plik DICOM lub Obraz
       </Button>
     </div>
   );

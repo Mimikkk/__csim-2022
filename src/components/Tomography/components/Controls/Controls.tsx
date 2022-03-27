@@ -8,6 +8,7 @@ import {
 } from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
+import { dicomService } from "@/components/Tomography/services/dicom";
 
 const Info = () => {
   const { original, width, height } = useControls();
@@ -44,7 +45,8 @@ const Info = () => {
 };
 
 const Parameters = () => {
-  const { setSpread, setDetectors, setScans, setUseFilter } = useControls();
+  const { original, setSpread, setDetectors, setScans, setUseFilter } =
+    useControls();
 
   return (
     <OutlineBox>
@@ -75,6 +77,7 @@ const Parameters = () => {
         />
         <Checkbox default={false} label="Filtrowanie" onChange={setUseFilter} />
         <Button
+          disabled={!original()}
           onClick={() => {
             console.log("Todo: Save parameters");
           }}>
@@ -86,7 +89,8 @@ const Parameters = () => {
 };
 
 const Patient = () => {
-  const { setComments, setName, setId, id, name, comments } = useControls();
+  const { original, setComments, setName, setId, id, name, comments } =
+    useControls();
 
   return (
     <OutlineBox label="Pacjent" class="flex flex-col gap-2">
@@ -108,6 +112,18 @@ const Patient = () => {
         value={comments()}
         placeholder="Wprowadź..."
       />
+      <Button
+        onClick={async () => {
+          console.log(
+            await dicomService.save({
+              image: original(),
+              patient: { comments: comments(), name: name(), id: id() },
+            })
+          );
+        }}
+        disabled={!(name() && id() && comments())}>
+        Zapisz zdjęcie jako DICOM
+      </Button>
     </OutlineBox>
   );
 };
