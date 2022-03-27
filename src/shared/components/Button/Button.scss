@@ -9,6 +9,10 @@
     @apply border-amber-400;
     @apply bg-blue-800;
   }
+
+  &.disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
 }
 
 .ripple {

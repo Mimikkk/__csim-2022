@@ -24,40 +24,34 @@ const createRipple = (
   setTimeout(() => ripple.remove(), 1000);
 };
 
-export const Button: Component<Props> = ({
-  class: classname,
-  onClick,
-  disabled,
-  onDrop,
-  children,
-}) => {
+export const Button: Component<Props> = (props) => {
   let button: HTMLButtonElement = null;
 
   return (
     <button
-      class={cx("Button", classname)}
+      class={cx("Button", props.class, { disabled: props.disabled })}
       ref={button}
-      disabled={disabled}
+      disabled={props.disabled}
       ondragover={(event) => {
-        if (!onDrop) return;
+        if (!props.onDrop) return;
         event.preventDefault();
         createRipple(event, button);
       }}
       ondrop={(event) => {
-        if (!onDrop) return;
+        if (!props.onDrop) return;
         event.preventDefault();
         createRipple(event, button, "green");
         const file = event.dataTransfer.files[0];
         if (!file) return createRipple(event, button, "red");
         createRipple(event, button, "green");
-        onDrop(file);
+        props.onDrop(file);
       }}
       onClick={(event) => {
-        if (!onClick) return;
+        if (!props.onClick) return;
         createRipple(event, button);
-        onClick?.();
+        props.onClick?.();
       }}>
-      {children}
+      {props.children}
     </button>
   );
 };
