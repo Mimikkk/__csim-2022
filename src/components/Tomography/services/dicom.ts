@@ -1,13 +1,8 @@
 import axios from "axios";
 import { DataResponse, parseResponse } from "@/shared/utils";
+import { Patient } from "@/components/Tomography/models";
 
 const ApiUrl = "http://localhost:3001/api/tomography/dicom";
-
-export interface Patient {
-  id: string;
-  name: string;
-  comments: string;
-}
 
 interface Load {
   image: string;
