@@ -1,3 +1,3 @@
-export * from "./__Tomography";
+export * from "./Tomography";
 export * from "./Eyes";
 export * from "./Fihr";
