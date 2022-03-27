@@ -9,6 +9,7 @@ from imageio import imwrite
 from matplotlib import pyplot as plt
 from numpy import array, subtract, ndarray, number, interp, uint8, clip, around
 from imageio import mimsave
+from pydicom import FileDataset
 from skimage import img_as_ubyte
 
 def rescaled(arr: ndarray[Any, number]) -> ndarray[Any, uint8]:
@@ -54,3 +55,7 @@ def square_image(image: Image) -> Image:
 
 def clip_array(arr: ndarray[(Any, Any), int], feature_range: (float, float)) -> ndarray[(Any, Any), int]:
   return clip(around(arr / arr.max(initial=None) * 255), *feature_range)
+
+def dicom_to_base64(dicom: FileDataset) -> str:
+  imwrite(buffered := BytesIO(), dicom.pixel_array, format='png')
+  return bytesio_to_base64(buffered, format="png")
