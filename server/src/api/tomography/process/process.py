@@ -1,7 +1,7 @@
 from fastapi import UploadFile
 
 from src import app
-from src.math import create_sinogram, inverse_sinogram, create_sinogram_filter, create_sinogram_filter_kernel
+from src.math import create_sinogram, inverse_sinogram, filter_sinogram, create_sinogram_filter_kernel
 from src.utils import image_to_array, square_image
 from src.utils.image_conversion import array_to_base64, arrays_to_base64
 from .models import TomographyResponse, TomographyRequest
@@ -17,7 +17,7 @@ def process_post(item: TomographyRequest):
   sinogram = create_sinogram(grayscale, radius, item.scans, item.detectors, item.spread)
   if (item.use_filter):
     kernel = create_sinogram_filter_kernel(item.detectors)
-    sinogram = create_sinogram_filter(sinogram, kernel)
+    sinogram = filter_sinogram(sinogram, kernel)
   (reconstruction, frames, rmse) = inverse_sinogram(sinogram, grayscale, radius,
                                                     item.scans, item.detectors, item.spread)
 

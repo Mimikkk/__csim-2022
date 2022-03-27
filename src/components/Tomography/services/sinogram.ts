@@ -10,9 +10,19 @@ interface CreateRequest {
   scans: number;
 }
 
+interface FilterRequest {
+  original: string;
+}
+
 export const sinogramService = {
-  create: (item) =>
+  create: (item: CreateRequest) =>
     axios
       .post<CreateRequest, DataResponse<string>>(`${ApiUrl}/create`, item)
+      .then(parseResponse),
+  filter: (item: string) =>
+    axios
+      .post<FilterRequest, DataResponse<string>>(`${ApiUrl}/filter`, {
+        original: item,
+      })
       .then(parseResponse),
 };

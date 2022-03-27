@@ -7,7 +7,7 @@ export const TomographySinogram: Component = () => {
   return (
     <Show when={imagepath()} fallback="Wybierz zdjęcie...">
       <Show when={!processed.loading} fallback="Ładowanie...">
-        <Show when={processed().isOk} fallback="Wykonaj sinogram">
+        <Show when={processed().isOk} fallback="Wykonaj sinogram...">
           <canvas class="max-h-[350px] rounded-md" ref={setSinogram} />
         </Show>
       </Show>

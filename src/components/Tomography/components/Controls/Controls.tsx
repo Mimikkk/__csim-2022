@@ -52,6 +52,7 @@ const Parameters = () => {
     original,
     setSinogram,
     setSpread,
+    sinogram,
     setDetectors,
     setScans,
     setUseFilter,
@@ -90,17 +91,20 @@ const Parameters = () => {
         <Checkbox default={false} label="Filtrowanie" onChange={setUseFilter} />
         <Button
           disabled={!original()}
-          onClick={async () => {
-            const sinogram = await sinogramService.create({
-              original: original(),
-              scans: scans(),
-              spread: spread(),
-              detectors: detectors(),
-            });
-
-            setSinogram(sinogram);
-          }}>
+          onClick={async () =>
+            setSinogram(
+              await sinogramService.create({
+                original: original(),
+                scans: scans(),
+                spread: spread(),
+                detectors: detectors(),
+              })
+            )
+          }>
           Wykonaj sinogram
+        </Button>
+        <Button disabled={!sinogram()} onClick={async () => {}}>
+          Wykonaj rekonstrukcje
         </Button>
       </fieldset>
     </OutlineBox>

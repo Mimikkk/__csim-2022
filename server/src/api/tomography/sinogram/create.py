@@ -19,7 +19,7 @@ class CreateSinogramRequest(object):
 async def create_sinogram_post(request: CreateSinogramRequest):
   (original, detectors, spread, scans) = astuple(request)
   print(f"Parameters : {scans=} {detectors=} {spread=}")
-  (mime, base64) = original.split(",")
+  (_, base64) = original.split(",")
 
   grayscale = image_to_array(square_image(to_grayscale(base64_to_image(base64))))
   radius = max(grayscale.shape) // 2
