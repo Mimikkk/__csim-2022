@@ -21,7 +21,7 @@ const Content = () => {
   } = useControls();
 
   return (
-    <>
+    <fieldset class="tomography">
       <Controls />
       <OutlineBox label="Oryginał" centered class="flex flex-col gap-2">
         <OutlineBox label="Obraz" centered class="min-h-[350px] min-w-[350px]">
@@ -84,14 +84,12 @@ const Content = () => {
           </Show>
         </OutlineBox>
       </OutlineBox>
-    </>
+    </fieldset>
   );
 };
 
 export const Tomography = () => (
   <ControlsProvider>
-    <fieldset class="tomography">
-      <Content />
-    </fieldset>
+    <Content />
   </ControlsProvider>
 );

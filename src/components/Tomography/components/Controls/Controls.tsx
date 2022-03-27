@@ -7,6 +7,7 @@ import {
   reconstructionService,
   sinogramService,
 } from "@/components/Tomography/services";
+import { Link } from "solid-app-router";
 
 const Info = () => {
   const { original, width, height, rmse } = useControls();
@@ -151,10 +152,12 @@ const Patient = () => {
             patient: { comments: comments(), name: name(), id: id() },
           });
 
+          const url = window.URL.createObjectURL(file);
           Object.assign(document.createElement("a"), {
-            href: window.URL.createObjectURL(file),
+            href: url,
             download: "download.dcm",
           }).click();
+          window.URL.revokeObjectURL(url);
         }}
         disabled={!(name() && id() && comments())}>
         Zapisz rekonstrukcje jako DICOM
@@ -168,5 +171,10 @@ export const Controls = () => (
     <Info />
     <Parameters />
     <Patient />
+    <Link
+      href="/tomography-experiment"
+      class="self-center hover:text-amber-400 font-bold">
+      Wyniki Eksperymentów
+    </Link>
   </div>
 );
