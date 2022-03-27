@@ -1,5 +1,5 @@
 import { Component, Show } from "solid-js";
-import { useTomography } from "@/components/Tomography/context";
+import { useTomography } from "@/components/__Tomography/context";
 
 export const TomographyImage: Component = () => {
   const { imagepath } = useTomography();

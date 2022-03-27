@@ -4,8 +4,8 @@ import {
   fetchImageBase64FromSource,
   fetchImageDataFromSource,
 } from "@/shared/utils";
-import { tomographyService } from "@/components/Tomography/service";
-import { useControls } from "@/components/Tomography/components/Controls/context";
+import { tomographyService } from "@/components/__Tomography/service";
+import { useControls } from "@/components/__Tomography/components/Controls/context";
 
 const options = {
   initialValue: {

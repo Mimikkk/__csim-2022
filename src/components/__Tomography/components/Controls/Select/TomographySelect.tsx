@@ -1,6 +1,6 @@
 import { Option, Select } from "@/shared/components";
 import { values } from "rambda";
-import { useTomography } from "@/components/Tomography/context";
+import { useTomography } from "@/components/__Tomography/context";
 
 const $default: Option = {
   label: "Wybierz zdjęcie...",

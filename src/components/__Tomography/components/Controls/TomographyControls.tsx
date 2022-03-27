@@ -1,6 +1,6 @@
 import { TomographSelect } from "./Select";
 import { Range, Checkbox, OutlineBox, Button } from "@/shared/components";
-import { useTomography } from "@/components/Tomography/context";
+import { useTomography } from "@/components/__Tomography/context";
 import { useControls } from "./context";
 import { Show } from "solid-js";
 

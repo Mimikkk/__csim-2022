@@ -1,4 +1,4 @@
-import { useTomography } from "@/components/Tomography/context";
+import { useTomography } from "@/components/__Tomography/context";
 import { Component, Show } from "solid-js";
 import { OutlineBox } from "@/shared/components";
 
