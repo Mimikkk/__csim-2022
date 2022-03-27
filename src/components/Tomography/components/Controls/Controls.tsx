@@ -4,25 +4,33 @@ import { useControls } from "./context";
 import { Show } from "solid-js";
 
 const Info = () => {
+  const { original, width, height } = useControls();
+  console.log({ original });
   return (
     <OutlineBox class="flex-col">
       <TomographSelect />
       <p>
         <strong>Szerokość: </strong>
-        <Show when={true} fallback="Ładowanie...">
-          TODO - Szerokość px
+        <Show when={original()} fallback="Wybierz zdjęcie...">
+          <Show when={width()} fallback="Ładowanie...">
+            {width}px
+          </Show>
         </Show>
       </p>
       <p>
         <strong>Wysokość: </strong>
-        <Show when={true} fallback="Ładowanie...">
-          TODO - Wysokość px
+        <Show when={original()} fallback="Wybierz zdjęcie...">
+          <Show when={height()} fallback="Ładowanie...">
+            {height}px
+          </Show>
         </Show>
       </p>
       <p>
         <strong>RMSE: </strong>
-        <Show when={true} fallback="Ładowanie...">
-          TODO - RMSE
+        <Show when={true} fallback="Wykonaj rekonstrukcje...">
+          <Show when={true} fallback="Ładowanie...">
+            TODO - RMSE
+          </Show>
         </Show>
       </p>
     </OutlineBox>

@@ -8,14 +8,21 @@ import { OutlineBox } from "@/shared/components";
 import { Show } from "solid-js";
 
 const Content = () => {
-  const { original } = useControls();
+  const { original, setWidth, setHeight } = useControls();
 
   return (
     <>
       <Controls />
       <OutlineBox label="Obraz" centered>
         <Show when={original()} fallback="Wybierz obraz...">
-          <img alt="original image" src={original()} />
+          <img
+            alt="original image"
+            src={original()}
+            onload={({ currentTarget: { width, height } }) => {
+              setWidth(width);
+              setHeight(height);
+            }}
+          />
         </Show>
       </OutlineBox>
     </>
