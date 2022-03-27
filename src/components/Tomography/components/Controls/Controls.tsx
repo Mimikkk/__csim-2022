@@ -1,20 +1,15 @@
 import { TomographSelect } from "./Select";
-import {
-  Range,
-  Checkbox,
-  OutlineBox,
-  Button,
-  Textfield,
-} from "@/shared/components";
+import { Range, OutlineBox, Button, Textfield } from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
 import {
   dicomService,
+  reconstructionService,
   sinogramService,
 } from "@/components/Tomography/services";
 
 const Info = () => {
-  const { original, width, height } = useControls();
+  const { original, width, height, rmse } = useControls();
 
   return (
     <OutlineBox class="flex-col">
@@ -37,10 +32,8 @@ const Info = () => {
       </p>
       <p>
         <strong>RMSE: </strong>
-        <Show when={true} fallback="Wykonaj rekonstrukcje...">
-          <Show when={true} fallback="Ładowanie...">
-            TODO - RMSE
-          </Show>
+        <Show when={rmse()} fallback="Wykonaj rekonstrukcje...">
+          {rmse()}
         </Show>
       </p>
     </OutlineBox>
@@ -55,10 +48,12 @@ const Parameters = () => {
     sinogram,
     setDetectors,
     setScans,
-    setUseFilter,
     spread,
     scans,
     detectors,
+    setReconstruction,
+    setAnimation,
+    setRmse,
   } = useControls();
 
   return (
@@ -88,7 +83,6 @@ const Parameters = () => {
           label="Rozpiętość"
           onChange={setSpread}
         />
-        <Checkbox default={false} label="Filtrowanie" onChange={setUseFilter} />
         <Button
           disabled={!original()}
           onClick={async () =>
@@ -103,7 +97,22 @@ const Parameters = () => {
           }>
           Wykonaj sinogram
         </Button>
-        <Button disabled={!sinogram()} onClick={async () => {}}>
+        <Button
+          disabled={!sinogram()}
+          onClick={async () => {
+            const { image, rmse, animation } =
+              await reconstructionService.reconstruct({
+                original: original(),
+                sinogram: sinogram(),
+                spread: spread(),
+                detectors: detectors(),
+                scans: scans(),
+              });
+
+            setReconstruction(image);
+            setAnimation(animation);
+            setRmse(rmse);
+          }}>
           Wykonaj rekonstrukcje
         </Button>
       </fieldset>

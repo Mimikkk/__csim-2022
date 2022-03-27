@@ -10,8 +10,15 @@ import "./Tomography.scss";
 import { sinogramService } from "@/components/Tomography/services";
 
 const Content = () => {
-  const { original, sinogram, setWidth, setSinogram, setHeight } =
-    useControls();
+  const {
+    original,
+    sinogram,
+    reconstruction,
+    animation,
+    setWidth,
+    setSinogram,
+    setHeight,
+  } = useControls();
 
   return (
     <>
@@ -42,28 +49,40 @@ const Content = () => {
                 class="max-h-[350px] flex-grow rendering-pixelated"
               />
               <Button
-                onClick={async () => {
-                  console.log(sinogram());
-                  return setSinogram(await sinogramService.filter(sinogram()));
-                }}>
+                onClick={async () =>
+                  setSinogram(await sinogramService.filter(sinogram()))
+                }>
                 Przefiltruj sinogram
               </Button>
             </Show>
           </Show>
         </OutlineBox>
       </OutlineBox>
-      <OutlineBox label="Obraz" centered>
-        <Show when={original()} fallback="Wybierz obraz...">
-          <img
-            alt="original image"
-            src={original()}
-            onload={({ currentTarget: { naturalHeight, naturalWidth } }) => {
-              setWidth(naturalWidth);
-              setHeight(naturalHeight);
-            }}
-            class="max-h-[350px]"
-          />
-        </Show>
+      <OutlineBox label="Rekonstrukcja" centered class="flex flex-col gap-2">
+        <OutlineBox
+          centered
+          label="Obraz"
+          class="min-h-[300px] min-w-[300px] flex-grow">
+          <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
+            <img
+              alt="reconstruction of the original"
+              src={reconstruction()}
+              class="max-h-[350px]"
+            />
+          </Show>
+        </OutlineBox>
+        <OutlineBox
+          centered
+          label="Animacja"
+          class="flex-grow min-h-[300px] min-w-[300px]">
+          <Show when={animation()} fallback="Wykonaj rekonstrukcje...">
+            <img
+              alt="animation of the reconstruction process of the original"
+              src={animation()}
+              class="max-h-[350px] flex-grow"
+            />
+          </Show>
+        </OutlineBox>
       </OutlineBox>
     </>
   );

@@ -18,8 +18,8 @@ interface Response {
 }
 
 export const reconstructionService = {
-  reconstruct: (sinogram) =>
+  reconstruct: (item: Request) =>
     axios
-      .post<Request, DataResponse<Response>>(`${ApiUrl}/reconstruct`, sinogram)
+      .post<Request, DataResponse<Response>>(`${ApiUrl}/reconstruct`, item)
       .then(parseResponse),
 };
