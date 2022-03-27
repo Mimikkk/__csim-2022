@@ -30,7 +30,7 @@ export const TomographSelect = () => {
   const { setOriginal, setName, setId, setComments } = useControls();
 
   return (
-    <div class="flex w-full gap-2">
+    <div class="flex flex-col w-full gap-2">
       <Select
         label="Tomograf"
         placeholder="Wybierz zdjęcie..."

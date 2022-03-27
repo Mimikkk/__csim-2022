@@ -19,10 +19,11 @@ const Content = () => {
           <img
             alt="original image"
             src={original()}
-            onload={({ currentTarget: { width, height } }) => {
-              setWidth(width);
-              setHeight(height);
+            onload={({ currentTarget: { naturalHeight, naturalWidth } }) => {
+              setWidth(naturalWidth);
+              setHeight(naturalHeight);
             }}
+            class="max-h-[350px]"
           />
         </Show>
       </OutlineBox>

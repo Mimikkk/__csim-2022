@@ -125,7 +125,7 @@ const Patient = () => {
           }).click();
         }}
         disabled={!(name() && id() && comments())}>
-        Zapisz zdjęcie jako DICOM
+        Zapisz rekonstrukcje jako DICOM
       </Button>
     </OutlineBox>
   );
