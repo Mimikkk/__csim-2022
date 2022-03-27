@@ -14,7 +14,7 @@ from skimage import img_as_ubyte
 def rescaled(arr: ndarray[Any, number]) -> ndarray[Any, uint8]:
   arr = arr / arr.max(initial=None)
   ranges = (arr.min(initial=None), arr.max(initial=None))
-  return interp(arr, ranges, (0, 255)).astype(uint8)
+  return interp(arr, ranges, (0, 255))
 
 def bytesio_to_base64(bytes: BytesIO, format: str) -> str:
   return f"data:image/{format};base64,{b64encode(bytes.getvalue()).decode('utf-8')}"
@@ -24,11 +24,11 @@ def image_to_base64(image: Image) -> str:
   return bytesio_to_base64(buffered, "png")
 
 def array_to_bytes(arr: ndarray[(Any, Any), int]) -> bytes:
-  imwrite(buffered := BytesIO(), rescaled(arr), format='png')
+  imwrite(buffered := BytesIO(), rescaled(arr).astype(uint8), format='png')
   return buffered.getvalue()
 
 def array_to_base64(arr: ndarray[(Any, Any, Any), number]) -> str:
-  imwrite(buffered := BytesIO(), rescaled(arr), format='png')
+  imwrite(buffered := BytesIO(), rescaled(arr).astype(uint8), format='png')
   return bytesio_to_base64(buffered, format="png")
 
 def arrays_to_base64(arrays: ndarray[(Any, Any, Any, Any), number]) -> str:
@@ -51,16 +51,13 @@ def image_to_array(image: Image) -> ndarray[((Any, Any), Any), number]:
 def square_image(image: Image) -> Image:
   (width, height) = image.size
   difference = abs(subtract(*image.size))
-  offset = (0, difference // 2) if (width > height) else (difference // 2, 0)
+  offset = (0, (difference - 1) // 2) if (width > height) else ((difference - 1) // 2, 0)
 
-  size = max(image.size)
+  size = max_ - 1 if (max_ := max(image.size)) % 2 else max_
   # noinspection PyTypeChecker
   augmented = new(image.mode, (size, size), (0,))
   augmented.paste(image, offset)
   return augmented
-
-def clip_array(arr: ndarray[(Any, Any), int], feature_range: (float, float)) -> ndarray[(Any, Any), int]:
-  return clip(around(arr / arr.max(initial=None) * 255), *feature_range)
 
 def dicom_to_base64(dicom: FileDataset) -> str:
   imwrite(buffered := BytesIO(), dicom.pixel_array, format='png')
