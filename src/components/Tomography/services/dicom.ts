@@ -11,12 +11,12 @@ interface Load {
 
 export const dicomService = {
   save: (item) => axios.post<FormData>(`${ApiUrl}/save`, item),
-  load: (item: File | Blob) => {
+  read: (item: File | Blob) => {
     const form = new FormData();
     form.append("file", item);
 
     return axios
-      .post<FormData, DataResponse<Load>>(`${ApiUrl}/load`, form)
+      .post<FormData, DataResponse<Load>>(`${ApiUrl}/read`, form)
       .then(parseResponse);
   },
 };

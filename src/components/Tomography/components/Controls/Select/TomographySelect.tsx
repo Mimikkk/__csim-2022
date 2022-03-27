@@ -46,7 +46,7 @@ export const TomographSelect = () => {
         class="flex-shrink"
         onDrop={async (file) => {
           if (file.name.endsWith(".dcm")) {
-            const { image } = await dicomService.load(file);
+            const { image } = await dicomService.read(file);
 
             return setOriginal(image);
           }
