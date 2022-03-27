@@ -19,7 +19,7 @@ async def filter_sinogram_post(request: SinogramFilterRequest):
   sinogram = base64_to_array(base64)
   (detectors, _) = sinogram.shape
 
-  kernel = create_sinogram_filter_kernel(detectors - 1)
+  kernel = create_sinogram_filter_kernel(detectors)
   sinogram = filter_sinogram(sinogram, kernel)
 
   return Response(array_to_base64(sinogram), media_type="image/png")
