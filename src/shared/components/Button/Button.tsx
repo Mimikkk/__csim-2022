@@ -4,14 +4,14 @@ import cx from "classnames";
 
 interface Props {
   onClick?: () => void;
-  onDrop?: (file?: File) => void;
+  onDrop?: (file: File) => void;
   disabled?: boolean;
 }
 
 const createRipple = (
   { clientX, clientY }: MouseEvent,
   button: HTMLElement,
-  color?: "white" | "green"
+  color?: "white" | "green" | "red"
 ) => {
   let [x, y] = [clientX - button.offsetLeft, clientY - button.offsetTop];
   let ripple = document.createElement("span");
@@ -46,7 +46,10 @@ export const Button: Component<Props> = ({
         if (!onDrop) return;
         event.preventDefault();
         createRipple(event, button, "green");
-        onDrop(event.dataTransfer.files[0]);
+        const file = event.dataTransfer.files[0];
+        if (!file) return createRipple(event, button, "red");
+        createRipple(event, button, "green");
+        onDrop(file);
       }}
       onClick={(event) => {
         if (!onClick) return;
