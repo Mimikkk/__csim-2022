@@ -9,12 +9,13 @@ import { Show } from "solid-js";
 
 const Content = () => {
   const { original } = useControls();
+
   return (
     <>
       <Controls />
       <OutlineBox label="Obraz" centered>
-        <Show when={original} fallback="Wybierz obraz...">
-          <img alt="original image" src={original} />
+        <Show when={original()} fallback="Wybierz obraz...">
+          <img alt="original image" src={original()} />
         </Show>
       </OutlineBox>
     </>

@@ -1,10 +1,6 @@
-import { Button, Option, OutlineBox, Select } from "@/shared/components";
+import { Button, Option, Select } from "@/shared/components";
 import { values } from "rambda";
-
-const $default: Option = {
-  label: "Wybierz zdjęcie...",
-  value: "",
-};
+import { useControls } from "@/components/Tomography/components/Controls/context";
 
 const path = (name: string) => `tomograph/photos/${name}`;
 const images: Record<string, Option> = {
@@ -19,16 +15,38 @@ const images: Record<string, Option> = {
   sheppLogan: { label: "Shepp Logan", value: path("Shepp_Logan.jpg") },
 };
 
+const readfile = (file: File | Blob): Promise<string> =>
+  new Promise((resolve, reject) => {
+    let reader = new FileReader();
+
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+  });
+
 export const TomographSelect = () => {
+  const { setOriginal } = useControls();
+
   return (
-    <div>
+    <div class="flex w-full gap-2">
       <Select
         label="Tomograf"
-        default={$default}
+        placeholder="Wybierz zdjęcie..."
         options={values(images)}
-        // onChange={setImagepath}
-        // value={imagepath()}
+        onChange={async (path) => {
+          const file = await fetch(path).then((response) => response.blob());
+          setOriginal(await readfile(file));
+        }}
+        class="flex-grow"
       />
+      <Button
+        class="flex-shrink"
+        onDrop={async (file) => {
+          setOriginal(await readfile(file));
+        }}>
+        Upuść plik Dicom lub Obraz
+      </Button>
     </div>
   );
 };

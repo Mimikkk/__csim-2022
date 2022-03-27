@@ -1,23 +1,20 @@
 import { createContext } from "@/shared/utils";
-import { createStore } from "solid-js/store";
+import { createSignal } from "solid-js";
+import { Nullable } from "@/shared/types";
 
-const initial = {
-  detectors: 90,
-  scans: 90,
-  spread: 45,
-  useFilter: false,
-  original: "",
-};
 export const [useControls, ControlsProvider] = createContext("Controls", () => {
-  const [store, setStore] = createStore(initial);
-  const setDetectors = (detectors: number) => setStore("detectors", detectors);
-  const setScans = (scans: number) => setStore("scans", scans);
-  const setSpread = (spread: number) => setStore("spread", spread);
-  const setUseFilter = (useFilter: boolean) => setStore("useFilter", useFilter);
-  const setOriginal = (original: string) => setStore("original", original);
+  const [detectors, setDetectors] = createSignal(90);
+  const [scans, setScans] = createSignal(90);
+  const [spread, setSpread] = createSignal(45);
+  const [useFilter, setUseFilter] = createSignal(false);
+  const [original, setOriginal] = createSignal<Nullable<string>>(null);
 
   return {
-    ...store,
+    spread,
+    detectors,
+    scans,
+    useFilter,
+    original,
     setSpread,
     setDetectors,
     setScans,
