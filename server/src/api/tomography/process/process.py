@@ -27,17 +27,3 @@ def process_command(item: TomographyRequest):
     encoded_sinogram_png=array_to_base64(sinogram),
     rmse=rmse,
   )
-
-from dataclasses import dataclass
-@dataclass
-class CreateSinogramRequest(object):
-  image: UploadFile
-  detectors: int
-  spread: int
-  scans: int
-
-@app.post("/api/tomography/sinogram/create")
-def sinogram_post(item: CreateSinogramRequest):
-  print(f"Parameters : {item.scans=} {item.detectors=} {item.spread=}")
-
-  return {}
