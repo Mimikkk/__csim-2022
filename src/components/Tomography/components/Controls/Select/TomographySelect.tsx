@@ -1,6 +1,7 @@
 import { Button, Option, Select } from "@/shared/components";
 import { values } from "rambda";
 import { useControls } from "@/components/Tomography/components/Controls/context";
+import { dicomService } from "@/components/Tomography/services/dicom";
 
 const path = (name: string) => `tomograph/photos/${name}`;
 const images: Record<string, Option> = {
@@ -35,7 +36,8 @@ export const TomographSelect = () => {
         placeholder="Wybierz zdjęcie..."
         options={values(images)}
         onChange={async (path) => {
-          const file = await fetch(path).then((response) => response.blob());
+          const response = await fetch(path);
+          const file = await response.blob();
           setOriginal(await readfile(file));
         }}
         class="flex-grow"
@@ -43,7 +45,17 @@ export const TomographSelect = () => {
       <Button
         class="flex-shrink"
         onDrop={async (file) => {
-          setOriginal(await readfile(file));
+          if (file.name.endsWith(".dcm")) {
+            const { image } = await dicomService.load(file);
+
+            return setOriginal(image);
+          }
+
+          if (file.type.startsWith("image")) {
+            return setOriginal(await readfile(file));
+          }
+
+          return alert(`Nieprawidłowy format pliku '${file.type}'`);
         }}>
         Upuść plik Dicom lub Obraz
       </Button>
