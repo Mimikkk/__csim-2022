@@ -2,6 +2,7 @@ import { createEffect, createSignal, For } from "solid-js";
 import "./Select.scss";
 import { Nullable } from "@/shared/types";
 import { Show } from "solid-js";
+import cx from "classnames";
 
 export interface Option<T = string> {
   label: string;
@@ -9,6 +10,7 @@ export interface Option<T = string> {
 }
 
 interface Props<T> {
+  class?: string;
   label?: string;
   placeholder?: string;
   nooptions?: string;
@@ -20,6 +22,7 @@ interface Props<T> {
 
 export const Select = <T,>({
   value,
+  class: classname,
   label,
   options,
   onChange,
@@ -34,8 +37,8 @@ export const Select = <T,>({
   });
 
   return (
-    <label>
-      <fieldset class="select-fieldset">
+    <label class={classname}>
+      <fieldset class={cx("select-fieldset", classname)}>
         <legend>{label}</legend>
         <select
           onChange={({ currentTarget: { value } }) => {

@@ -3,6 +3,7 @@ import "./Button.scss";
 import cx from "classnames";
 
 interface Props {
+  class?: string;
   onClick?: () => void;
   onDrop?: (file: File) => void;
   disabled?: boolean;
@@ -24,6 +25,7 @@ const createRipple = (
 };
 
 export const Button: Component<Props> = ({
+  class: classname,
   onClick,
   disabled,
   onDrop,
@@ -33,8 +35,7 @@ export const Button: Component<Props> = ({
 
   return (
     <button
-      type="button"
-      class="Button"
+      class={cx("Button", classname)}
       ref={button}
       disabled={disabled}
       ondragover={(event) => {
