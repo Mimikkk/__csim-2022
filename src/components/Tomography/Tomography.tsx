@@ -6,6 +6,7 @@ import { ControlsProvider, useControls } from "./components/Controls/context";
 import { Controls } from "@/components/Tomography/components";
 import { OutlineBox } from "@/shared/components";
 import { Show } from "solid-js";
+import "./Tomography.scss";
 
 const Content = () => {
   const { original, setWidth, setHeight } = useControls();
@@ -31,6 +32,8 @@ const Content = () => {
 
 export const Tomography = () => (
   <ControlsProvider>
-    <Content />
+    <fieldset class="tomography">
+      <Content />
+    </fieldset>
   </ControlsProvider>
 );
