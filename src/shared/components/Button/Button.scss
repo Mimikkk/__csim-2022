@@ -14,6 +14,12 @@
 .ripple {
   @apply bg-white absolute rounded-full pointer-events-none;
   @apply aspect-square;
+  &--white {
+    @apply bg-white;
+  }
+  &--green {
+    @apply bg-green-800;
+  }
 
   animation: ripple 1s linear infinite;
   transform: translate(-50%, -50%);
