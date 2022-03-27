@@ -1,4 +1,3 @@
-import { path, pipe } from "rambda";
 import "./Textfield.scss";
 
 interface Props<T extends string | number> {
@@ -8,19 +7,16 @@ interface Props<T extends string | number> {
   onChange?: (value: T) => void;
 }
 
-export const Textfield = <T extends string | number>({
-  label,
-  onChange,
-  placeholder,
-  value: defaultValue,
-}: Props<T>) => (
+export const Textfield = <T extends string | number>(props: Props<T>) => (
   <label>
     <fieldset class="select-fieldset">
-      <legend>{label}</legend>
+      <legend>{props.label}</legend>
       <input
-        onChange={pipe(path("currentTarget.value"), onChange)}
-        placeholder={placeholder}
-        value={defaultValue || null}
+        onChange={({ currentTarget: { value } }) => {
+          props.onChange(value as T);
+        }}
+        placeholder={props.placeholder}
+        value={props.value}
       />
     </fieldset>
   </label>
