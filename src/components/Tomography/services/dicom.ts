@@ -10,7 +10,13 @@ interface Load {
 }
 
 export const dicomService = {
-  save: (item) => axios.post<FormData>(`${ApiUrl}/save`, item),
+  save: (item) =>
+    axios
+      .post<FormData, DataResponse<Blob>>(`${ApiUrl}/save`, item, {
+        responseType: "blob",
+      })
+      .then(parseResponse),
+
   read: (item: File | Blob) => {
     const form = new FormData();
     form.append("file", item);

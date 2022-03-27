@@ -114,12 +114,15 @@ const Patient = () => {
       />
       <Button
         onClick={async () => {
-          console.log(
-            await dicomService.save({
-              image: original(),
-              patient: { comments: comments(), name: name(), id: id() },
-            })
-          );
+          const file = await dicomService.save({
+            image: original(),
+            patient: { comments: comments(), name: name(), id: id() },
+          });
+
+          Object.assign(document.createElement("a"), {
+            href: window.URL.createObjectURL(file),
+            download: "download.dcm",
+          }).click();
         }}
         disabled={!(name() && id() && comments())}>
         Zapisz zdjęcie jako DICOM
