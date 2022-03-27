@@ -3,9 +3,9 @@ import { createSignal } from "solid-js";
 import { Nullable } from "@/shared/types";
 
 export const [useControls, ControlsProvider] = createContext("Controls", () => {
-  const [detectors, setDetectors] = createSignal(30);
-  const [scans, setScans] = createSignal(30);
-  const [spread, setSpread] = createSignal(15);
+  const [detectors, setDetectors] = createSignal(180);
+  const [scans, setScans] = createSignal(180);
+  const [spread, setSpread] = createSignal(180);
 
   const [original, setOriginal] = createSignal<Nullable<string>>(null);
   const [width, setWidth] = createSignal<Nullable<number>>(null);

@@ -61,7 +61,7 @@ const Parameters = () => {
     <OutlineBox>
       <fieldset class="flex flex-col gap-y-2">
         <Range
-          default={90}
+          value={detectors()}
           min={90}
           max={720}
           step={90}
@@ -69,7 +69,7 @@ const Parameters = () => {
           onChange={setDetectors}
         />
         <Range
-          default={90}
+          value={scans()}
           min={90}
           max={720}
           step={90}
@@ -77,7 +77,7 @@ const Parameters = () => {
           onChange={setScans}
         />
         <Range
-          default={45}
+          value={spread()}
           min={45}
           max={270}
           step={45}

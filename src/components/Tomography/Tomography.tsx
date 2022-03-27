@@ -23,7 +23,7 @@ const Content = () => {
   return (
     <fieldset class="tomography">
       <Controls />
-      <OutlineBox label="Oryginał" centered class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2">
         <OutlineBox label="Obraz" centered class="min-h-[350px] min-w-[350px]">
           <Show when={original()} fallback="Wybierz obraz...">
             <img
@@ -57,8 +57,8 @@ const Content = () => {
             </Show>
           </Show>
         </OutlineBox>
-      </OutlineBox>
-      <OutlineBox label="Rekonstrukcja" centered class="flex flex-col gap-2">
+      </div>
+      <div class="flex flex-col gap-2">
         <OutlineBox
           centered
           label="Obraz"
@@ -83,7 +83,7 @@ const Content = () => {
             />
           </Show>
         </OutlineBox>
-      </OutlineBox>
+      </div>
     </fieldset>
   );
 };
