@@ -1,8 +1,8 @@
 from dataclasses import dataclass, astuple
-import logging
 
 from PIL.ImageOps import grayscale as to_grayscale
 from src import app
+from src.app import logger
 from src.math import inverse_sinogram
 from src.utils.image_conversion import array_to_base64, base64_to_array, base64_to_image, image_to_array, square_image, \
   arrays_to_base64
@@ -17,6 +17,8 @@ class ReconstructionRequest(object):
 
 @app.post("/api/tomography/reconstruction/reconstruct")
 async def reconstruct_image_post(request: ReconstructionRequest):
+  logger.info("Received request to reconstruct image from sinogram")
+
   (original, sinogram, scans, spread, detectors) = astuple(request)
   (_, base64) = sinogram.split(",")
   sinogram = base64_to_array(base64)
@@ -24,9 +26,9 @@ async def reconstruct_image_post(request: ReconstructionRequest):
   grayscale = image_to_array(square_image(to_grayscale(base64_to_image(base64))))
   radius = max(grayscale.shape) // 2
 
-  logging.info("Reconstructing image...")
+  logger.info("Reconstructing image...")
   (reconstruction, frames, rmse) = inverse_sinogram(sinogram, grayscale, radius, scans, detectors, spread)
-  logging.info("Reconstruction complete.")
+  logger.info("Reconstruction complete.")
 
   return {
     "image": array_to_base64(reconstruction),

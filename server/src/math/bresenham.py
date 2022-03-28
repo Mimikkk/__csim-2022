@@ -20,4 +20,4 @@ def bresenham(start: ndarray[(1, 2), int], target: ndarray[(1, 2), int]) -> ndar
       if y0 == y1: break
       err += dx
       y0 += sy
-  return array(points)
+  return array(points, dtype=int)

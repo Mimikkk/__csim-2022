@@ -11,10 +11,9 @@ from imageio import mimsave
 from pydicom import FileDataset, dcmwrite
 from skimage import img_as_ubyte
 
-def rescaled(arr: ndarray[Any, number]) -> ndarray[Any, uint8]:
-  arr = arr / arr.max(initial=None)
+def rescaled(arr: ndarray[Any, number], feature=(0, 255)) -> ndarray[Any, uint8]:
   ranges = (arr.min(initial=None), arr.max(initial=None))
-  return interp(arr, ranges, (0, 255))
+  return interp(arr, ranges, feature)
 
 def bytesio_to_base64(bytes: BytesIO, format: str) -> str:
   return f"data:image/{format};base64,{b64encode(bytes.getvalue()).decode('utf-8')}"

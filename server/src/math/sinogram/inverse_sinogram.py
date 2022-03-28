@@ -1,7 +1,6 @@
-import logging
-
 from numpy import zeros, number, ndarray
 
+from src.app import logger
 from src.math.rmse import rmse
 from src.math.bresenham import bresenham
 from src.math.sinogram.utils import create_offset, calculate_emiter_position, calculate_detection_positions
@@ -26,7 +25,7 @@ def inverse_sinogram(sinogram: ndarray[(int, int), number], grayscale: ndarray[(
   spread = deg2rad(spread)
 
   for (i, (line, rotation)) in enumerate(zip(sinogram, linspace(0, tau, scans))):
-    logging.info(f"Processing line {i} of {scans}")
+    logger.info(f"Processing line {i} of {scans}")
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
     detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
 

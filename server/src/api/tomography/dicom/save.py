@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from fastapi import Response
 from src import app
+from src.app import logger
 from src.utils.image_conversion import base64_to_array, dicom_to_bytes
 from .models import Patient
 from .utils import array_to_dicom
@@ -12,6 +13,8 @@ class DicomLoadRequest(object):
 
 @app.post("/api/tomography/dicom/save")
 async def dicom_read_post(request: DicomLoadRequest):
+  logger.info("Received request to save contents as a dicom file")
+
   patient = request.patient
   (mime, base64) = request.image.split(",")
 

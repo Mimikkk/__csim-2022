@@ -12,7 +12,7 @@ def create_sinogram(original: ndarray[(int, int), number], radius: int, scans: i
   spread = deg2rad(spread)
 
   sinogram = []
-  offset = array((radius, radius))
+  offset = array((radius, radius), dtype=float)
 
   for (i, rotation) in enumerate(linspace(0, tau, scans)):
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
