@@ -9,6 +9,7 @@ interface Request {
   scans: number;
   spread: number;
   detectors: number;
+  use_filter: boolean;
 }
 
 interface Response {

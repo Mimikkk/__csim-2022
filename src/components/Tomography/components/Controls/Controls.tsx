@@ -1,5 +1,11 @@
 import { TomographSelect } from "./Select";
-import { Range, OutlineBox, Button, Textfield } from "@/shared/components";
+import {
+  Range,
+  OutlineBox,
+  Button,
+  Textfield,
+  Checkbox,
+} from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
 import {
@@ -45,6 +51,7 @@ const Parameters = () => {
   const {
     original,
     setSinogram,
+    setFilter,
     setSpread,
     sinogram,
     setDetectors,
@@ -55,6 +62,8 @@ const Parameters = () => {
     setReconstruction,
     setAnimation,
     setRmse,
+    useFilter,
+    setUseFilter,
   } = useControls();
 
   return (
@@ -84,6 +93,7 @@ const Parameters = () => {
           label="Rozpiętość"
           onChange={setSpread}
         />
+        <Checkbox label="Czy filtrować?" onChange={setUseFilter} />
         <Button
           disabled={!original()}
           onClick={async () =>
@@ -108,6 +118,7 @@ const Parameters = () => {
                 spread: spread(),
                 detectors: detectors(),
                 scans: scans(),
+                use_filter: useFilter(),
               });
 
             setReconstruction(image);

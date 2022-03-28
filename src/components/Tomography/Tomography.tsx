@@ -16,7 +16,8 @@ const Content = () => {
     reconstruction,
     animation,
     setWidth,
-    setSinogram,
+    filter,
+    setFilter,
     setHeight,
   } = useControls();
 
@@ -33,7 +34,7 @@ const Content = () => {
                 setWidth(naturalWidth);
                 setHeight(naturalHeight);
               }}
-              class="max-h-[350px]"
+              class="max-h-[350px] rendering-pixelated"
             />
           </Show>
         </OutlineBox>
@@ -48,12 +49,22 @@ const Content = () => {
                 src={sinogram()}
                 class="max-h-[350px] flex-grow rendering-pixelated"
               />
-              <Button
-                onClick={async () =>
-                  setSinogram(await sinogramService.filter(sinogram()))
+              <Show
+                when={filter()}
+                fallback={
+                  <Button
+                    onClick={async () =>
+                      setFilter(await sinogramService.filter(sinogram()))
+                    }>
+                    Pokaż przefiltrowany
+                  </Button>
                 }>
-                Przefiltruj sinogram
-              </Button>
+                <img
+                  alt="filtered sinogram image of the original"
+                  src={filter()}
+                  class="max-h-[350px] flex-grow rendering-pixelated"
+                />
+              </Show>
             </Show>
           </Show>
         </OutlineBox>
@@ -62,12 +73,12 @@ const Content = () => {
         <OutlineBox
           centered
           label="Obraz"
-          class="min-h-[300px] min-w-[300px] flex-grow">
+          class="flex-grow min-h-[300px] min-w-[300px]">
           <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
             <img
               alt="reconstruction of the original"
               src={reconstruction()}
-              class="max-h-[350px]"
+              class="max-h-[350px] rendering-pixelated"
             />
           </Show>
         </OutlineBox>
@@ -79,7 +90,7 @@ const Content = () => {
             <img
               alt="animation of the reconstruction process of the original"
               src={animation()}
-              class="max-h-[350px] flex-grow"
+              class="max-h-[350px] rendering-pixelated"
             />
           </Show>
         </OutlineBox>

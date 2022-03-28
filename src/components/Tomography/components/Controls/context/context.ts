@@ -6,6 +6,7 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [detectors, setDetectors] = createSignal(180);
   const [scans, setScans] = createSignal(180);
   const [spread, setSpread] = createSignal(180);
+  const [useFilter, setUseFilter] = createSignal(false);
 
   const [original, setOriginal] = createSignal<Nullable<string>>(null);
   const [width, setWidth] = createSignal<Nullable<number>>(null);
@@ -20,11 +21,13 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     createSignal<Nullable<string>>(null);
   const [rmse, setRmse] = createSignal<Nullable<number>>(null);
   const [animation, setAnimation] = createSignal<Nullable<string>>(null);
+  const [filter, setFilter] = createSignal<Nullable<string>>(null);
 
   return {
     spread,
     detectors,
     scans,
+    useFilter,
     original,
     width,
     height,
@@ -35,6 +38,7 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     reconstruction,
     rmse,
     animation,
+    filter,
     setSpread,
     setDetectors,
     setScans,
@@ -48,5 +52,7 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     setReconstruction,
     setRmse,
     setAnimation,
+    setUseFilter,
+    setFilter,
   } as const;
 });
