@@ -1,10 +1,11 @@
 import { TomographSelect } from "./Select";
 import {
-  Range,
-  OutlineBox,
   Button,
-  Textfield,
   Checkbox,
+  OutlineBox,
+  Range,
+  Spinner,
+  Textfield,
 } from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
@@ -14,6 +15,8 @@ import {
   sinogramService,
 } from "@/components/Tomography/services";
 import { Link } from "solid-app-router";
+import { RequestStatus } from "@/shared/types";
+import { createTracked } from "@/shared/hooks/createTracked";
 
 const Info = () => {
   const { original, width, height, rmse } = useControls();
@@ -66,6 +69,18 @@ const Parameters = () => {
     setUseFilter,
   } = useControls();
 
+  const [, status, refresh] = createTracked({
+    fn: async () =>
+      setSinogram(
+        await sinogramService.create({
+          original: original(),
+          scans: scans(),
+          spread: spread(),
+          detectors: detectors(),
+        })
+      ),
+  });
+
   return (
     <OutlineBox>
       <fieldset class="flex flex-col gap-y-2">
@@ -94,19 +109,16 @@ const Parameters = () => {
           onChange={setSpread}
         />
         <Checkbox label="Czy filtrować?" onChange={setUseFilter} />
-        <Button
-          disabled={!original()}
-          onClick={async () =>
-            setSinogram(
-              await sinogramService.create({
-                original: original(),
-                scans: scans(),
-                spread: spread(),
-                detectors: detectors(),
-              })
-            )
-          }>
-          Wykonaj sinogram
+        <Button disabled={!original()} onClick={refresh}>
+          <Show
+            when={RequestStatus.isLoading(status())}
+            fallback={
+              <div class="flex justify-center">
+                <Spinner />
+              </div>
+            }>
+            Wykonaj sinogram
+          </Show>
         </Button>
         <Button
           disabled={!sinogram()}

@@ -1,13 +1,13 @@
 .spinner {
-  border: 1em solid rgba(255, 255, 255, 0.2);
-  border-left: 1em solid white;
-
+  border: 0.5rem solid rgba(255, 255, 255, 0.2);
+  border-left: 0.5rem solid white;
   animation: spin 2s infinite cubic-bezier(0.65, 0, 0.35, 1);
+  aspect-ratio: 1/1;
 
   &, .spinner:after {
     border-radius: 50%;
-    width: 8em;
-    height: 8em;
+    width: 2rem;
+    height: 2rem;
   }
 
   @keyframes spin {

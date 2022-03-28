@@ -22,8 +22,8 @@ export module RequestStatus {
     isLoading(...statuses)
       ? RequestStatus.Loading
       : isFailed(...statuses)
-      ? RequestStatus.Success
-      : isSuccess(...statuses)
       ? RequestStatus.Failed
+      : isSuccess(...statuses)
+      ? RequestStatus.Success
       : RequestStatus.Idle;
 }
