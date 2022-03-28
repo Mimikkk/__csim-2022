@@ -25,7 +25,8 @@ def inverse_sinogram(sinogram: ndarray[(int, int), number], grayscale: ndarray[(
   spread = deg2rad(spread)
 
   for (i, (line, rotation)) in enumerate(zip(sinogram, linspace(0, tau, scans))):
-    logger.info(f"Processing line {i} of {scans}")
+    if (i % 10 == 0): logger.info(f"Processing line {i} of {scans}")
+
     emiter = create_offset(calculate_emiter_position(radius, rotation), offset)
     detections = create_offset(calculate_detection_positions(radius, rotation, spread, detectors), offset)
 

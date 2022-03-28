@@ -1,15 +1,11 @@
-from dataclasses import dataclass, astuple
-
-from matplotlib import pyplot as plt
+from dataclasses import dataclass
 
 from src import app
 from src.app import logger
-from src.math import create_sinogram, filter_sinogram, create_sinogram_filter_kernel
-from src.utils import image_to_array, square_image
-from PIL.ImageOps import grayscale as to_grayscale
+from src.math import filter_sinogram, create_sinogram_filter_kernel
 from fastapi import Response
 
-from src.utils.image_conversion import base64_to_image, array_to_base64, base64_to_array, rescaled
+from src.utils.image_conversion import array_to_base64, base64_to_array, rescaled
 
 @dataclass
 class SinogramFilterRequest(object):
