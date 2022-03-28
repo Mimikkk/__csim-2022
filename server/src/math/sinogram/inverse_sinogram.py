@@ -7,7 +7,7 @@ from src.math.sinogram.utils import create_offset, calculate_emiter_position, ca
 from src.math.consts import tau
 from numpy import array, deg2rad, linspace
 
-from src.utils.image_conversion import image_to_array, rescaled
+from src.utils.image_conversion import image_to_array, rescale_array
 
 from PIL import Image
 from PIL import ImageDraw
@@ -34,9 +34,9 @@ def inverse_sinogram(sinogram: ndarray[(int, int), number], grayscale: ndarray[(
       for point in bresenham(emiter, detection):
         reconstruction[tuple(point)] += value
 
-    image = Image.fromarray(rescaled(reconstruction))
+    image = Image.fromarray(rescale_array(reconstruction))
     context = ImageDraw.Draw(image)
     context.text((6, 6), f"RMSE: {rmse(grayscale, reconstruction):.2f}", fill=200)
     animation[i, :, :] = image_to_array(image)
 
-  return (rescaled(reconstruction), animation, rmse(grayscale, reconstruction))
+  return (rescale_array(reconstruction), animation, rmse(grayscale, reconstruction))

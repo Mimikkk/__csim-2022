@@ -1,8 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, astuple
 from fastapi import Response
 from src import app
 from src.app import logger
-from src.utils.image_conversion import base64_to_array, dicom_to_bytes
+from src.utils.image_conversion import dicom_to_bytes, media_to_array
 from .models import Patient
 from .utils import array_to_dicom
 
@@ -15,10 +15,8 @@ class DicomLoadRequest(object):
 async def dicom_read_post(request: DicomLoadRequest):
   logger.info("Received request to save contents as a dicom file")
 
-  patient = request.patient
-  (mime, base64) = request.image.split(",")
-
-  image = base64_to_array(base64)
-  dicom = array_to_dicom(image, patient)
-
-  return Response(dicom_to_bytes(dicom), media_type="application/dicom")
+  (image, patient) = astuple(request)
+  return Response(
+    dicom_to_bytes(array_to_dicom(media_to_array(image), patient)),
+    media_type="application/dicom"
+  )
