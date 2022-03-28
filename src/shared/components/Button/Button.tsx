@@ -1,13 +1,8 @@
-import { Component } from "solid-js";
+import { Component, Show } from "solid-js";
 import "./Button.scss";
 import cx from "classnames";
-
-interface Props {
-  class?: string;
-  onClick?: () => void;
-  onDrop?: (file: File) => void;
-  disabled?: boolean;
-}
+import { RequestStatus } from "@/shared/types";
+import { Spinner } from "@/shared/components";
 
 const createRipple = (
   { clientX, clientY }: MouseEvent,
@@ -24,7 +19,14 @@ const createRipple = (
   setTimeout(() => ripple.remove(), 1000);
 };
 
-export const Button: Component<Props> = (props) => {
+interface BaseProps {
+  class?: string;
+  onClick?: () => void;
+  onDrop?: (file: File) => void;
+  disabled?: boolean;
+}
+
+export const Button: Component<BaseProps> = (props) => {
   let button: HTMLButtonElement = null;
 
   return (
@@ -55,3 +57,20 @@ export const Button: Component<Props> = (props) => {
     </button>
   );
 };
+
+interface LoadProps extends BaseProps {
+  status: RequestStatus;
+  onClick?: () => void;
+}
+
+export const LoadButton: Component<LoadProps> = (props) => (
+  <Button
+    {...props}
+    disabled={props.disabled || RequestStatus.isLoading(props.status)}>
+    <Show
+      when={!RequestStatus.isLoading(props.status)}
+      fallback={<Spinner centered />}>
+      {props.children}
+    </Show>
+  </Button>
+);
