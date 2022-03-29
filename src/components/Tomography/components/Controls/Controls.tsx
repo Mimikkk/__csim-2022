@@ -1,6 +1,5 @@
 import { TomographSelect } from "./Select";
 import {
-  Button,
   Checkbox,
   LoadButton,
   OutlineBox,
@@ -13,6 +12,7 @@ import { Show } from "solid-js";
 import { dicomService } from "@/components/Tomography/services";
 import { Link } from "solid-app-router";
 import { Status } from "@/shared/types";
+import { createTracked } from "@/shared/hooks";
 
 const Info = () => {
   const { original, width, height, reconstruction, reconstructionStatus } =
@@ -119,6 +119,22 @@ const Patient = () => {
   const { original, setComments, setName, setId, id, name, comments } =
     useControls();
 
+  const [, status, savePatient] = createTracked({
+    fn: async () => {
+      const file = await dicomService.save({
+        image: original(),
+        patient: { comments: comments(), name: name(), id: id() },
+      });
+
+      const url = window.URL.createObjectURL(file);
+      Object.assign(document.createElement("a"), {
+        href: url,
+        download: "download.dcm",
+      }).click();
+      window.URL.revokeObjectURL(url);
+    },
+  });
+
   return (
     <OutlineBox label="Pacjent" class="flex flex-col gap-2">
       <Textfield
@@ -139,23 +155,12 @@ const Patient = () => {
         value={comments()}
         placeholder="Wprowadź..."
       />
-      <Button
-        onClick={async () => {
-          const file = await dicomService.save({
-            image: original(),
-            patient: { comments: comments(), name: name(), id: id() },
-          });
-
-          const url = window.URL.createObjectURL(file);
-          Object.assign(document.createElement("a"), {
-            href: url,
-            download: "download.dcm",
-          }).click();
-          window.URL.revokeObjectURL(url);
-        }}
-        disabled={!(name() && id() && comments())}>
+      <LoadButton
+        onClick={savePatient}
+        disabled={!(name() && id() && comments())}
+        status={status()}>
         Zapisz rekonstrukcje jako DICOM
-      </Button>
+      </LoadButton>
     </OutlineBox>
   );
 };
