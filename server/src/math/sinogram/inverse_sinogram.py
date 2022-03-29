@@ -36,7 +36,7 @@ def inverse_sinogram(sinogram: ndarray[(int, int), number], grayscale: ndarray[(
 
     image = Image.fromarray(rescale_array(reconstruction))
     context = ImageDraw.Draw(image)
-    context.text((6, 6), f"RMSE: {rmse(rescale_array(grayscale), reconstruction):.2f}", fill=200)
+    context.text((6, 6), f"RMSE: {rmse(grayscale, reconstruction):.2f}", fill=200)
     animation[i, :, :] = image_to_array(image)
 
   return (rescale_array(reconstruction), animation, rmse(grayscale, reconstruction))
