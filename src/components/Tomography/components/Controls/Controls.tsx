@@ -10,7 +10,6 @@ import {
 import { useControls } from "./context";
 import { Show } from "solid-js";
 import { dicomService } from "@/components/Tomography/services";
-import { Link } from "solid-app-router";
 import { Status } from "@/shared/types";
 import { createTracked } from "@/shared/hooks";
 
@@ -170,10 +169,5 @@ export const Controls = () => (
     <Info />
     <Parameters />
     <Patient />
-    <Link
-      href="/tomography-experiment"
-      class="self-center hover:text-amber-400 font-bold">
-      Wyniki Eksperymentów
-    </Link>
   </div>
 );

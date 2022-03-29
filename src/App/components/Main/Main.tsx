@@ -5,7 +5,6 @@ export const Main = () => (
   <main>
     <Routes>
       <Route path="/tomography" element={Tomography} />
-      <Route path="/tomography-experiment" element={Tomography} />
       <Route path="/eyes" element={Eyes} />
       <Route path="/fihr" element={Fihr} />
     </Routes>
