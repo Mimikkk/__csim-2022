@@ -4,10 +4,11 @@ export const [useContext, ContextProvider] = createContext("Tomography", () => {
 });
 import { ControlsProvider, useControls } from "./components/Controls/context";
 import { Controls } from "@/components/Tomography/components";
-import { Button, OutlineBox } from "@/shared/components";
+import { Button, OutlineBox, Spinner } from "@/shared/components";
 import { Show } from "solid-js";
 import "./Tomography.scss";
 import { sinogramService } from "@/components/Tomography/services";
+import { Status } from "@/shared/types";
 
 const Content = () => {
   const {
@@ -18,6 +19,8 @@ const Content = () => {
     filter,
     setFilter,
     setHeight,
+    reconstructionStatus,
+    sinogramStatus,
   } = useControls();
 
   return (
@@ -42,27 +45,31 @@ const Content = () => {
           label="Sinogram"
           class="min-h-[350px] min-w-[350px] flex-grow flex flex-col gap-2">
           <Show when={original()} fallback="Wybierz obraz...">
-            <Show when={sinogram()} fallback="Wykonaj sinogram...">
-              <img
-                alt="sinogram image of the original"
-                src={sinogram()}
-                class="max-h-[350px] flex-grow rendering-pixelated"
-              />
-              <Show
-                when={filter()}
-                fallback={
-                  <Button
-                    onClick={async () =>
-                      setFilter(await sinogramService.filter(sinogram()))
-                    }>
-                    Pokaż przefiltrowany
-                  </Button>
-                }>
+            <Show
+              when={!Status.isLoading(sinogramStatus())}
+              fallback={<Spinner />}>
+              <Show when={sinogram()} fallback="Wykonaj sinogram...">
                 <img
-                  alt="filtered sinogram image of the original"
-                  src={filter()}
+                  alt="sinogram image of the original"
+                  src={sinogram()}
                   class="max-h-[350px] flex-grow rendering-pixelated"
                 />
+                <Show
+                  when={filter()}
+                  fallback={
+                    <Button
+                      onClick={async () =>
+                        setFilter(await sinogramService.filter(sinogram()))
+                      }>
+                      Pokaż przefiltrowany
+                    </Button>
+                  }>
+                  <img
+                    alt="filtered sinogram image of the original"
+                    src={filter()}
+                    class="max-h-[350px] flex-grow rendering-pixelated"
+                  />
+                </Show>
               </Show>
             </Show>
           </Show>
@@ -73,24 +80,32 @@ const Content = () => {
           centered
           label="Obraz"
           class="flex-grow min-h-[300px] min-w-[300px]">
-          <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
-            <img
-              alt="reconstruction of the original"
-              src={reconstruction().image}
-              class="max-h-[350px] rendering-pixelated"
-            />
+          <Show
+            when={!Status.isLoading(reconstructionStatus())}
+            fallback={<Spinner />}>
+            <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
+              <img
+                alt="reconstruction of the original"
+                src={reconstruction().image}
+                class="max-h-[350px] rendering-pixelated"
+              />
+            </Show>
           </Show>
         </OutlineBox>
         <OutlineBox
           centered
           label="Animacja"
           class="flex-grow min-h-[300px] min-w-[300px]">
-          <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
-            <img
-              alt="animation of the reconstruction process of the original"
-              src={reconstruction().animation}
-              class="max-h-[350px] rendering-pixelated"
-            />
+          <Show
+            when={!Status.isLoading(reconstructionStatus())}
+            fallback={<Spinner />}>
+            <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
+              <img
+                alt="animation of the reconstruction process of the original"
+                src={reconstruction().animation}
+                class="max-h-[350px] rendering-pixelated"
+              />
+            </Show>
           </Show>
         </OutlineBox>
       </div>
