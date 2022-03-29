@@ -1,7 +1,7 @@
 import { Component, Show } from "solid-js";
 import "./Button.scss";
 import cx from "classnames";
-import { RequestStatus } from "@/shared/types";
+import { Status } from "@/shared/types";
 import { Spinner } from "@/shared/components";
 
 const createRipple = (
@@ -59,16 +59,16 @@ export const Button: Component<BaseProps> = (props) => {
 };
 
 interface LoadProps extends BaseProps {
-  status: RequestStatus;
+  status: Status;
   onClick?: () => void;
 }
 
 export const LoadButton: Component<LoadProps> = (props) => (
   <Button
     {...props}
-    disabled={props.disabled || RequestStatus.isLoading(props.status)}>
+    disabled={props.disabled || Status.isLoading(props.status)}>
     <Show
-      when={!RequestStatus.isLoading(props.status)}
+      when={!Status.isLoading(props.status)}
       fallback={<Spinner centered />}>
       {props.children}
     </Show>

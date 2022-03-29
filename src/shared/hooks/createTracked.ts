@@ -1,5 +1,5 @@
 import { createEffect, createSignal, on } from "solid-js";
-import { RequestStatus } from "@/shared/types";
+import { Status } from "@/shared/types";
 import { createRefresh } from "./createRefresh";
 
 interface Props<T, Y = null> {
@@ -9,7 +9,7 @@ interface Props<T, Y = null> {
 }
 
 export const createTracked = <T, Y = null>(props: Props<T, Y>) => {
-  const [status, setStatus] = createSignal<RequestStatus>(RequestStatus.Idle);
+  const [status, setStatus] = createSignal<Status>(Status.Idle);
   const [toggled, refresh] = createRefresh(props.instant);
   const [resource, setResource] = createSignal<T | Y>(
     props.default === undefined ? null : props.default
@@ -19,14 +19,14 @@ export const createTracked = <T, Y = null>(props: Props<T, Y>) => {
     on(toggled, async (run) => {
       if (!run) return;
 
-      setStatus(RequestStatus.Loading);
+      setStatus(Status.Loading);
       setResource(() => (props.default === undefined ? null : props.default));
       try {
         const $new = await props.fn(resource());
         setResource(() => $new);
-        setStatus(RequestStatus.Success);
+        setStatus(Status.Success);
       } catch {
-        setStatus(RequestStatus.Failed);
+        setStatus(Status.Failed);
       }
     })
   );

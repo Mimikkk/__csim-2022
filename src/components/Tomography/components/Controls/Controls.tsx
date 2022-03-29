@@ -2,6 +2,7 @@ import { TomographSelect } from "./Select";
 import {
   Button,
   Checkbox,
+  LoadButton,
   OutlineBox,
   Range,
   Spinner,
@@ -9,17 +10,13 @@ import {
 } from "@/shared/components";
 import { useControls } from "./context";
 import { Show } from "solid-js";
-import {
-  dicomService,
-  reconstructionService,
-  sinogramService,
-} from "@/components/Tomography/services";
+import { dicomService } from "@/components/Tomography/services";
 import { Link } from "solid-app-router";
-import { RequestStatus } from "@/shared/types";
-import { createTracked } from "@/shared/hooks/createTracked";
+import { Status } from "@/shared/types";
 
 const Info = () => {
-  const { original, width, height, rmse } = useControls();
+  const { original, width, height, reconstruction, reconstructionStatus } =
+    useControls();
 
   return (
     <OutlineBox class="flex-col">
@@ -42,8 +39,14 @@ const Info = () => {
       </p>
       <p>
         <strong>RMSE: </strong>
-        <Show when={rmse()} fallback="Wykonaj rekonstrukcje...">
-          {rmse()}
+        <Show
+          when={!Status.isIdle(reconstructionStatus())}
+          fallback="Wykonaj rekonstrukcje...">
+          <Show
+            when={!Status.isLoading(reconstructionStatus())}
+            fallback={<Spinner />}>
+            {reconstruction().rmse}
+          </Show>
         </Show>
       </p>
     </OutlineBox>
@@ -53,8 +56,8 @@ const Info = () => {
 const Parameters = () => {
   const {
     original,
-    setSinogram,
-    setFilter,
+    createSinogram,
+    sinogramStatus,
     setSpread,
     sinogram,
     setDetectors,
@@ -62,24 +65,10 @@ const Parameters = () => {
     spread,
     scans,
     detectors,
-    setReconstruction,
-    setAnimation,
-    setRmse,
-    useFilter,
+    recreateImage,
+    reconstructionStatus,
     setUseFilter,
   } = useControls();
-
-  const [, status, refresh] = createTracked({
-    fn: async () =>
-      setSinogram(
-        await sinogramService.create({
-          original: original(),
-          scans: scans(),
-          spread: spread(),
-          detectors: detectors(),
-        })
-      ),
-  });
 
   return (
     <OutlineBox>
@@ -109,36 +98,18 @@ const Parameters = () => {
           onChange={setSpread}
         />
         <Checkbox label="Czy filtrować?" onChange={setUseFilter} />
-        <Button disabled={!original()} onClick={refresh}>
-          <Show
-            when={RequestStatus.isLoading(status())}
-            fallback={
-              <div class="flex justify-center">
-                <Spinner />
-              </div>
-            }>
-            Wykonaj sinogram
-          </Show>
-        </Button>
-        <Button
+        <LoadButton
+          disabled={!original()}
+          onClick={createSinogram}
+          status={sinogramStatus()}>
+          Wykonaj sinogram
+        </LoadButton>
+        <LoadButton
           disabled={!sinogram()}
-          onClick={async () => {
-            const { image, rmse, animation } =
-              await reconstructionService.reconstruct({
-                original: original(),
-                sinogram: sinogram(),
-                spread: spread(),
-                detectors: detectors(),
-                scans: scans(),
-                use_filter: useFilter(),
-              });
-
-            setReconstruction(image);
-            setAnimation(animation);
-            setRmse(rmse);
-          }}>
+          onClick={recreateImage}
+          status={reconstructionStatus()}>
           Wykonaj rekonstrukcje
-        </Button>
+        </LoadButton>
       </fieldset>
     </OutlineBox>
   );

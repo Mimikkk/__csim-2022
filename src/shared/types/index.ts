@@ -1,2 +1,2 @@
 export * from "./nullable";
-export * from "./request-status";
+export * from "./status";

@@ -14,7 +14,6 @@ const Content = () => {
     original,
     sinogram,
     reconstruction,
-    animation,
     setWidth,
     filter,
     setFilter,
@@ -77,7 +76,7 @@ const Content = () => {
           <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
             <img
               alt="reconstruction of the original"
-              src={reconstruction()}
+              src={reconstruction().image}
               class="max-h-[350px] rendering-pixelated"
             />
           </Show>
@@ -86,10 +85,10 @@ const Content = () => {
           centered
           label="Animacja"
           class="flex-grow min-h-[300px] min-w-[300px]">
-          <Show when={animation()} fallback="Wykonaj rekonstrukcje...">
+          <Show when={reconstruction()} fallback="Wykonaj rekonstrukcje...">
             <img
               alt="animation of the reconstruction process of the original"
-              src={animation()}
+              src={reconstruction().animation}
               class="max-h-[350px] rendering-pixelated"
             />
           </Show>

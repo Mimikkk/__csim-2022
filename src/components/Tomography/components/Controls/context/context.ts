@@ -1,6 +1,11 @@
 import { createContext } from "@/shared/utils";
 import { createSignal } from "solid-js";
 import { Nullable } from "@/shared/types";
+import { createTracked } from "@/shared/hooks";
+import {
+  reconstructionService,
+  sinogramService,
+} from "@/components/Tomography/services";
 
 export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [detectors, setDetectors] = createSignal(180);
@@ -16,11 +21,28 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [id, setId] = createSignal<Nullable<string>>(null);
   const [comments, setComments] = createSignal<Nullable<string>>(null);
 
-  const [sinogram, setSinogram] = createSignal<Nullable<string>>(null);
-  const [reconstruction, setReconstruction] =
-    createSignal<Nullable<string>>(null);
-  const [rmse, setRmse] = createSignal<Nullable<number>>(null);
-  const [animation, setAnimation] = createSignal<Nullable<string>>(null);
+  const [sinogram, sinogramStatus, createSinogram] = createTracked({
+    fn: () =>
+      sinogramService.create({
+        original: original(),
+        scans: scans(),
+        spread: spread(),
+        detectors: detectors(),
+      }),
+  });
+
+  const [reconstruction, reconstructionStatus, recreateImage] = createTracked({
+    fn: () =>
+      reconstructionService.reconstruct({
+        original: original(),
+        sinogram: sinogram(),
+        spread: spread(),
+        detectors: detectors(),
+        scans: scans(),
+        use_filter: useFilter(),
+      }),
+  });
+
   const [filter, setFilter] = createSignal<Nullable<string>>(null);
 
   return {
@@ -36,8 +58,6 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     comments,
     sinogram,
     reconstruction,
-    rmse,
-    animation,
     filter,
     setSpread,
     setDetectors,
@@ -48,10 +68,10 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     setName,
     setId,
     setComments,
-    setSinogram,
-    setReconstruction,
-    setRmse,
-    setAnimation,
+    sinogramStatus,
+    createSinogram,
+    reconstructionStatus,
+    recreateImage,
     setUseFilter,
     setFilter,
   } as const;
