@@ -115,13 +115,13 @@ const Parameters = () => {
 };
 
 const Patient = () => {
-  const { original, setComments, setName, setId, id, name, comments } =
+  const { reconstruction, setComments, setName, setId, id, name, comments } =
     useControls();
 
   const [, status, savePatient] = createTracked({
     fn: async () => {
       const file = await dicomService.save({
-        image: original(),
+        image: reconstruction().image,
         patient: { comments: comments(), name: name(), id: id() },
       });
 
@@ -156,7 +156,7 @@ const Patient = () => {
       />
       <LoadButton
         onClick={savePatient}
-        disabled={!(name() && id() && comments())}
+        disabled={!(name() && id() && comments() && reconstruction())}
         status={status()}>
         Zapisz rekonstrukcje jako DICOM
       </LoadButton>
