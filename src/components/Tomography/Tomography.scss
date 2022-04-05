@@ -2,12 +2,3 @@
   @apply grid grid-cols-[1fr,2fr,3fr] gap-x-2 p-2;
   @apply w-full h-full;
 }
-
-.container {
-  display: block;
-  .image {
-    display: block;
-    max-height: inherit;
-    max-width: inherit;
-  }
-}
