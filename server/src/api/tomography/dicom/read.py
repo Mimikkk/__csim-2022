@@ -13,7 +13,7 @@ class DicomLoadResponse(object):
   patient: Patient
 
 @app.post("/api/tomography/dicom/read", response_model=DicomLoadResponse)
-async def dicom_load_post(file: UploadFile):
+async def dicom_load_command(file: UploadFile):
   logger.info("Received request to read contents from dicom file")
   dicom: FileDataset = dcmread(file.file, force=True)
 

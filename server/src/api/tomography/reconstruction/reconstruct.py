@@ -16,7 +16,7 @@ class ReconstructionRequest(object):
   use_filter: bool
 
 @app.post("/api/tomography/reconstruction/reconstruct")
-async def reconstruct_image_post(request: ReconstructionRequest):
+async def reconstruct_image_command(request: ReconstructionRequest):
   (original, sinogram, scans, spread, detectors, use_filter) = astuple(request)
   logger.info("Received request to reconstruct image from sinogram")
 

@@ -1,1 +1,1 @@
-from .reconstruct import reconstruct_image_post
+from .reconstruct import reconstruct_image_command

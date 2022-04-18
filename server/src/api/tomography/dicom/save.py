@@ -12,7 +12,7 @@ class DicomLoadRequest(object):
   patient: Patient
 
 @app.post("/api/tomography/dicom/save")
-async def dicom_read_post(request: DicomLoadRequest):
+async def dicom_read_command(request: DicomLoadRequest):
   logger.info("Received request to save contents as a dicom file")
   image = request.image
   patient = request.patient

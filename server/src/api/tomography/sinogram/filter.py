@@ -12,7 +12,7 @@ class SinogramFilterRequest(object):
   original: str
 
 @app.post("/api/tomography/sinogram/filter")
-async def filter_sinogram_post(request: SinogramFilterRequest):
+async def filter_sinogram_command(request: SinogramFilterRequest):
   logger.info("Received request to filter sinogram")
 
   sinogram = media_to_array(request.original)

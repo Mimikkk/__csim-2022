@@ -17,7 +17,7 @@ class CreateSinogramRequest(object):
   scans: int
 
 @app.post("/api/tomography/sinogram/create")
-async def create_sinogram_post(request: CreateSinogramRequest):
+async def create_sinogram_command(request: CreateSinogramRequest):
   logger.info("Received request to create sinogram")
 
   (original, detectors, spread, scans) = astuple(request)
