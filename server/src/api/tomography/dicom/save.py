@@ -1,4 +1,4 @@
-from dataclasses import dataclass, astuple
+from dataclasses import dataclass
 from fastapi import Response
 from src import app
 from src.app import logger
