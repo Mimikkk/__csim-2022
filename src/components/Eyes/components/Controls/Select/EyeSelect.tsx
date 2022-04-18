@@ -99,12 +99,6 @@ export const EyeSelect: Component = () => {
           }}>
           Upuść zdjęcie do klasyfikacji
         </LoadButton>
-        <LoadButton onClick={() => {}} class="w-full" status={Status.Success}>
-          Użyj sieci neuronowej
-        </LoadButton>
-        <LoadButton onClick={() => {}} class="w-full" status={Status.Success}>
-          Użyj klasycznych technik przetwarzania
-        </LoadButton>
       </OutlineBox>
     </div>
   );
