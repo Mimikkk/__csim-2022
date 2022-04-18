@@ -52,7 +52,7 @@ const Content = () => {
                 <img
                   alt="sinogram image of the original"
                   src={sinogram()}
-                  class="max-h-[350px] flex-grow rendering-pixelated"
+                  class="max-h-[350px] flex-grow rendering-pixelated rounded"
                 />
                 <Show
                   when={filter()}
@@ -67,7 +67,7 @@ const Content = () => {
                   <img
                     alt="filtered sinogram image of the original"
                     src={filter()}
-                    class="max-h-[350px] flex-grow rendering-pixelated"
+                    class="max-h-[350px] flex-grow rendering-pixelated rounded"
                   />
                 </Show>
               </Show>

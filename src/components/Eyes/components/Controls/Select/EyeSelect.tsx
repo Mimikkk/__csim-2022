@@ -64,7 +64,7 @@ const readfile = (file: File | Blob): Promise<string> =>
   });
 
 export const EyeSelect: Component = () => {
-  const { setOriginal } = useControls();
+  const { setOriginal, setVeins } = useControls();
 
   return (
     <div>
@@ -75,9 +75,13 @@ export const EyeSelect: Component = () => {
             label="Gotowe Zdjęcie"
             placeholder="Wybierz zdjęcie oka..."
             onChange={async (path) => {
-              const response = await fetch(path);
-              const file = await response.blob();
-              setOriginal(await readfile(file));
+              const original = await (await fetch(path)).blob();
+
+              // const [filename] = path.split(".");
+              // const veinsPath = `${filename}.tif`;
+
+              setOriginal(await readfile(original));
+              // setVeins(await readfile(veins));
             }}
           />
           <p>
