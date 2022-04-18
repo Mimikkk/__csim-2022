@@ -3,6 +3,7 @@ import { LoadButton, Option, OutlineBox, Select } from "@/shared/components";
 import { Status } from "@/shared/types";
 import { values } from "rambda";
 import { Component } from "solid-js";
+import { tiffService } from "@/shared/services";
 
 const path = (name: string) => `eye/photos/${name}`;
 const images: Record<string, Option> = {
@@ -77,11 +78,11 @@ export const EyeSelect: Component = () => {
             onChange={async (path) => {
               const original = await (await fetch(path)).blob();
 
-              // const [filename] = path.split(".");
-              // const veinsPath = `${filename}.tif`;
+              path = `${path.split(".")[0]}.tif`;
+              const veins = await (await fetch(path)).blob();
 
               setOriginal(await readfile(original));
-              // setVeins(await readfile(veins));
+              setVeins(await tiffService.convert(veins));
             }}
           />
           <p>

@@ -1,7 +1,3 @@
-import { createContext } from "@/shared/utils";
-export const [useContext, ContextProvider] = createContext("Tomography", () => {
-  return {};
-});
 import { ControlsProvider, useControls } from "./components/Controls/context";
 import { Controls } from "@/components/Tomography/components";
 import { Button, OutlineBox, Spinner } from "@/shared/components";
