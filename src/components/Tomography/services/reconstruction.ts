@@ -1,7 +1,8 @@
 import axios from "axios";
 import { DataResponse, parseResponse } from "@/shared/utils";
+import { createApiUrl } from "@/shared/services";
 
-const ApiUrl = "http://localhost:3001/api/tomography/reconstruction";
+const ApiUrl = createApiUrl("tomography/reconstruction");
 
 interface Request {
   original: string;

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { DataResponse, parseResponse } from "@/shared/utils";
 import { Patient } from "@/components/Tomography/models";
+import { createApiUrl } from "@/shared/services";
 
-const ApiUrl = "http://localhost:3001/api/tomography/dicom";
+const ApiUrl = createApiUrl("tomography/dicom");
 
 interface SaveRequest {
   image: string;

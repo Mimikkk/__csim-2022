@@ -1,12 +1,13 @@
 import axios from "axios";
 import { DataResponse, parseResponse } from "@/shared/utils";
+import { createApiUrl } from "./createProxy";
 
-const ApiUrl = "http://localhost:3001/api/tiff";
+const ApiUrl = createApiUrl("tiff");
 
 export const tiffService = {
   convert: (item: File | Blob) => {
+    console.log(import.meta.env.VITE_PROXY);
     const form = new FormData();
-    console.log({ item });
     form.append("file", item);
 
     return axios
