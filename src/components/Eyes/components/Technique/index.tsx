@@ -35,14 +35,14 @@ export const Technique: Component<Props> = (props) => {
           <OutlineBox centered class="gap-2 flex-grow w-full h-full">
             <Show when={!Status.isLoading(props.status)} fallback={<Spinner />}>
               <img
-                class="max-w-[350px] flex-grow rendering-pixelated rounded"
+                class="max-w-[300px] flex-grow rendering-pixelated rounded"
                 alt="image"
                 src={props.image}
               />
             </Show>
             <Show when={hasCompared()}>
               <img
-                class="max-w-[350px] flex-grow rendering-pixelated rounded"
+                class="max-w-[300px] flex-grow rendering-pixelated rounded"
                 alt="image"
                 src={statistics().confusion}
               />
