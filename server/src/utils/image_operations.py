@@ -1,4 +1,3 @@
-from array import array
 from typing import Literal
 
 from numpy import zeros
@@ -59,7 +58,7 @@ def create_confusion_matrix(image, mask):
         else:
           tn += 1
 
-  return (array(confusion), tp, fp, fn, tn)
+  return (confusion, tp, fp, fn, tn)
 
 def create_statistics(image, mask):
   image = image > 0
