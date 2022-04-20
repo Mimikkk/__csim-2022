@@ -30,7 +30,7 @@ def create_mask(image, threshold=0.05):
   image[image[:, :] > image * threshold] = 1
   image[image[:, :] < image * threshold] = 0
 
-  erosion_disk = disk(8)
+  erosion_disk = disk(16)
   image = erosion(image, erosion_disk)
   return image
 
