@@ -7,6 +7,7 @@ import { Status } from "@/shared/types";
 import { createTracked } from "@/shared/hooks";
 import cx from "classnames";
 import { compareService } from "@/components/Eyes/services/compare";
+import { percent } from "@/shared/utils";
 
 interface Props {
   status: Status;
@@ -14,8 +15,6 @@ interface Props {
   label: string;
   description: string;
 }
-
-export const percent = (n: number) => Math.round(n * 100 * 100) / 100;
 
 export const Technique: Component<Props> = (props) => {
   const { original, veins } = useControls();
