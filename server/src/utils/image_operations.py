@@ -1,6 +1,7 @@
 from typing import Literal
 
 from numpy import zeros
+from scipy.stats import gmean
 from skimage.exposure import equalize_hist
 from skimage.filters import unsharp_mask
 from skimage.morphology import erosion, disk
@@ -69,5 +70,6 @@ def create_statistics(image, mask):
   accuracy = (tp + tn) / (tn + fn + tp + fp)
   sensitivity = tp / (tp + fn)
   specificity = tn / (fp + tn)
+  geometric = gmean([sensitivity, specificity])
 
-  return (confusion, accuracy, sensitivity, specificity)
+  return (confusion, accuracy, sensitivity, specificity, geometric)

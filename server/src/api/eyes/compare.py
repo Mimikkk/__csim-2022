@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-from numpy import array, zeros
-
 from src import app
 
 from src.app import logger
@@ -19,6 +17,7 @@ class EyesCompareResponse(object):
   accuracy: float
   sensitivity: float
   specificity: float
+  geometric: float
 
 @app.post("/api/eyes/compare", response_model=EyesCompareResponse)
 async def eyes_compare_to_expert_command(request: EyesCompareRequest):
@@ -27,11 +26,12 @@ async def eyes_compare_to_expert_command(request: EyesCompareRequest):
   expert = media_to_array(request.expert)
 
   logger.info(f"Creating statistics...")
-  (confusion, accuracy, sensitivity, specificity) = create_statistics(processed, expert)
+  (confusion, accuracy, sensitivity, specificity, geometric) = create_statistics(processed, expert)
 
   return {
     "confusion": array_to_media(confusion),
     "accuracy": accuracy,
     "sensitivity": sensitivity,
-    "specificity": specificity
+    "specificity": specificity,
+    "geometric": geometric
   }
