@@ -1,104 +1,8 @@
-import { LoadButton, OutlineBox, Spinner } from "@/shared/components";
-import { EyeSelect } from "@/components/Eyes/components";
-import "./Eyes.scss";
+import { LoadButton, OutlineBox } from "@/shared/components";
+import { EyeSelect, Technique } from "@/components/Eyes/components";
 import { useControls, ControlsProvider } from "./context";
-import { Component, Show, createResource } from "solid-js";
-import { Status } from "@/shared/types";
-import { createTracked } from "@/shared/hooks";
-import cx from "classnames";
-import { compareService } from "@/components/Eyes/services/compare";
-import { percent } from "@/shared/utils";
-
-interface Props {
-  status: Status;
-  image: string;
-  label: string;
-  description: string;
-}
-
-export const Technique: Component<Props> = (props) => {
-  const { original, veins } = useControls();
-
-  const [statistics, statisticsStatus, createStatistics] = createTracked({
-    fn: () => compareService.compare(props.image, veins()),
-  });
-
-  const [hasCompared] = createResource(statisticsStatus, (status) =>
-    Status.isSuccess(status)
-  );
-
-  return (
-    <OutlineBox
-      label={props.label}
-      class={cx("flex", !hasCompared() && "flex-col")}
-      centered>
-      <Show when={original()} fallback="Wybierz obraz...">
-        <Show when={props.image} fallback={props.description}>
-          <OutlineBox centered class="gap-2 flex-grow w-full h-full">
-            <Show when={!Status.isLoading(props.status)} fallback={<Spinner />}>
-              <img
-                class="max-w-[350px]  flex-grow rendering-pixelated rounded"
-                alt="image"
-                src={props.image}
-              />
-            </Show>
-            <Show when={hasCompared()}>
-              <img
-                class="max-w-[350px] flex-grow rendering-pixelated rounded"
-                alt="image"
-                src={statistics().confusion}
-              />
-            </Show>
-          </OutlineBox>
-        </Show>
-      </Show>
-      <Show when={props.image && veins()}>
-        <Show when={!hasCompared()}>
-          <LoadButton
-            onClick={createStatistics}
-            status={statisticsStatus()}
-            class="w-full">
-            Porównaj z maską ekspercką
-          </LoadButton>
-        </Show>
-        <Show when={hasCompared()}>
-          <OutlineBox class="flex flex-col h-full w-full" centered>
-            <Show when={Status.isSuccess(statisticsStatus())}>
-              <div class="flex w-full justify-between">
-                <strong>Celność: </strong>
-                <span>{percent(statistics().accuracy)}%</span>
-              </div>
-              <div class="flex w-full justify-between">
-                <strong>Czułość: </strong>
-                <span>{percent(statistics().sensitivity)}%</span>
-              </div>
-              <div class="flex w-full justify-between">
-                <strong>Swoistość: </strong>
-                <span>{percent(statistics().specificity)}%</span>
-              </div>
-              <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-green-600 rounded border-2" />
-                <span>Prawdziwy Pozytywny</span>
-              </div>
-              <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-red-600 rounded border-2" />
-                <span>Fałszywy Pozytywny</span>
-              </div>
-              <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-blue-600 rounded border-2" />
-                <span>Fałszywy Negatywny</span>
-              </div>
-              <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-black rounded border-2" />
-                <span>Prawdziwy Negatywny</span>
-              </div>
-            </Show>
-          </OutlineBox>
-        </Show>
-      </Show>
-    </OutlineBox>
-  );
-};
+import { Show } from "solid-js";
+import "./Eyes.scss";
 
 export const Content = () => {
   const {
@@ -144,7 +48,7 @@ export const Content = () => {
         <Show when={original()} fallback="Wybierz zdjęcie...">
           <OutlineBox label="Obraz" centered>
             <img
-              class="max-w-[350px]  flex-grow rendering-pixelated rounded"
+              class="max-w-[350px] flex-grow rendering-pixelated rounded"
               alt="original image to process"
               src={original()}
             />
@@ -152,7 +56,7 @@ export const Content = () => {
           <OutlineBox label="Maska ekspercka" centered>
             <Show when={veins()} fallback="Zdjęcie nie ma mapy eksperckiej...">
               <img
-                class="max-w-[350px]  flex-grow rendering-pixelated rounded"
+                class="max-w-[350px] flex-grow rendering-pixelated rounded"
                 alt="original expert created image's veins if has any"
                 src={veins()}
               />
