@@ -1,5 +1,7 @@
+from array import array
 from typing import Literal
 
+from numpy import zeros
 from skimage.exposure import equalize_hist
 from skimage.filters import unsharp_mask
 from skimage.morphology import erosion, disk
@@ -23,9 +25,6 @@ def sharpen(image):
 def normalize_histogram(image):
   return equalize_hist(image)
 
-def apply_mask(image, mask):
-  return image * mask
-
 def create_mask(image, threshold=0.05):
   image = image.copy()
 
@@ -35,3 +34,41 @@ def create_mask(image, threshold=0.05):
   erosion_disk = disk(24)
   image = erosion(image, erosion_disk)
   return image
+
+def apply_mask(image, mask):
+  return image * mask
+
+def create_confusion_matrix(image, mask):
+  confusion = zeros((*image.shape, 3))
+  (width, height) = image.shape
+
+  (tp, fp, fn, tn) = (0,) * 4
+  for x in range(width):
+    for y in range(height):
+      if (image[x, y]):
+        if (mask[x, y]):
+          confusion[x, y, :] = (0, 1, 0)
+          tp += 1
+        else:
+          confusion[x, y, :] = (1, 0, 0)
+          fp += 1
+      else:
+        if (mask[x, y]):
+          confusion[x, y, :] = (0, 0, 1)
+          fn += 1
+        else:
+          tn += 1
+
+  return (array(confusion), tp, fp, fn, tn)
+
+def create_statistics(image, mask):
+  image = image > 0
+  mask = mask > 0
+
+  (confusion, tp, fp, fn, tn) = create_confusion_matrix(image, mask)
+
+  accuracy = (tp + tn) / (tn + fn + tp + fp)
+  sensitivity = tp / (tp + fn)
+  specificity = tn / (fp + tn)
+
+  return (confusion, accuracy, sensitivity, specificity)
