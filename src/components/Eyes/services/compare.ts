@@ -14,6 +14,7 @@ interface CompareStatistics {
   specificity: number;
   sensitivity: number;
   accuracy: number;
+  geometric: number;
 }
 
 export const compareService = {

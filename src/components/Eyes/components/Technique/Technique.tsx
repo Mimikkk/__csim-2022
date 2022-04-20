@@ -42,14 +42,14 @@ export const Technique: Component<Props> = (props) => {
                 when={!Status.isLoading(props.status)}
                 fallback={<Spinner />}>
                 <img
-                  class="max-w-[300px] flex-grow rendering-pixelated rounded"
+                  class="max-w-[300px] flex-grow rounded"
                   alt="image"
                   src={props.image}
                 />
               </Show>
               <Show when={hasCompared()}>
                 <img
-                  class="max-w-[300px] flex-grow rendering-pixelated rounded"
+                  class="max-w-[300px] flex-grow rounded"
                   alt="image"
                   src={statistics().confusion}
                 />
@@ -82,21 +82,25 @@ export const Technique: Component<Props> = (props) => {
                 <strong>Swoistość: </strong>
                 <span>{percent(statistics().specificity)}%</span>
               </div>
+              <div class="flex w-full justify-between">
+                <strong>Średnia: </strong>
+                <span>{percent(statistics().geometric)}%</span>
+              </div>
               <div class="flex w-full gap-2 items-center">
                 <div class="w-6 h-6 aspect-square bg-green-600 rounded border-2" />
-                <span>- Pp</span>
+                <span>- Prawdziwy pozytywny</span>
               </div>
               <div class="flex w-full gap-2 items-center">
                 <div class="w-6 h-6 aspect-square bg-red-600 rounded border-2" />
-                <span>- Fp</span>
+                <span>- Fałszywy pozytywny</span>
               </div>
               <div class="flex w-full gap-2 items-center">
                 <div class="w-6 h-6 aspect-square bg-blue-600 rounded border-2" />
-                <span>- Fn</span>
+                <span>- Fałszywy negatywny</span>
               </div>
               <div class="flex w-full gap-2 items-center">
                 <div class="w-6 h-6 aspect-square bg-black rounded border-2" />
-                <span>- Pn</span>
+                <span>- Prawdziwy negatywny</span>
               </div>
             </Show>
           </OutlineBox>

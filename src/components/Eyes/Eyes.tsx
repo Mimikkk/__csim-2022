@@ -48,7 +48,7 @@ export const Content = () => {
         <Show when={original()} fallback="Wybierz zdjęcie...">
           <OutlineBox label="Obraz" centered>
             <img
-              class="max-w-[350px] flex-grow rendering-pixelated rounded"
+              class="max-w-[350px] flex-grow rounded"
               alt="original image to process"
               src={original()}
             />
@@ -56,7 +56,7 @@ export const Content = () => {
           <OutlineBox label="Maska ekspercka" centered>
             <Show when={veins()} fallback="Zdjęcie nie ma mapy eksperckiej...">
               <img
-                class="max-w-[350px] flex-grow rendering-pixelated rounded"
+                class="max-w-[350px] flex-grow rounded"
                 alt="original expert created image's veins if has any"
                 src={veins()}
               />
