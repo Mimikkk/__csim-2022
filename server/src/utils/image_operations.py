@@ -27,13 +27,9 @@ def normalize_histogram(image):
 
 def create_mask(image, threshold=0.05):
   image = image.copy()
-
   image[image[:, :] > image * threshold] = 1
   image[image[:, :] < image * threshold] = 0
-
-  erosion_disk = disk(24)
-  image = erosion(image, erosion_disk)
-  return image
+  return erosion(image, disk(24))
 
 def apply_mask(image, mask):
   return image * mask
