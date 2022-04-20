@@ -4,6 +4,7 @@ import { Status } from "@/shared/types";
 import { values } from "rambda";
 import { Component } from "solid-js";
 import { tiffService } from "@/shared/services";
+import { createTracked } from "@/shared/hooks";
 
 const path = (name: string) => `eye/photos/${name}`;
 const images: Record<string, Option> = {
@@ -65,7 +66,16 @@ const readfile = (file: File | Blob): Promise<string> =>
   });
 
 export const EyeSelect: Component = () => {
-  const { setOriginal, setVeins } = useControls();
+  const { original, setOriginal, setVeins } = useControls();
+
+  const [shape, , createShape] = createTracked({
+    fn: async () => {
+      const image = Object.assign(new Image(), { src: original() });
+      await image.decode();
+
+      return { width: image.width, height: image.height };
+    },
+  });
 
   return (
     <div>
@@ -82,21 +92,25 @@ export const EyeSelect: Component = () => {
               const veins = await (await fetch(path)).blob();
 
               setOriginal(await readfile(original));
+              createShape();
               setVeins(await tiffService.convert(veins));
             }}
           />
-          <p>
-            <strong>Wysokość</strong>: HEIGHTpx
-          </p>
-          <p>
-            <strong>Szerokość</strong>: WIDTHpx
-          </p>
+          <div class="flex justify-between">
+            <strong>Szerokość: </strong>
+            <span>{shape()?.width || 0}px</span>
+          </div>
+          <div class="flex justify-between">
+            <strong>Wysokość: </strong>
+            <span>{shape()?.height || 0}px</span>
+          </div>
         </div>
         <LoadButton
           class="w-full"
           status={Status.Success}
           onDrop={async (file) => {
             if (file.type.startsWith("image")) {
+              createShape();
               return setOriginal(await readfile(file));
             }
 

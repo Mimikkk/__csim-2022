@@ -75,20 +75,20 @@ export const Technique: Component<Props> = (props) => {
                 <span>{percent(statistics().specificity)}%</span>
               </div>
               <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-green-600 rounded border-2" />
-                <span>Prawdziwy Pozytywny</span>
+                <div class="w-6 h-6 aspect-square bg-green-600 rounded border-2" />
+                <span>- Pp</span>
               </div>
               <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-red-600 rounded border-2" />
-                <span>Fałszywy Pozytywny</span>
+                <div class="w-6 h-6 aspect-square bg-red-600 rounded border-2" />
+                <span>- Fp</span>
               </div>
               <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-blue-600 rounded border-2" />
-                <span>Fałszywy Negatywny</span>
+                <div class="w-6 h-6 aspect-square bg-blue-600 rounded border-2" />
+                <span>- Fn</span>
               </div>
               <div class="flex w-full gap-2 items-center">
-                <div class="w-8 h-8 aspect-square bg-black rounded border-2" />
-                <span>Prawdziwy Negatywny</span>
+                <div class="w-6 h-6 aspect-square bg-black rounded border-2" />
+                <span>- Pn</span>
               </div>
             </Show>
           </OutlineBox>
