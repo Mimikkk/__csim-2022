@@ -4,8 +4,8 @@ import { Nullable } from "@/shared/types";
 import { createTracked } from "@/shared/hooks";
 import {
   cnnService,
-  traditionalService,
   knnService,
+  traditionalService,
 } from "@/components/Eyes/services";
 
 export const [useControls, ControlsProvider] = createContext("Controls", () => {
