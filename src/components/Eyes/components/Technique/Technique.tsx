@@ -1,5 +1,5 @@
 import { Status } from "@/shared/types";
-import { Component, createResource, Show } from "solid-js";
+import { Component, createEffect, createSignal, Show } from "solid-js";
 import { useControls } from "@/components/Eyes/context";
 import { createTracked } from "@/shared/hooks";
 import { compareService } from "@/components/Eyes/services/compare";
@@ -20,10 +20,14 @@ export const Technique: Component<Props> = (props) => {
   const [statistics, statisticsStatus, createStatistics] = createTracked({
     fn: () => compareService.compare(props.image, veins()),
   });
+  const [hasCompared, setHasCompared] = createSignal(false);
 
-  const [hasCompared] = createResource(statisticsStatus, (status) =>
-    Status.isSuccess(status)
-  );
+  createEffect(() => {
+    if (Status.isLoading(props.status)) setHasCompared(false);
+  });
+  createEffect(() => {
+    if (Status.isSuccess(statisticsStatus())) setHasCompared(true);
+  });
 
   return (
     <OutlineBox
@@ -31,23 +35,27 @@ export const Technique: Component<Props> = (props) => {
       class={cx("flex", !hasCompared() && "flex-col")}
       centered>
       <Show when={original()} fallback="Wybierz obraz...">
-        <Show when={props.image} fallback={props.description}>
-          <OutlineBox centered class="gap-2 flex-grow w-full h-full">
-            <Show when={!Status.isLoading(props.status)} fallback={<Spinner />}>
-              <img
-                class="max-w-[300px] flex-grow rendering-pixelated rounded"
-                alt="image"
-                src={props.image}
-              />
-            </Show>
-            <Show when={hasCompared()}>
-              <img
-                class="max-w-[300px] flex-grow rendering-pixelated rounded"
-                alt="image"
-                src={statistics().confusion}
-              />
-            </Show>
-          </OutlineBox>
+        <Show when={!Status.isLoading(props.status)} fallback={<Spinner />}>
+          <Show when={props.image} fallback={props.description}>
+            <OutlineBox centered class="gap-2 flex-grow w-full h-full">
+              <Show
+                when={!Status.isLoading(props.status)}
+                fallback={<Spinner />}>
+                <img
+                  class="max-w-[300px] flex-grow rendering-pixelated rounded"
+                  alt="image"
+                  src={props.image}
+                />
+              </Show>
+              <Show when={hasCompared()}>
+                <img
+                  class="max-w-[300px] flex-grow rendering-pixelated rounded"
+                  alt="image"
+                  src={statistics().confusion}
+                />
+              </Show>
+            </OutlineBox>
+          </Show>
         </Show>
       </Show>
       <Show when={props.image && veins()}>
