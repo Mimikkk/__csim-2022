@@ -8,19 +8,16 @@ interface Props {
   centered?: boolean;
   label?: string;
 }
-export const OutlineBox: Component<Props> = ({
-  children,
-  centered = false,
-  label,
-  class: classname,
-}) => {
-  return (
-    <fieldset
-      class={cx("outline-box", { centered, label: Boolean(label) }, classname)}>
-      <Show when={label}>
-        <legend>{label}</legend>
-      </Show>
-      {children}
-    </fieldset>
-  );
-};
+export const OutlineBox: Component<Props> = (props) => (
+  <fieldset
+    class={cx(
+      "outline-box",
+      { centered: props.centered, label: Boolean(props.label) },
+      props.class
+    )}>
+    <Show when={props.label}>
+      <legend>{props.label}</legend>
+    </Show>
+    {props.children}
+  </fieldset>
+);
