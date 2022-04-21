@@ -6,7 +6,7 @@ import { Component } from "solid-js";
 import { tiffService } from "@/shared/services";
 import { createTracked } from "@/shared/hooks";
 
-const path = (name: string) => `eye/photos/${name}`;
+const path = (name: string) => `eyes/photos/${name}`;
 const images: Record<string, Option> = {
   diabetic_retinography_1: { label: "Cukrzyk - 1", value: path("01_dr.JPG") },
   glaucomatous_1: { label: "Jaskra - 1", value: path("01_g.jpg") },
