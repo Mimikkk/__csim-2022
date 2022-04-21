@@ -9,10 +9,9 @@ from src import app
 class EyesKnnRequest(object):
   image: str
 
-@app.post("/api/eyes/knn/process")
-async def eyes_knn_process_command(request: EyesKnnRequest):
-  logger.info("Received request to process image with sampled k-nearest-neighbours method...")
+@app.post("/api/eyes/tree/process")
+async def eyes_tree_process_command(request: EyesKnnRequest):
+  logger.info("Received request to process image with sampled decision tree classifier...")
   image = request.image
 
   return Response(image, media_type="image/png")
-
