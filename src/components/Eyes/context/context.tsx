@@ -4,7 +4,7 @@ import { Nullable } from "@/shared/types";
 import { createTracked } from "@/shared/hooks";
 import {
   cnnService,
-  knnService,
+  treeService,
   traditionalService,
 } from "@/components/Eyes/services";
 
@@ -15,7 +15,7 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     fn: () => traditionalService.process(original()),
   });
   const [knn, knnStatus, createKnn] = createTracked({
-    fn: () => knnService.process(original()),
+    fn: () => treeService.process(original()),
   });
   const [cnn, cnnStatus, createCnn] = createTracked({
     fn: () => cnnService.process(original()),
