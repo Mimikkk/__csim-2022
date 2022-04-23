@@ -1,3 +1,5 @@
+import callbacks as callbacks
+from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras.losses import binary_crossentropy
 from keras.preprocessing.image import apply_affine_transform
 from keras_preprocessing import image as kpi
@@ -39,7 +41,7 @@ def shift(image, limits):
 
 def random_shift(image, mask, w_limit, h_limit, chance):
   if boolean(chance):
-    limits = uniform(*w_limit), uniform(*h_limit)
+    limits = -uniform(*w_limit), uniform(*h_limit)
     image = shift(image, limits)
     mask = shift(mask, limits)
   return image, mask
@@ -91,9 +93,9 @@ def random_crop(image, mask, size):
   return image[x: x + size, y:y + size, :], mask[x:x + size, y:y + size]
 
 def random_augmentation(image, mask):
-  image = random_brightness(image, limits=(-0.1, 0.1), chance=0.25)
-  image = random_contrast(image, limits=(-0.1, 0.1), chance=0.25)
-  image = random_saturation(image, limits=(-0.1, 0.1), chance=0.25)
+  image = random_brightness(image, limits=(-0.1, 0.1), chance=0.05)
+  image = random_contrast(image, limits=(-0.1, 0.1), chance=0.05)
+  image = random_saturation(image, limits=(-0.1, 0.1), chance=0.05)
   image, mask = random_rotate(image, mask, limits=(-10, 10), chance=0.05)
   image, mask = random_shear(image, mask, limits=(-5, 5), chance=0.05)
   image, mask = random_flip(image, mask, chance=0.5)
@@ -142,7 +144,8 @@ def unet(dropout, activation):
 
   model = Model(inputs=[inputs], outputs=[conv10])
 
-  model.compile(optimizer=Adam(learning_rate=1e-3), loss=binary_crossentropy, metrics=['accuracy'])
+  model.compile(optimizer=Adam(learning_rate=1e-3), loss=binary_crossentropy,
+                metrics=['accuracy'])
   return model
 
 def read_image(path):
@@ -160,7 +163,7 @@ def read_pair(pair):
 
 def generator(dataset):
   pairs = list(map(read_pair, dataset))
-  (span, images, crops) = list(range(len(dataset))), 4, range(2)
+  (span, images, crops) = list(range(len(dataset))), 3, range(16)
 
   while True:
     picked = (pairs[pair] for pair in choice(span, size=images, replace=False))
@@ -174,15 +177,32 @@ if __name__ == '__main__':
 
   resources = "resources"
   DRIVE = f"{resources}/dataset/DRIVE"
-  images = f"{DRIVE}/train/images/*.tif"
-  expert = f"{DRIVE}/train/1st_manual/*.gif"
+  train_images = f"{DRIVE}/train/images/*.tif"
+  train_expert = f"{DRIVE}/train/1st_manual/*.gif"
 
-  trainset = list(zip(sorted(glob(images)), sorted(glob(expert))))
-  print("Train set size:", len(trainset))
+  test_images = f"{DRIVE}/test/images/*.tif"
+  test_expert = f"{DRIVE}/test/1st_manual/*.gif"
 
-  model = unet(dropout=0.2, activation=ReLU)
-  filepath = f"{resources}/models/{modelname}.best.h5"
-  steps_per_epoch = len(trainset) // 16 * 100
-  history = model.fit(generator(trainset), epochs=2, verbose=1, steps_per_epoch=steps_per_epoch)
+  trainset = list(zip(sorted(glob(train_images)), sorted(glob(train_expert))))
+  testset = list(zip(sorted(glob(test_images)), sorted(glob(test_expert))))
 
-  model.save_weights(filepath)
+  print("Trainset size:", len(trainset))
+  print("Testset size:", len(testset))
+
+  model = unet(dropout=0.1, activation=ReLU)
+  bestfilepath = f"{resources}/models/{modelname}.best.h5"
+  checkfilepath = f"{resources}/models/{modelname}.best.h5"
+
+  callbacks = [
+    ModelCheckpoint(checkfilepath, save_weights_only=True, monitor='val_loss', mode='min', save_best_only=True),
+    EarlyStopping(monitor="val_loss", mode="min", patience=50, verbose=1),
+    ReduceLROnPlateau(monitor="val_loss", mode="min", patience=10, verbose=1),
+  ]
+
+  model.fit(generator(trainset),
+            steps_per_epoch=100,
+            validation_data=generator(testset),
+            validation_steps=40,
+            epochs=200, verbose=1,
+            callbacks=callbacks)
+  model.save_weights(bestfilepath)

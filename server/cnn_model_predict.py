@@ -16,9 +16,7 @@ if __name__ == '__main__':
 
   resources = "resources"
   DRIVE = f"{resources}/dataset/DRIVE"
-  images = f"{DRIVE}/train/images/*.tif"
-  expert = f"{DRIVE}/train/1st_manual/*.gif"
-  masks = f"{DRIVE}/train/mask/*.gif"
+  images = f"{DRIVE}/test/images/*.tif"
 
   testset = sorted(glob(images))
 
