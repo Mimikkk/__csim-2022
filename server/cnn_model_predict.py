@@ -2,25 +2,13 @@ from glob import glob
 
 from keras.layers import ReLU
 from matplotlib import pyplot as plt
-from numpy import array, newaxis
+from numpy import newaxis
 from skimage.transform import resize
 import numpy as np
 
-from cnn_model_trainer import read_image, read_expert, unet, read_mask
+from cnn_model_trainer import read_image, unet
 
-batchsize = 4
 shape = (576, 576)
-
-def batch(dataset, n=batchsize):
-  for i in range(0, len(dataset), n):
-    yield dataset[i:min(i + n, len(dataset))]
-
-def read_pair(pair):
-  (image, expert, mask) = pair
-  image = resize(read_image(image), shape)
-  expert = read_expert(expert)
-  mask = read_mask(mask)
-  return image, expert, mask
 
 if __name__ == '__main__':
   modelname = f"unet_do_0.2_activation_ReLU"
@@ -43,6 +31,8 @@ if __name__ == '__main__':
     image = resize(image, shape)
     images = image[newaxis, ...]
 
+    print(images.shape)
+
     (prediction,) = model.predict(images)
     prediction = np.clip(prediction, 0, 1)
 
@@ -50,3 +40,4 @@ if __name__ == '__main__':
 
     plt.imshow(prediction, cmap='gray')
     plt.show()
+    break

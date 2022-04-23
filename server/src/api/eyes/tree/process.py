@@ -15,7 +15,7 @@ from src.utils.image_operations import rgb2channel, create_mask, normalize_histo
 class EyesKnnRequest(object):
   image: str
 
-with open("decision_tree_classifier_model_12.pkl", "rb") as file:
+with open("resources/models/decision_tree_classifier_model_12.pkl", "rb") as file:
   classifier = pickle.load(file)
 
 def calculate_metrics(section):
