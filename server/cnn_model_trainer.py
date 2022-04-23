@@ -157,6 +157,7 @@ def read_pair(pair):
   (image, expert) = pair
   return read_image(image), read_expert(expert)
 
+
 def generator(dataset):
   pairs = list(map(read_pair, dataset))
   (span, images, crops) = list(range(len(dataset))), 4, range(2)
