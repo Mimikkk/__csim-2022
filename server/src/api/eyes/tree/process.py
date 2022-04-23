@@ -51,7 +51,7 @@ async def eyes_tree_process_command(request: EyesKnnRequest):
   processed = apply_mask(sato(normalized), mask)
 
   logger.info("Predicting veins with the classifier...")
-  processed = resize(processed, image.shape)
+  processed = scale(processed, 0.3)
   prediction = predict_veins(classifier, processed, 12)
   prediction = resize(prediction, image.shape)
 
