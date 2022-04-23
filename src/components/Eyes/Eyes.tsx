@@ -11,9 +11,9 @@ export const Content = () => {
     traditional,
     createTraditional,
     traditionalStatus,
-    knn,
-    createKnn,
-    knnStatus,
+    tree,
+    createTree,
+    treeStatus,
     cnn,
     createCnn,
     cnnStatus,
@@ -31,10 +31,10 @@ export const Content = () => {
             Użyj sieci neuronowej
           </LoadButton>
           <LoadButton
-            onClick={createKnn}
-            status={knnStatus()}
+            onClick={createTree}
+            status={treeStatus()}
             disabled={!original()}>
-            Użyj wycinków kNN
+            Użyj wycinków drzewa decyzyjnego
           </LoadButton>
           <LoadButton
             onClick={createTraditional}
@@ -72,10 +72,10 @@ export const Content = () => {
           image={cnn()}
         />
         <Technique
-          description="Użyj wycinków kNN..."
-          label="Wycinki kNN"
-          status={knnStatus()}
-          image={knn()}
+          description="Użyj wycinków drzewa decyzyjnego..."
+          label="Wycinki drzewa decyzyjnego"
+          status={treeStatus()}
+          image={tree()}
         />
         <Technique
           description="Użyj technik tradycyjnych..."

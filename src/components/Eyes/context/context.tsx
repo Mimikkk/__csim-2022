@@ -14,7 +14,7 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
   const [traditional, traditionalStatus, createTraditional] = createTracked({
     fn: () => traditionalService.process(original()),
   });
-  const [knn, knnStatus, createKnn] = createTracked({
+  const [tree, treeStatus, createTree] = createTracked({
     fn: () => treeService.process(original()),
   });
   const [cnn, cnnStatus, createCnn] = createTracked({
@@ -26,14 +26,14 @@ export const [useControls, ControlsProvider] = createContext("Controls", () => {
     setOriginal,
     veins,
     setVeins,
-    knn,
-    knnStatus,
+    tree,
+    treeStatus,
     traditional,
     traditionalStatus,
     cnn,
     cnnStatus,
     createTraditional,
-    createKnn,
+    createTree,
     createCnn,
   } as const;
 });
