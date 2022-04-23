@@ -153,6 +153,10 @@ def read_expert(path):
   x = array(Image.open(path)) / 255.
   return x[..., newaxis]
 
+def read_mask(path):
+  x = array(Image.open(path)) / 255.
+  return x[..., newaxis]
+
 def read_pair(pair):
   (image, expert) = pair
   return read_image(image), read_expert(expert)
