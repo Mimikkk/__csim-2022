@@ -16,14 +16,14 @@ from src.utils.image_conversion import media_to_array, array_to_media
 class EyesCnnRequest(object):
   image: str
 
-shape = (576, 576)
+shape = (1152, 1152)
 
 
 @app.post("/api/eyes/cnn/process")
 async def eyes_cnn_process_command(request: EyesCnnRequest):
   classifier = eyes_cnn_process_command.classifier
   if not eyes_cnn_process_command.classifier:
-    eyes_cnn_process_command.classifier = unet(dropout=0.2, activation=ReLU)
+    eyes_cnn_process_command.classifier = unet(dropout=0.1, activation=ReLU)
     modelname = f"unet_do_0.2_activation_ReLU"
     resources = "resources"
     eyes_cnn_process_command.classifier.load_weights(f"{resources}/models/{modelname}.best.h5", by_name=True)
@@ -37,7 +37,7 @@ async def eyes_cnn_process_command(request: EyesCnnRequest):
   images = resized[newaxis, ...]
 
   logger.info("Predicting veins...")
-  (prediction,) = clip(classifier.predict(images), 0, 1)
+  (prediction,) = clip(classifier.predict(images), 0, 1) > 0.15
   prediction = resize(prediction, image.shape)
 
   return Response(array_to_media(rgb2gray(prediction)), media_type="image/png")
