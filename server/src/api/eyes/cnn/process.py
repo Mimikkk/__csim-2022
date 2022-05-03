@@ -6,7 +6,7 @@ from numpy import newaxis, clip
 from skimage.color import rgb2gray
 from skimage.transform import resize
 
-from cnn_model_trainer import unet
+from models.cnn_model_trainer import unet
 from src.app import logger
 from src import app
 from src.utils.image_conversion import media_to_array, array_to_media
