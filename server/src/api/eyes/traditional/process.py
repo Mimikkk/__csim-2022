@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from fastapi import Response
-from skimage.filters.ridges import sato
+from skimage.filters.ridges import sato, frangi
 
 from src.app import logger
 from src import app
@@ -13,7 +13,7 @@ class EyesTraditionalRequest(object):
   image: str
 
 def binary_decision(image, threshold=0.35):
-  return image > threshold
+  return image
 
 @app.post("/api/eyes/traditional/process")
 async def eyes_traditional_process_command(request: EyesTraditionalRequest):
@@ -21,12 +21,13 @@ async def eyes_traditional_process_command(request: EyesTraditionalRequest):
   image = media_to_array(request.image)
 
   logger.info("Creating mask...")
-  mask = create_mask(rgb2channel(image, 'green'))
+  green = rgb2channel(image, 'green')
+  mask = create_mask(green)
 
   logger.info("Preprocessing image...")
-  normalized = normalize_histogram(sharpen(rgb2channel(image, 'green')))
+  normalized = normalize_histogram(sharpen(green))
 
   logger.info("Filtering veins...")
-  veins = binary_decision(rescale_array((apply_mask(sato(normalized), mask)), (0, 1)), 0.25)
+  veins = binary_decision(rescale_array((apply_mask(frangi(normalized), mask)), (0, 1)), 0.00)
 
   return Response(array_to_media(veins), media_type="image/png")
