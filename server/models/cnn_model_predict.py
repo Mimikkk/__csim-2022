@@ -14,7 +14,7 @@ if __name__ == '__main__':
   modelname = f"unet_do_0.2_activation_ReLU"
   print(f"Model : {modelname}")
 
-  resources = "resources"
+  resources = "../resources"
   DRIVE = f"{resources}/dataset/DRIVE"
   images = f"{DRIVE}/test/images/*.tif"
 
