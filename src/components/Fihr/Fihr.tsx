@@ -19,7 +19,7 @@ export const Fihr = () => {
           "patient-list--visible": patientName(),
         })}>
         <Show when={patientName()}>
-          <OutlineBox label="Wyniki wyszukiwania" class="w-full h-full">
+          <OutlineBox label="Wyniki wyszukiwania" class="p-0 w-full h-full">
             <PatientList />
           </OutlineBox>
         </Show>
