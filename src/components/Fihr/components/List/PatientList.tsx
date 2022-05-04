@@ -12,6 +12,7 @@ export const PatientList = () => {
           <th>Płeć</th>
           <th>Data urodzenia</th>
           <th>Identyfikator</th>
+          <th />
         </tr>
       </thead>
       <tbody>

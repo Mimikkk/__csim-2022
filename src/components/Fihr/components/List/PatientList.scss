@@ -10,14 +10,29 @@
     &--visible {
       @apply flex-grow;
     }
+
     &-row {
       :nth-child(3) {
         @apply text-center;
       }
 
-      @apply border-b;
-
+      @apply border-y;
       @apply capitalize;
+
+      @apply transition transition-all;
+
+      &:hover {
+        @apply bg-sky-800;
+      }
+
+      &-button {
+        @apply w-full h-full flex justify-center items-center;
+        @apply transition transition-all;
+
+        &:hover {
+          @apply text-amber-400;
+        }
+      }
     }
   }
 }

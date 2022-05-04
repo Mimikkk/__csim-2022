@@ -95,7 +95,7 @@ export const Technique: Component<Props> = (props) => {
                 <span>- Fałszywy pozytywny</span>
               </div>
               <div class="flex w-full gap-2 items-center">
-                <div class="w-6 h-6 aspect-square bg-blue-600 rounded border-2" />
+                <div class="w-6 h-6 aspect-square bg-sky-600 rounded border-2" />
                 <span>- Fałszywy negatywny</span>
               </div>
               <div class="flex w-full gap-2 items-center">
