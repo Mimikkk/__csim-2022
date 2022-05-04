@@ -17,6 +17,7 @@ export const [useFhir, FhirProvider] = createContext("Fhir", () => {
         gender: gender(),
         limit: limit(),
       }),
+    default: [],
   });
 
   createEffect(

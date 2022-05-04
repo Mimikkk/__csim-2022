@@ -19,7 +19,9 @@ interface Service {
 const ApiUrl = createApiUrl("fhir/patients");
 
 export const patientService: Service = {
-  read: (id) => axios.get(`${ApiUrl}/read/${id}`).then(parseResponse),
+  read: (id) =>
+    axios.get(`${ApiUrl}/read`, { params: { id } }).then(parseResponse),
+
   search: (params) =>
     axios.get(`${ApiUrl}/search`, { params }).then(parseResponse),
 };

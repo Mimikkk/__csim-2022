@@ -2,12 +2,20 @@ header {
   @apply bg-gray-900;
   @apply px-2;
 
-  @apply flex justify-end;
+  @apply flex justify-between;
   div {
     @apply flex gap-x-2 items-center;
 
     a {
       @apply hover:text-amber-300 transition-all duration-300;
     }
+  }
+}
+
+.go-back-arrow {
+  @apply w-6 h-6;
+
+  &:hover {
+    @apply border-amber-400;
   }
 }
