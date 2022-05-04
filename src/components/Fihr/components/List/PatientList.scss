@@ -1,0 +1,22 @@
+.patient {
+  &-search-panel {
+    @apply w-full h-full flex flex-col align-middle items-center justify-center gap-2;
+  }
+
+  &-list {
+    @apply transition transition-all duration-1000;
+    @apply w-full px-12;
+
+    &--visible {
+      @apply flex-grow;
+    }
+    &-row {
+      :nth-child(3) {
+        @apply text-center;
+      }
+
+      @apply whitespace-pre;
+      @apply capitalize;
+    }
+  }
+}
