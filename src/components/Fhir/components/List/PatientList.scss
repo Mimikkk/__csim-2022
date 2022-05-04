@@ -15,11 +15,17 @@
       :nth-child(3) {
         @apply text-center;
       }
-
+      @apply w-full;
       @apply border-y;
       @apply capitalize;
-
       @apply transition transition-all;
+
+      td {
+        max-width: 12rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       &:hover {
         @apply bg-sky-800;

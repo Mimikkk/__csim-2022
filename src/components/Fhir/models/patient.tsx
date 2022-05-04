@@ -1,5 +1,6 @@
 import { Identifier, Gender, HumanName } from "./base";
 import { sortBy, trim, head } from "rambda";
+import { Component } from "solid-js";
 
 export interface Patient {
   id: string;
@@ -24,7 +25,20 @@ export module Patient {
     export const birthdate = ({ birthDate }: Patient) =>
       birthDate?.toLocaleString() || "-";
 
-    export const identifier = ({ identifier }: Patient) => {
+    export const identifierTitle = ({ identifier }: Patient) => {
+      if (!identifier) return "-";
+
+      const { use, value } = head(
+        sortBy(
+          (id) => id?.use === "official",
+          identifier.filter(({ value }) => !!value)
+        )
+      );
+
+      return `${use || "unknown"} - ${value}`;
+    };
+
+    export const identifier: Component<Patient> = ({ identifier }) => {
       if (!identifier) return "-";
 
       const { use, value } = head(
