@@ -8,7 +8,7 @@ export const Header = () => (
       <Icon icon="abstract-018" class="fill-amber-300" />
       <Link href="/tomography">Tomograf</Link>
       <Link href="/eyes">Dno oka</Link>
-      <Link href="/fihr">FIHR</Link>
+      <Link href="/fhir">FHIR</Link>
     </div>
   </header>
 );

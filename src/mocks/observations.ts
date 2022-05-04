@@ -1,4 +1,4 @@
-import { Observation } from "@/components/Fihr/models";
+import { Observation } from "@/components/Fhir/models";
 
 export const mockObservations: Observation[] = [
   {

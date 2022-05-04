@@ -1,4 +1,4 @@
-import { MedicationStatement } from "@/components/Fihr/models";
+import { MedicationStatement } from "@/components/Fhir/models";
 
 export const mockMedicationStatement: MedicationStatement = {
   resourceType: "MedicationStatement",

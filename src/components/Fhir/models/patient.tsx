@@ -2,6 +2,7 @@ import { Identifier, Gender, HumanName } from "./base";
 import { sortBy, trim, head } from "rambda";
 
 export interface Patient {
+  id: string;
   name: HumanName[];
   gender: Gender;
   birthDate?: Date;

@@ -1,4 +1,4 @@
-import { Patient } from "@/components/Fihr/models";
+import { Patient } from "@/components/Fhir/models";
 
 export const mockPatient: Patient = {
   resourceType: "Patient",
