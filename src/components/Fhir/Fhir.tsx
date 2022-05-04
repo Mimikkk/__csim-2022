@@ -1,50 +1,12 @@
 import { OutlineBox, Textfield } from "@/shared/components";
-import { createEffect, createSignal, on, Show } from "solid-js";
-import cx from "classnames";
+import { Show } from "solid-js";
 import { PatientList } from "@/components/Fhir/components";
-import { patientService } from "@/components/Fhir/services";
-import { createContext } from "@/shared/utils";
-import { createTracked } from "@/shared/hooks";
-import { Gender } from "@/components/Fhir/models/base";
-import { Nullable } from "@/shared/types";
-
-export const [useFhir, FhirProvider] = createContext("Fhir", () => {
-  const [patientName, setPatientName] = createSignal<Nullable<string>>(null);
-  const [gender, setGender] = createSignal<Nullable<Gender>>(null);
-  const [limit, setLimit] = createSignal<Nullable<number>>(null);
-
-  const [patients, fetchPatients] = createTracked({
-    fn: () =>
-      patientService.search({
-        name: patientName(),
-        gender: gender(),
-        limit: limit(),
-      }),
-  });
-
-  createEffect(() => {});
-
-  createEffect(
-    on([patientName, gender, limit], async () => {
-      console.log("xDDD");
-      await fetchPatients();
-    })
-  );
-
-  return {
-    patientName,
-    gender,
-    limit,
-    patients,
-    setPatientName,
-    setGender,
-    setLimit,
-    fetchPatients,
-  } as const;
-});
+import { Status } from "@/shared/types";
+import { FhirProvider, useFhir } from "@/components/Fhir/context";
+import cx from "classnames";
 
 const Content = () => {
-  const { patientName, setPatientName, setGender, setLimit, fetchPatients } =
+  const { patientName, setPatientName, setGender, patientsStatus, setLimit } =
     useFhir();
 
   return (
@@ -57,9 +19,9 @@ const Content = () => {
       />
       <div
         class={cx("patient-list", {
-          "patient-list--visible": patientName(),
+          "patient-list--visible": !Status.isIdle(patientsStatus()),
         })}>
-        <Show when={patientName()}>
+        <Show when={!Status.isIdle(patientsStatus())}>
           <OutlineBox label="Wyniki wyszukiwania" class="p-0 w-full h-full">
             <PatientList />
           </OutlineBox>
