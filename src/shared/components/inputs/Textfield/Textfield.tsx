@@ -5,10 +5,11 @@ interface Props<T extends string | number> {
   placeholder?: string;
   value?: T;
   onChange?: (value: T) => void;
+  class?: string;
 }
 
 export const Textfield = <T extends string | number>(props: Props<T>) => (
-  <label>
+  <label class={props.class}>
     <fieldset class="select-fieldset">
       <legend>{props.label}</legend>
       <input
