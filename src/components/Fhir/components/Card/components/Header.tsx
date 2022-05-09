@@ -3,9 +3,9 @@ import { ReadResponse } from "@/components/Fhir/services";
 import { Patient } from "@/components/Fhir/models";
 import { Tracked } from "@/shared/hooks";
 
+const { birthdate, gender, identifierTitle, fullname } = Patient.Row;
 export const CardHeader = () => {
   const [data] = useData<Tracked<ReadResponse>>();
-  const { birthdate, gender, identifierTitle, fullname } = Patient.Row;
   const { patient } = data();
 
   return (
