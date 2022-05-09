@@ -11,7 +11,7 @@ const patientLoader = ({ params }: RouteDataFuncArgs) =>
   });
 
 export const Main = () => (
-  <main class="p-2">
+  <main>
     <Routes>
       <Route path="/tomography" element={Tomography} />
       <Route path="/eyes" element={Eyes} />

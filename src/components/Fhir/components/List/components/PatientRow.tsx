@@ -15,9 +15,7 @@ export const PatientRow: Component<Props> = (props) => (
     <td title={birthdate(props.patient)}>{birthdate(props.patient)}</td>
     <td title={identifierTitle(props.patient)}>{identifier(props.patient)}</td>
     <td>
-      <Link
-        href={`patient-${props.patient.id}`}
-        class="patient-list-row-button">
+      <Link href={props.patient.id} class="patient-list-row-button">
         <FiArrowRight />
       </Link>
     </td>
