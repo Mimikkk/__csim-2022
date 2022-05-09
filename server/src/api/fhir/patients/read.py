@@ -26,8 +26,8 @@ async def patients_read_get(id: str):
   print("Had Observations", len(x['observations']) > 0)
   json.dump(x, open(f"search-response.ts", "w"), indent=2)
 
-  return json.dumps({
+  return {
     "patient": first(list(filter(is_patient, entries))),
     "observations": list(filter(is_observation, entries)),
-    "medication_statements": list(filter(is_medication_statement, entries))
-  }, indent=2)
+    "medicationStatements": list(filter(is_medication_statement, entries))
+  }

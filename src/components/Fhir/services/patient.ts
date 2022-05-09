@@ -1,5 +1,9 @@
 import { Gender } from "@/components/Fhir/models/base";
-import { Patient } from "@/components/Fhir/models";
+import {
+  MedicationStatement,
+  Observation,
+  Patient,
+} from "@/components/Fhir/models";
 import { Nullable } from "@/shared/types";
 import { createApiUrl } from "@/shared/services";
 import { parseResponse } from "@/shared/utils";
@@ -11,8 +15,14 @@ interface SearchParams {
   gender?: Gender;
 }
 
+interface ReadResponse {
+  patient: Patient;
+  observations: Observation[];
+  medicationStatements: MedicationStatement[];
+}
+
 interface Service {
-  read: (id: string) => Promise<Nullable<Patient>>;
+  read: (id: string) => Promise<Nullable<ReadResponse>>;
   search: (params: SearchParams) => Promise<Patient[]>;
 }
 
