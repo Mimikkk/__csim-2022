@@ -15,7 +15,7 @@ interface SearchParams {
   gender?: Gender;
 }
 
-interface ReadResponse {
+export interface ReadResponse {
   patient: Patient;
   observations: Observation[];
   medicationStatements: MedicationStatement[];

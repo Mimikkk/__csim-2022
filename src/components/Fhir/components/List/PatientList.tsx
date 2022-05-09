@@ -5,15 +5,13 @@ import { Status } from "@/shared/types";
 import "./PatientList.scss";
 import { Spinner } from "@/shared/components";
 
-export const EmptyBody = () => {
-  return (
-    <tr>
-      <td class="text-center" colspan="100%">
-        No patients found
-      </td>
-    </tr>
-  );
-};
+export const EmptyBody = () => (
+  <tr>
+    <td class="text-center" colspan="100%">
+      No patients found
+    </td>
+  </tr>
+);
 
 export const PatientList = () => {
   const { patients, patientsStatus } = useFhir();
@@ -21,11 +19,7 @@ export const PatientList = () => {
   return (
     <Show
       when={Status.isSuccess(patientsStatus())}
-      fallback={
-        <div class="flex justify-center h-full items-center">
-          <Spinner class="w-48 h-48" />
-        </div>
-      }>
+      fallback={<Spinner centered class="w-48 h-48" />}>
       <table class="w-full">
         <thead>
           <tr>

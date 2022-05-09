@@ -10,7 +10,7 @@ interface Props {
 export const Spinner: Component<Props> = (props) => {
   if (props.centered) {
     return (
-      <div class="flex justify-center align-middle">
+      <div class="flex justify-center items-center w-full h-full">
         <Spinner class={props.class} />
       </div>
     );

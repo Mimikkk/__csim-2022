@@ -1,4 +1,4 @@
-import { createEffect, createSignal, on } from "solid-js";
+import { Accessor, createEffect, createSignal, on, Signal } from "solid-js";
 import { Status } from "@/shared/types";
 import { createRefresh } from "./createRefresh";
 
@@ -8,7 +8,15 @@ interface Props<T, Y = null> {
   instant?: true;
 }
 
-export const createTracked = <T, Y = null>(props: Props<T, Y>) => {
+export type Tracked<T, Y = null> = readonly [
+  Accessor<T | Y>,
+  Accessor<Status>,
+  () => boolean
+];
+
+export const createTracked = <T, Y = null>(
+  props: Props<T, Y>
+): Tracked<T, Y> => {
   const [status, setStatus] = createSignal<Status>(Status.Idle);
   const [toggled, refresh] = createRefresh(props.instant);
   const [resource, setResource] = createSignal<T | Y>(
