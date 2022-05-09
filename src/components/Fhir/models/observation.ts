@@ -10,4 +10,5 @@ export interface Observation {
   category: CodeableConcept[];
   code: CodeableConcept;
   valueQuantity: Quantity;
+  effectiveDateTime: string;
 }

@@ -1,11 +1,13 @@
 import { useData } from "solid-app-router";
-import { createEffect, Show } from "solid-js";
+import { createEffect, For, Show } from "solid-js";
 import { ReadResponse } from "@/components/Fhir/services";
 import { Status } from "@/shared/types";
 import { Spinner } from "@/shared/components";
 import { Patient } from "@/components/Fhir/models";
 import { Tracked } from "@/shared/hooks";
 import { FiUser } from "solid-icons/fi";
+import { CgUser } from "solid-icons/cg";
+import { BiEdit } from "solid-icons/bi";
 
 export const PatientCard = () => {
   const [data, status] = useData<Tracked<ReadResponse>>();
@@ -59,13 +61,35 @@ export const PatientCard = () => {
             </div>
           </div>
           <div class="col-span-9 max-h-[800px] overflow-y-auto flex gap-1 flex-col">
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
-            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <For each={data().observations}>
+              {(observation) => {
+                return (
+                  <div class="bg-gray-800 p-4 border-t rounded-md animated grid grid-cols-12 gap-2">
+                    <div class="col-span-1">
+                      <BiEdit class="w-full h-full" />
+                    </div>
+                    <div class="col-span-11 flex flex-col">
+                      <span class="w-full">
+                        Time:{" "}
+                        {new Date(
+                          observation?.effectiveDateTime
+                        ).toLocaleString()}
+                      </span>
+                      <span class="w-full">
+                        Category: {observation.category[0].coding[0].display}
+                      </span>
+                      <span class="text-gray-400 w-full">
+                        Description: {observation?.code?.text}
+                      </span>
+                      <span class="w-full">
+                        value: {observation?.valueQuantity?.value}
+                        {observation?.valueQuantity?.unit}
+                      </span>
+                    </div>
+                  </div>
+                );
+              }}
+            </For>
           </div>
         </div>
       </Show>
