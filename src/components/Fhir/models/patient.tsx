@@ -34,6 +34,24 @@ export module Patient {
 
     export const photo = ({ photo }: Patient) =>
       head(photo || []) ? Photo.toM(head(photo)) : null;
+
+    export const gender = ({ gender }: Patient): Gender => gender || "unknown";
+
+    export const birthdate = ({ birthDate }: Patient) =>
+      birthDate?.toLocaleString() || "-";
+
+    export const identifierTitle = ({ identifier }: Patient) => {
+      if (!identifier) return "-";
+
+      const { use, value } = head(
+        sortBy(
+          (id) => id?.use === "official",
+          identifier.filter(({ value }) => !!value)
+        )
+      );
+
+      return `${use || "unknown"} - ${value}`;
+    };
   }
 
   export module Row {
