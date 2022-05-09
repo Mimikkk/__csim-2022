@@ -1,12 +1,16 @@
-import { useData, useParams } from "solid-app-router";
+import { useData } from "solid-app-router";
 import { createEffect, Show } from "solid-js";
-import { patientService, ReadResponse } from "@/components/Fhir/services";
-import { createTracked, Tracked } from "@/shared/hooks";
+import { ReadResponse } from "@/components/Fhir/services";
+import { Tracked } from "@/shared/hooks";
 import { Status } from "@/shared/types";
 import { Spinner } from "@/shared/components";
 
 export const PatientCard = () => {
   const [data, status] = useData<Tracked<ReadResponse>>();
+
+  createEffect(() => {
+    console.log({ available: data() });
+  });
 
   return (
     <Show

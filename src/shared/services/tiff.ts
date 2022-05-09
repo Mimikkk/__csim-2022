@@ -6,7 +6,6 @@ const ApiUrl = createApiUrl("tiff");
 
 export const tiffService = {
   convert: (item: File | Blob) => {
-    console.log(import.meta.env.VITE_PROXY);
     const form = new FormData();
     form.append("file", item);
 
