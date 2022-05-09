@@ -5,6 +5,7 @@ import { Status } from "@/shared/types";
 import { Spinner } from "@/shared/components";
 import { Patient } from "@/components/Fhir/models";
 import { Tracked } from "@/shared/hooks";
+import { FiUser } from "solid-icons/fi";
 
 export const PatientCard = () => {
   const [data, status] = useData<Tracked<ReadResponse>>();
@@ -41,13 +42,31 @@ export const PatientCard = () => {
             {Patient.Row.identifierTitle(data().patient)}
           </span>
         </header>
-        <div>
-          <img
-            src={Patient.Card.photo(data().patient)}
-            alt={"123"}
-            width={400}
-            height={400}
-          />
+        <div class="p-2 grid grid-cols-12 gap-2">
+          <div class="col-span-3">
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">
+              <Show
+                when={Patient.Card.photo(data().patient)}
+                fallback={
+                  <FiUser class="w-full h-full rounded-full border-4 animated bg-gray-600 clip-circle" />
+                }>
+                <img
+                  class="w-full h-full rounded-full border-4 animated"
+                  src={Patient.Card.photo(data().patient)}
+                  alt="patients photo"
+                />
+              </Show>
+            </div>
+          </div>
+          <div class="col-span-9 max-h-[800px] overflow-y-auto flex gap-1 flex-col">
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+            <div class="bg-gray-800 p-4 border-t rounded-md animated">123</div>
+          </div>
         </div>
       </Show>
     </section>

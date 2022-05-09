@@ -8,12 +8,18 @@
 
     &:hover {
       @apply text-amber-400;
+      @apply border-amber-400;
     }
   }
 
   .ellipsis {
     @apply whitespace-pre overflow-hidden text-ellipsis;
   }
+
+  .clip-circle {
+    clip-path: circle(50.0% at 50% 50%);
+  }
+
 }
 
 body {
@@ -22,4 +28,12 @@ body {
   font-family: 'Verdana', sans-serif;
   font-size: 16px;
   color: aliceblue;
+}
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }

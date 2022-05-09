@@ -4,11 +4,10 @@ export interface Quantity {
   value: number;
   unit: string;
   comparator: Comparator;
-  system: string;
-  code: string;
 }
 
 export interface Observation {
+  category: CodeableConcept[];
   code: CodeableConcept;
   valueQuantity: Quantity;
 }
