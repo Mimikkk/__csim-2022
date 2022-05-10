@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const CardEmptyList: Component<Props> = (props) => (
-  <Tile title={props.reason} class={cx(props.class, "min-h-[200px]")}>
+  <Tile title={props.title} class={cx(props.class, "min-h-[200px]")}>
     {props.reason}
   </Tile>
 );

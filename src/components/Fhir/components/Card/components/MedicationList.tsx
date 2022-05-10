@@ -17,7 +17,7 @@ export const CardMedicationList: Component<Props> = (props) => {
     <div
       class={cx("overflow-y-auto flex gap-1 flex-col rounded-md", props.class)}>
       <For
-        each={[1, 2, 3, 4]}
+        each={medicationStatements}
         fallback={
           <CardEmptyList title="Medication" reason="No Prescribed Medication" />
         }>
