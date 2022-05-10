@@ -1,18 +1,23 @@
 import { useData } from "solid-app-router";
-import { Show } from "solid-js";
+import { Component, Show } from "solid-js";
 import { ReadResponse } from "@/components/Fhir/services";
 import { Patient } from "@/components/Fhir/models";
 import { Tracked } from "@/shared/hooks";
 import { FiUser } from "solid-icons/fi";
+import { Tile } from "@/shared/components/Tile";
 
 const { photo, fullname } = Patient.Card;
-export const CardPhoto = () => {
+
+interface Props {
+  class?: string;
+}
+export const CardPhoto: Component<Props> = (props) => {
   const [data] = useData<Tracked<ReadResponse>>();
   const { patient } = data();
 
   return (
-    <div class="col-span-3 row-span-1">
-      <div class="flex flex-col gap-4 bg-gray-800 p-4 border-t rounded-md animated">
+    <div class={props.class}>
+      <Tile class="flex flex-col gap-4 p-4">
         <Show
           when={photo(patient)}
           fallback={
@@ -25,7 +30,7 @@ export const CardPhoto = () => {
           />
         </Show>
         <span class="text-center font-bold">{fullname(patient)}</span>
-      </div>
+      </Tile>
     </div>
   );
 };
