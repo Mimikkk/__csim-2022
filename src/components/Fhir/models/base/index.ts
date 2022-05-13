@@ -5,3 +5,4 @@ export * from "./human-name";
 export * from "./period";
 export * from "./coding";
 export * from "./gender";
+export * from "./base";

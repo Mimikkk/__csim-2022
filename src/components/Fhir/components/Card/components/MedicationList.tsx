@@ -9,7 +9,7 @@ import { BiEdit } from "solid-icons/bi";
 import { Labeled } from "@/shared/components/Labled";
 import { MedicationStatement } from "@/components/Fhir/models";
 
-const { dosage, value } = MedicationStatement.Card;
+const { dosage, value, status } = MedicationStatement.Card;
 
 interface RowProps {
   medication: MedicationStatement;
@@ -17,7 +17,7 @@ interface RowProps {
 }
 export const MedicationRow: Component<RowProps> = (props) => {
   const title = !props.index() && "Medication";
-  console.log({ props });
+
   return (
     <Tile title={title} class="p-4 grid grid-cols-12 gap-2">
       <div class="col-span-1">
@@ -26,6 +26,7 @@ export const MedicationRow: Component<RowProps> = (props) => {
       <div class="col-span-11 flex flex-col">
         <Labeled label="Dosage" value={dosage(props.medication)} />
         <Labeled label="Value" value={value(props.medication)} />
+        <Labeled label="status" value={status(props.medication)} />
       </div>
     </Tile>
   );

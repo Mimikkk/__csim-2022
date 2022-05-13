@@ -1,12 +1,15 @@
-import { CodeableConcept } from "./base";
+import { CodeableConcept, Base } from "./base";
 
-export interface MedicationStatement {
+interface Contained {
+  code?: CodeableConcept;
+}
+
+export interface MedicationStatement extends Base {
+  id: string;
   medicationCodeableConcept?: CodeableConcept;
   dosage: CodeableConcept[];
-  contained?: {
-    code?: CodeableConcept;
-    text?: string;
-  }[];
+  contained?: Contained[];
+  status: string;
 }
 
 export module MedicationStatement {
@@ -22,5 +25,7 @@ export module MedicationStatement {
       medicationCodeableConcept?.coding?.[0].display ||
       contained?.[0]?.code?.text ||
       "-";
+
+    export const status = ({ status }: MedicationStatement) => status || "-";
   }
 }

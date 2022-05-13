@@ -1,4 +1,4 @@
-import { CodeableConcept, Comparator } from "./base";
+import { CodeableConcept, Comparator, Base } from "./base";
 
 export interface Quantity {
   value: number;
@@ -6,7 +6,7 @@ export interface Quantity {
   comparator: Comparator;
 }
 
-export interface Observation {
+export interface Observation extends Base {
   category: CodeableConcept[];
   code: CodeableConcept;
   valueQuantity: Quantity;

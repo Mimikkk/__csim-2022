@@ -1,20 +1,9 @@
-import { Identifier, Gender, HumanName } from "./base";
+import { Identifier, Gender, HumanName, Base } from "./base";
 import { sortBy, trim, head } from "rambda";
 import { Component } from "solid-js";
+import { Photo } from "@/components/Fhir/models/photo";
 
-export type Media = string;
-interface Photo {
-  data: string;
-  contentType: string;
-}
-
-export module Photo {
-  export const toM = (photo: Photo): Media =>
-    `data:${photo.contentType};base64,${photo.data}`;
-}
-
-export interface Patient {
-  id: string;
+export interface Patient extends Base {
   name: HumanName[];
   gender: Gender;
   birthDate?: Date;

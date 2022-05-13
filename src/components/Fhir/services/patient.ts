@@ -8,6 +8,7 @@ import { Nullable } from "@/shared/types";
 import { createApiUrl } from "@/shared/services";
 import { parseResponse } from "@/shared/utils";
 import axios from "axios";
+import { mockPatientRead } from "@/mocks/patient-read";
 
 interface SearchParams {
   name?: string;
@@ -29,6 +30,7 @@ interface Service {
 const ApiUrl = createApiUrl("fhir/patients");
 
 export const patientService: Service = {
+  // read: async (id) => mockPatientRead,
   read: (id) =>
     axios.get(`${ApiUrl}/read`, { params: { id } }).then(parseResponse),
 
