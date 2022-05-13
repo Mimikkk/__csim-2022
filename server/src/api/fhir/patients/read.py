@@ -1,24 +1,27 @@
-import json
+from fhirpy.base import SyncSearchSet
 
 from src import fhir, app, logger
-from src.utils import first
-AllowedResources = ['Patient', 'Observation', 'MedicationStatement']
-
-def is_patient(x): return x['resourceType'] == 'Patient'
-def is_observation(x): return x['resourceType'] == 'Observation'
-def is_medication_statement(x): return x['resourceType'] == 'MedicationStatement'
 
 @app.get("/api/fhir/patients/read")
 async def patients_read_get(id: str):
   logger.info(f"Reading patient with id: '{id}'...")
 
-  executedata = fhir.execute(f"Patient/{id}/$everything")
+  patient_set: SyncSearchSet = fhir.resources("Patient")
+  patient = patient_set.get(id)
+  logger.info(f"Read patient!")
 
-  entries = executedata.entry
-  entries = [entry.resource for entry in entries if entry.resource.resourceType in AllowedResources]
+  logger.info(f"Reading patient's observations...")
+  observation_set: SyncSearchSet = fhir.resources("Observation")
+  observations = observation_set.search(subject=id).fetch_all()
+  logger.info(f"Read total {len(observations)} observations!")
+
+  logger.info(f"Reading patient's medication statements...")
+  medication_statements_set: SyncSearchSet = fhir.resources("MedicationStatement")
+  medication_statements = medication_statements_set.search(subject=id).fetch_all()
+  logger.info(f"Read total {len(medication_statements)} medication statements!")
 
   return {
-    "patient": first(list(filter(is_patient, entries))),
-    "observations": list(filter(is_observation, entries)),
-    "medicationStatements": list(filter(is_medication_statement, entries))
+    "patient": patient,
+    "observations": observations,
+    "medicationStatements": medication_statements,
   }

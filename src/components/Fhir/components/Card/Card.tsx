@@ -29,8 +29,8 @@ export const PatientCard = () => {
         when={Status.isSuccess(status())}
         fallback={<Spinner centered class="w-48 h-48" />}>
         <CardHeader />
-        <div class="grid grid-cols-12 py-4 gap-2 max-w-[1200px]">
-          <CardPhoto class="col-span-3" />
+        <div class="grid grid-cols-12 py-4 gap-2 w-full max-w-[1200px]">
+          <CardPhoto class="col-span-3 w-full" />
           <CardObservationList class="col-span-5 max-h-[800px]" />
           <CardMedicationList class="col-span-4 max-h-[800px]" />
         </div>

@@ -6,8 +6,9 @@ interface Props {
 }
 
 export const Labeled: Component<Props> = (props) => (
-  <span>
+  <span class="capitalize ellipsis inline-block">
     <span>{props.label}: </span>
+
     <span class="text-gray-400" title={props.value}>
       {props.value}
     </span>

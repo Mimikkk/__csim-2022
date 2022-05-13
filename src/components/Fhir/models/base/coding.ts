@@ -3,5 +3,5 @@ export interface Coding {
   code: string;
   display: string;
   userSelected: boolean;
+  text?: string;
 }
-
