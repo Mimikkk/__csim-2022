@@ -21,6 +21,7 @@ const ObservationRow: Component<RowProps> = (props) => (
     title={props.index() === 0 && "Observations"}>
     <div class="col-span-1">
       <BiEdit class="w-full h-full" />
+      <span class="flex justify-center">{props.index() + 1}</span>
     </div>
     <div class="col-span-11 flex flex-col">
       <Labeled label="Time" value={time(props.observation)} />
