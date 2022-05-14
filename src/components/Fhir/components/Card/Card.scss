@@ -1,0 +1,54 @@
+.chart {
+  & > div {
+    min-height: 0;
+    min-width: 0;
+    width: 90%;
+
+    & > div {
+      min-height: 0;
+      min-width: 0;
+      width: 90% !important;
+
+    }
+  }
+}
+
+.chart {
+  svg {
+    @apply stroke-gray-400;
+  }
+
+  .apexcharts-toolbar {
+    svg {
+      @apply stroke-transparent;
+    }
+
+    .apexcharts-pan-icon {
+      svg {
+        @apply fill-gray-500 #{!important};
+      }
+    }
+  }
+
+  .apexcharts-legend-text {
+    @apply transition transition-all;
+    @apply text-gray-500 #{!important};
+    &:hover {
+      @apply text-amber-400 #{!important};
+    }
+  }
+
+  .apexcharts-menu {
+    @apply border-2;
+    @apply bg-gray-700;
+    @apply text-gray-50;
+    &-item:hover {
+      @apply hover:bg-sky-900 #{!important};
+    }
+
+    &:hover {
+      @apply bg-sky-800;
+      @apply border-amber-300;
+    }
+  }
+}
