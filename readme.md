@@ -19,4 +19,3 @@
 
 # FHIR
 - Aplikacja do eksploracji karty pacjenta - dostępna pod url: /fhir - /fhir/:id_pacjenta
-- todo - 14.06.2022

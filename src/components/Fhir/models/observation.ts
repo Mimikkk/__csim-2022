@@ -1,11 +1,5 @@
-import { CodeableConcept, Comparator, Base } from "./base";
-import { head } from "rambda";
-
-export interface Quantity {
-  value: number;
-  unit: string;
-  comparator: Comparator;
-}
+import { CodeableConcept, Quantity, Base } from "./base";
+import { Chartable, Series } from "@/shared/models";
 
 export interface Component {
   valueQuantity: Quantity;
@@ -20,17 +14,6 @@ export interface Observation extends Base {
   component?: Component[];
 }
 
-const round2 = (value: number) => Math.round(value * 100) / 100;
-const valueQuantityS = (item?: Quantity[] | Quantity) =>
-  item
-    ? Array.isArray(item)
-      ? `${item
-          .map(({ value }) => value)
-          .map(round2)
-          .join("/")} ${head(item).unit}`
-      : `${round2(item.value)} ${item.unit}`
-    : "";
-
 export module Observation {
   export module Card {
     export const description = ({ code }: Observation) => code?.text || "-";
@@ -43,8 +26,32 @@ export module Observation {
       "-";
 
     export const value = ({ valueQuantity, component }: Observation) =>
-      valueQuantityS(
+      Quantity.toString(
         valueQuantity || component?.map(({ valueQuantity }) => valueQuantity)
       );
+  }
+
+  export module Chart {
+    export const isChartable = ({
+      code,
+      valueQuantity,
+      effectiveDateTime,
+    }: Observation) => code?.text && valueQuantity && effectiveDateTime;
+
+    const round2 = (value: number) => Math.round(value * 100) / 100;
+    export const asChartable = ({
+      code,
+      valueQuantity: { unit, value },
+      effectiveDateTime,
+    }: Observation): Chartable => ({
+      name: `${code.text} [${unit}]`,
+      value: round2(value),
+      time: Date.parse(effectiveDateTime),
+    });
+
+    export const toSeries = (observations: Observation[]): Series[] =>
+      Object.entries(
+        Chartable.byName(observations.filter(isChartable).map(asChartable))
+      ).map(Chartable.toSeries);
   }
 }
