@@ -8,8 +8,6 @@ import { Nullable } from "@/shared/types";
 import { createApiUrl } from "@/shared/services";
 import { parseResponse } from "@/shared/utils";
 import axios from "axios";
-import { mockPatientRead as chonky } from "@/mocks/patient-read-alot-of-observations";
-import { mockPatientRead as both } from "@/mocks/patient-read-both";
 
 interface SearchParams {
   name?: string;
@@ -31,11 +29,8 @@ interface Service {
 const ApiUrl = createApiUrl("fhir/patients");
 
 export const patientService: Service = {
-  read: async (id) => {
-    if (id === "chonky") return chonky;
-    if (id === "both") return both;
-    return axios.get(`${ApiUrl}/read`, { params: { id } }).then(parseResponse);
-  },
+  read: async (id) =>
+    axios.get(`${ApiUrl}/read`, { params: { id } }).then(parseResponse),
 
   search: (params) =>
     axios.get(`${ApiUrl}/search`, { params }).then(parseResponse),

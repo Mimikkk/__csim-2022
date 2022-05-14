@@ -32,12 +32,6 @@ async def patients_read_get(id: str):
   medication_statements = medication_statements_set.search(subject=id).fetch_all()
   logger.info(f"Read total {len(medication_statements)} medication statements!")
 
-  json.dump({
-    "patient": patient,
-    "observations": observations,
-    "medicationStatements": medication_statements,
-  }, open(f"{id}.json", "w"))
-
   return {
     "patient": patient,
     "observations": observations,
