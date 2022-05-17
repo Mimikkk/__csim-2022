@@ -5,7 +5,7 @@ export const Footer = () => (
   <footer>
     <div>
       <LinkIcon link="https://github.com/Mimikkk" icon="github" />
-      <LinkIcon link="https://discord.gg/GSE43yH63T" icon="discord" />
+      <LinkIcon link="https://discord.com" icon="discord" />
     </div>
     <div>
       <Icon icon="abstract-003" class="link fill-amber-300" />
